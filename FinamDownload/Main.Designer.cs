@@ -287,9 +287,10 @@
             // 
             // treeViewSecurity
             // 
+            this.treeViewSecurity.CheckBoxes = true;
             this.treeViewSecurity.Location = new System.Drawing.Point(12, 255);
             this.treeViewSecurity.Name = "treeViewSecurity";
-            this.treeViewSecurity.Size = new System.Drawing.Size(421, 58);
+            this.treeViewSecurity.Size = new System.Drawing.Size(421, 151);
             this.treeViewSecurity.TabIndex = 26;
             // 
             // buttonDownloadTxt
@@ -304,10 +305,10 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 333);
+            this.textBox1.Location = new System.Drawing.Point(12, 423);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(421, 126);
+            this.textBox1.Size = new System.Drawing.Size(421, 36);
             this.textBox1.TabIndex = 28;
             // 
             // Main

@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PropsFields xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <XmlFileName>C:\Users\oemnau\Google Диск\РАБОТА\MVS\FinamDownload\WindowsFormsApplication1\bin\Debug\settings.xml</XmlFileName>
+  <XmlFileName>C:\Repository\AistDownloader\FinamDownload\bin\Debug\settings.xml</XmlFileName>
   <Folder>C:\Users\oemnau\Desktop\TestHistory</Folder>
   <SplitChar>0</SplitChar>
   <TimeFrom>2016-01-25T00:00:00</TimeFrom>
   <TimeTo>2016-01-30T01:00:00</TimeTo>
   <Period>1</Period>
   <TimeCandle>0</TimeCandle>
+  <FileheaderRow>true</FileheaderRow>
+  <DateFromTxt>false</DateFromTxt>
   <Security>
     <SecurityInfo>
       <MarketId>14</MarketId>
@@ -14,7 +16,7 @@
       <MarketName>Фьючерсы ФОРТС</MarketName>
       <Name>BR</Name>
       <Code>SPFB.BR</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>14</MarketId>
@@ -22,7 +24,7 @@
       <MarketName>Фьючерсы ФОРТС</MarketName>
       <Name>Eu</Name>
       <Code>SPFB.Eu</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>14</MarketId>
@@ -30,7 +32,7 @@
       <MarketName>Фьючерсы ФОРТС</MarketName>
       <Name>GAZP</Name>
       <Code>SPFB.GAZR</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>14</MarketId>
@@ -38,7 +40,7 @@
       <MarketName>Фьючерсы ФОРТС</MarketName>
       <Name>LKOH</Name>
       <Code>SPFB.LKOH</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>14</MarketId>
@@ -46,7 +48,7 @@
       <MarketName>Фьючерсы ФОРТС</MarketName>
       <Name>SPFB.MIX</Name>
       <Code>SPFB.MIX</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>14</MarketId>
@@ -54,7 +56,7 @@
       <MarketName>Фьючерсы ФОРТС</MarketName>
       <Name>RTS</Name>
       <Code>SPFB.RTS</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>14</MarketId>
@@ -62,7 +64,7 @@
       <MarketName>Фьючерсы ФОРТС</MarketName>
       <Name>SBRF</Name>
       <Code>SPFB.SBRF</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>14</MarketId>
@@ -78,7 +80,7 @@
       <MarketName>Фьючерсы ФОРТС</MarketName>
       <Name>VTBR</Name>
       <Code>SPFB.VTBR</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>45</MarketId>
@@ -86,7 +88,7 @@
       <MarketName>Валюта</MarketName>
       <Name>EURRUB_TOM</Name>
       <Code>EUR_RUB__TOM</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>45</MarketId>
@@ -94,7 +96,7 @@
       <MarketName>Валюта</MarketName>
       <Name>USDRUB_TOM</Name>
       <Code>USD000UTSTOM</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>45</MarketId>
@@ -105,6 +107,5 @@
       <Checed>true</Checed>
     </SecurityInfo>
   </Security>
-  <FileheaderRow>true</FileheaderRow>
-  <DateFromTxt>true</DateFromTxt>
+  
 </PropsFields>

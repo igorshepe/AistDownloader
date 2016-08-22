@@ -97,7 +97,11 @@ namespace FinamDownloader
             checkBoxDateFromTxt.Checked = _props.Fields.DateFromTxt;
 
             Security = _props.Fields.Security;
-             
+
+
+            LoadTreeview();
+
+
         }
 
          
@@ -193,4 +197,43 @@ namespace FinamDownloader
                 MessageBox.Show(@"нет файлов");
             }
         }
+
+
+        private void LoadTreeview()
+        {
+            var dd = Security;
+            string checkname = String.Empty;
+            for (int i = 0; i < Security.Count; i++)
+            {
+                if (checkname == "")
+                {
+                    checkname = Security[i].MarketName;
+                    treeViewSecurity.Nodes.Add(Security[i].MarketName);
+                   
+                }
+                else if (checkname == Security[i].MarketName)
+                {
+                    }
+                else
+                {
+                    checkname = Security[i].MarketName;
+                    treeViewSecurity.Nodes.Add(Security[i].MarketName);
+                }
+                
+            }
+
+            for (int i = 0; i < treeViewSecurity.Nodes.Count; i++)
+            {
+                for (int j = 0; j < Security.Count; j++)
+                {
+                    if (treeViewSecurity.Nodes[i].Text == Security[j].MarketName)
+                    {
+                        treeViewSecurity.Nodes[i].Nodes.Add(Security[j].Name).Checked = Security[j].Checed;
+                         
+                    }
+                }
+                
+            }
+        }
+
     }}
