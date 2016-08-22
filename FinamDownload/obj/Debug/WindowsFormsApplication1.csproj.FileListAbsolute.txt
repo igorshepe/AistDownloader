@@ -1,0 +1,9 @@
+c:\users\invest\Google Диск\РАБОТА\MVS\FinamDownload\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+C:\Users\oemnau\Google Диск\РАБОТА\MVS\FinamDownload\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+C:\Users\oemnau\Google Диск\РАБОТА\MVS\FinamDownload\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+C:\Users\oemnau\Google Диск\РАБОТА\MVS\FinamDownload\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+C:\Users\oemnau\Google Диск\РАБОТА\MVS\FinamDownload\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+C:\Users\oemnau\Google Диск\РАБОТА\MVS\FinamDownload\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
+C:\Users\oemnau\Google Диск\РАБОТА\MVS\FinamDownload\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+C:\Users\oemnau\Google Диск\РАБОТА\MVS\FinamDownload\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+C:\Users\oemnau\Google Диск\РАБОТА\MVS\FinamDownload\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Main.resources
