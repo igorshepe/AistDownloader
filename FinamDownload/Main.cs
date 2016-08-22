@@ -18,6 +18,8 @@ namespace FinamDownloader
     {
         readonly Props _props = new Props();
         public List<SecurityInfo> Security = new List<SecurityInfo>();
+
+        private bool firststart = true;
         public Main()
         {
             
@@ -74,6 +76,10 @@ namespace FinamDownloader
 
             _props.Fields.DateFromTxt =  checkBoxDateFromTxt.Checked ;
 
+            _props.Fields.MergeFiles = checkBoxMergeFiles.Checked;
+
+            _props.Fields.Security = Security;
+
             _props.WriteXml();
         }
         private void ReadSetting()
@@ -96,12 +102,12 @@ namespace FinamDownloader
 
             checkBoxDateFromTxt.Checked = _props.Fields.DateFromTxt;
 
+            checkBoxMergeFiles.Checked = _props.Fields.MergeFiles;
+
             Security = _props.Fields.Security;
-
-
+            
             LoadTreeview();
-
-
+            firststart = false;
         }
 
          
@@ -201,7 +207,7 @@ namespace FinamDownloader
 
         private void LoadTreeview()
         {
-            var dd = Security;
+            
             string checkname = String.Empty;
             for (int i = 0; i < Security.Count; i++)
             {
@@ -236,4 +242,23 @@ namespace FinamDownloader
             }
         }
 
-    }}
+       
+
+        private void treeViewSecurity_BeforeCheck(object sender, TreeViewCancelEventArgs e)
+        {
+            if(!firststart)
+            {
+                for (int i = 0; i < Security.Count; i++)
+                {
+                    if (e.Node.Text == Security[i].Name)
+                    {
+                        Security[i].Checed = e.Cancel;
+                        return;
+                    }
+                }
+            }
+            
+
+        }
+    }
+}

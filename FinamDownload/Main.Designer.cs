@@ -31,6 +31,8 @@
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.checkBoxMergeFiles = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.checkBoxDateFromTxt = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -73,6 +75,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.checkBoxMergeFiles);
+            this.tabPage1.Controls.Add(this.label7);
             this.tabPage1.Controls.Add(this.checkBoxDateFromTxt);
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.label3);
@@ -88,6 +92,24 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "System";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxMergeFiles
+            // 
+            this.checkBoxMergeFiles.AutoSize = true;
+            this.checkBoxMergeFiles.Location = new System.Drawing.Point(96, 93);
+            this.checkBoxMergeFiles.Name = "checkBoxMergeFiles";
+            this.checkBoxMergeFiles.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxMergeFiles.TabIndex = 22;
+            this.checkBoxMergeFiles.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 93);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(58, 13);
+            this.label7.TabIndex = 21;
+            this.label7.Text = "Merge files";
             // 
             // checkBoxDateFromTxt
             // 
@@ -248,7 +270,7 @@
             // 
             // buttonSaveSettings
             // 
-            this.buttonSaveSettings.Location = new System.Drawing.Point(344, 172);
+            this.buttonSaveSettings.Location = new System.Drawing.Point(343, 330);
             this.buttonSaveSettings.Name = "buttonSaveSettings";
             this.buttonSaveSettings.Size = new System.Drawing.Size(80, 23);
             this.buttonSaveSettings.TabIndex = 21;
@@ -260,16 +282,19 @@
             // 
             this.groupBox1.Controls.Add(this.tabControl1);
             this.groupBox1.Controls.Add(this.buttonSaveSettings);
+            this.groupBox1.Controls.Add(this.textBoxUrlSecurity);
+            this.groupBox1.Controls.Add(this.buttonAddUrlSecurity);
+            this.groupBox1.Controls.Add(this.treeViewSecurity);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(430, 205);
+            this.groupBox1.Size = new System.Drawing.Size(430, 369);
             this.groupBox1.TabIndex = 22;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
             // 
             // textBoxUrlSecurity
             // 
-            this.textBoxUrlSecurity.Location = new System.Drawing.Point(12, 226);
+            this.textBoxUrlSecurity.Location = new System.Drawing.Point(6, 330);
             this.textBoxUrlSecurity.Name = "textBoxUrlSecurity";
             this.textBoxUrlSecurity.Size = new System.Drawing.Size(100, 20);
             this.textBoxUrlSecurity.TabIndex = 23;
@@ -277,7 +302,7 @@
             // 
             // buttonAddUrlSecurity
             // 
-            this.buttonAddUrlSecurity.Location = new System.Drawing.Point(118, 226);
+            this.buttonAddUrlSecurity.Location = new System.Drawing.Point(210, 330);
             this.buttonAddUrlSecurity.Name = "buttonAddUrlSecurity";
             this.buttonAddUrlSecurity.Size = new System.Drawing.Size(75, 23);
             this.buttonAddUrlSecurity.TabIndex = 24;
@@ -288,10 +313,11 @@
             // treeViewSecurity
             // 
             this.treeViewSecurity.CheckBoxes = true;
-            this.treeViewSecurity.Location = new System.Drawing.Point(12, 255);
+            this.treeViewSecurity.Location = new System.Drawing.Point(6, 173);
             this.treeViewSecurity.Name = "treeViewSecurity";
             this.treeViewSecurity.Size = new System.Drawing.Size(421, 151);
             this.treeViewSecurity.TabIndex = 26;
+            this.treeViewSecurity.BeforeCheck += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeViewSecurity_BeforeCheck);
             // 
             // buttonDownloadTxt
             // 
@@ -315,12 +341,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(445, 672);
+            this.ClientSize = new System.Drawing.Size(456, 672);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.buttonDownloadTxt);
-            this.Controls.Add(this.treeViewSecurity);
-            this.Controls.Add(this.buttonAddUrlSecurity);
-            this.Controls.Add(this.textBoxUrlSecurity);
             this.Controls.Add(this.groupBox1);
             this.Name = "Main";
             this.Text = "Main";
@@ -330,6 +353,7 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -363,6 +387,8 @@
         private System.Windows.Forms.TreeView treeViewSecurity;
         private System.Windows.Forms.Button buttonDownloadTxt;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.CheckBox checkBoxMergeFiles;
+        private System.Windows.Forms.Label label7;
     }
 }
 

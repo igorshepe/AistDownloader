@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Windows.Forms;
+using System.IO;using System.Windows.Forms;
 using System.Xml.Serialization;
 
 namespace FinamDownloader
@@ -19,9 +18,11 @@ namespace FinamDownloader
         public DateTime TimeTo = DateTime.Today.AddDays(-1);
         public int Period = 1;
         public int TimeCandle = 1;
-        public List<SecurityInfo> Security = new List<SecurityInfo>() ;
         public bool FileheaderRow = true;
         public bool DateFromTxt = false;
+        public bool MergeFiles = false;
+        public List<SecurityInfo> Security = new List<SecurityInfo>() ;
+       
 
     }
     
@@ -41,8 +42,7 @@ namespace FinamDownloader
 
         public Props()
         {
-            Fields = new PropsFields();
-        }
+            Fields = new PropsFields();}
 
         //Запист настроек в файл
         public void WriteXml()
