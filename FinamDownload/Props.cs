@@ -21,6 +21,7 @@ namespace FinamDownloader
         public bool FileheaderRow = true;
         public bool DateFromTxt = false;
         public bool MergeFiles = false;
+        public bool Yesterday = false;
         public List<SecurityInfo> Security = new List<SecurityInfo>() ;
        
 

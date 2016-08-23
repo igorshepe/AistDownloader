@@ -31,6 +31,7 @@
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.checkBoxYesterday = new System.Windows.Forms.CheckBox();
             this.checkBoxMergeFiles = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.checkBoxDateFromTxt = new System.Windows.Forms.CheckBox();
@@ -57,6 +58,9 @@
             this.treeViewSecurity = new System.Windows.Forms.TreeView();
             this.buttonDownloadTxt = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.buttonCancelDownload = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -75,6 +79,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.checkBoxYesterday);
             this.tabPage1.Controls.Add(this.checkBoxMergeFiles);
             this.tabPage1.Controls.Add(this.label7);
             this.tabPage1.Controls.Add(this.checkBoxDateFromTxt);
@@ -93,6 +98,17 @@
             this.tabPage1.Text = "System";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // checkBoxYesterday
+            // 
+            this.checkBoxYesterday.AutoSize = true;
+            this.checkBoxYesterday.Location = new System.Drawing.Point(257, 64);
+            this.checkBoxYesterday.Name = "checkBoxYesterday";
+            this.checkBoxYesterday.Size = new System.Drawing.Size(73, 17);
+            this.checkBoxYesterday.TabIndex = 23;
+            this.checkBoxYesterday.Text = "Yesterday";
+            this.checkBoxYesterday.UseVisualStyleBackColor = true;
+            this.checkBoxYesterday.CheckedChanged += new System.EventHandler(this.checkBoxYesterday_CheckedChanged);
+            // 
             // checkBoxMergeFiles
             // 
             this.checkBoxMergeFiles.AutoSize = true;
@@ -101,6 +117,7 @@
             this.checkBoxMergeFiles.Size = new System.Drawing.Size(15, 14);
             this.checkBoxMergeFiles.TabIndex = 22;
             this.checkBoxMergeFiles.UseVisualStyleBackColor = true;
+            this.checkBoxMergeFiles.CheckedChanged += new System.EventHandler(this.checkBoxMergeFiles_CheckedChanged);
             // 
             // label7
             // 
@@ -120,6 +137,7 @@
             this.checkBoxDateFromTxt.TabIndex = 20;
             this.checkBoxDateFromTxt.Text = "FromTXT";
             this.checkBoxDateFromTxt.UseVisualStyleBackColor = true;
+            this.checkBoxDateFromTxt.CheckStateChanged += new System.EventHandler(this.checkBoxDateFromTxt_CheckStateChanged);
             // 
             // label4
             // 
@@ -321,7 +339,7 @@
             // 
             // buttonDownloadTxt
             // 
-            this.buttonDownloadTxt.Location = new System.Drawing.Point(358, 465);
+            this.buttonDownloadTxt.Location = new System.Drawing.Point(360, 387);
             this.buttonDownloadTxt.Name = "buttonDownloadTxt";
             this.buttonDownloadTxt.Size = new System.Drawing.Size(75, 23);
             this.buttonDownloadTxt.TabIndex = 27;
@@ -337,14 +355,39 @@
             this.textBox1.Size = new System.Drawing.Size(421, 36);
             this.textBox1.TabIndex = 28;
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(12, 485);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(423, 23);
+            this.progressBar1.TabIndex = 29;
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerReportsProgress = true;
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
+            // 
+            // buttonCancelDownload
+            // 
+            this.buttonCancelDownload.Location = new System.Drawing.Point(252, 387);
+            this.buttonCancelDownload.Name = "buttonCancelDownload";
+            this.buttonCancelDownload.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancelDownload.TabIndex = 30;
+            this.buttonCancelDownload.Text = "Cancel";
+            this.buttonCancelDownload.UseVisualStyleBackColor = true;
+            this.buttonCancelDownload.Click += new System.EventHandler(this.buttonCancelDownload_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(456, 672);
+            this.ClientSize = new System.Drawing.Size(456, 530);
+            this.Controls.Add(this.buttonCancelDownload);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.buttonDownloadTxt);
             this.Controls.Add(this.groupBox1);
+            this.MinimumSize = new System.Drawing.Size(472, 516);
             this.Name = "Main";
             this.Text = "Main";
             this.tabControl1.ResumeLayout(false);
@@ -389,6 +432,10 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.CheckBox checkBoxMergeFiles;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.CheckBox checkBoxYesterday;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Button buttonCancelDownload;
+        public System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 

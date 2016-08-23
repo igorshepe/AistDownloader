@@ -59,32 +59,43 @@ namespace FinamDownloader
             return listSecurity;
         }
 
+        
         public static void Download(List<SecurityInfo> security, List<Main.FileSecurity> filesSecurities )
         {
             string str2 = String.Empty;
 
             for (int i = 0; i < security.Count; i++)
             {
-                
+
                 var securitySelect = security[i];
-               
+
 
                 if (!Main.DateFromeTxt)
                 {
 
                     if (securitySelect.Checed)
                     {
-                        
+
                         //TODO: Проверить , почему верные значения fileheaderRow получаем только после сохранения настроек
 
-                        string address = string.Format("http://195.128.78.52/{0}.{1}?d=d&market={2}&em={3}&p={4}&df={5}&mf={6}&yf={7}&dt={8}&mt={9}&yt={10}&f={11}&e=.{12}&datf={13}&cn={14}&dtf=1&tmf=1&MSOR={15}&sep={16}&sep2=1&at={17}", (object)securitySelect.Code, "txt", (object)securitySelect.MarketId, (object)securitySelect.Id, Main.Period + 1, Main.DateFrom.Day, Main.DateFrom.Month - 1, Main.DateFrom.Year, Main.DateTo.Day, Main.DateTo.Month - 1, Main.DateTo.Year, (object)securitySelect.Code, "txt", 5, (object)securitySelect.Code, Main.TimeCandle, Main.SplitChar, Convert.ToInt32(Main.FileheaderRow));
-                         
+                        string address =
+                            string.Format(
+                                "http://195.128.78.52/{0}.{1}?d=d&market={2}&em={3}&p={4}&df={5}&mf={6}&yf={7}&dt={8}&mt={9}&yt={10}&f={11}&e=.{12}&datf={13}&cn={14}&dtf=1&tmf=1&MSOR={15}&sep={16}&sep2=1&at={17}",
+                                (object) securitySelect.Code, "txt", (object) securitySelect.MarketId,
+                                (object) securitySelect.Id, Main.Period + 1, Main.DateFrom.Day, Main.DateFrom.Month - 1,
+                                Main.DateFrom.Year, Main.DateTo.Day, Main.DateTo.Month - 1, Main.DateTo.Year,
+                                (object) securitySelect.Code, "txt", 5, (object) securitySelect.Code, Main.TimeCandle,
+                                Main.SplitChar, Convert.ToInt32(Main.FileheaderRow));
+
                         Log.Debug("Скачиваю " + address);
                         WebClient webClient = InitWebClient();
                         webClient.Headers.Add("Referer", "http://www.finam.ru/analysis/export/default.asp");
                         try
                         {
+                            //List<DataBackground> forBackground = new List<DataBackground>();
                             str2 = webClient.DownloadString(address);
+                            //forBackground.Add(new DataBackground() {QuotesData = str2, SecurityInfo = securitySelect });
+                            //Main.backgroundWorker1.RunWorkerAsync(forBackground);
                             Main.SaveToFile(str2, securitySelect);
 
                         }
@@ -94,16 +105,24 @@ namespace FinamDownloader
                             Log.Info("Ошибка при скачивании " + ex);
                         }
                     }
-                    
+
                 }
-                else  
+                else
                 {
                     for (int j = 0; j < filesSecurities.Count; j++)
                     {
                         if (securitySelect.Name == filesSecurities[j].Sec)
                         {
                             var securityFile = filesSecurities[j];
-                            string address = string.Format("http://195.128.78.52/{0}.{1}?d=d&market={2}&em={3}&p={4}&df={5}&mf={6}&yf={7}&dt={8}&mt={9}&yt={10}&f={11}&e=.{12}&datf={13}&cn={14}&dtf=1&tmf=1&MSOR={15}&sep={16}&sep2=1&at={17}", (object)securitySelect.Code, "txt", (object)securitySelect.MarketId, (object)securitySelect.Id, Main.Period + 1, securityFile.Dat.Day+1, securityFile.Dat.Month - 1, securityFile.Dat.Year, Main.DateTo.Day, Main.DateTo.Month - 1, Main.DateTo.Year, (object)securitySelect.Code, "txt", 5, (object)securitySelect.Code, Main.TimeCandle, Main.SplitChar, Convert.ToInt32(Main.FileheaderRow));
+                            string address =
+                                string.Format(
+                                    "http://195.128.78.52/{0}.{1}?d=d&market={2}&em={3}&p={4}&df={5}&mf={6}&yf={7}&dt={8}&mt={9}&yt={10}&f={11}&e=.{12}&datf={13}&cn={14}&dtf=1&tmf=1&MSOR={15}&sep={16}&sep2=1&at={17}",
+                                    (object) securitySelect.Code, "txt", (object) securitySelect.MarketId,
+                                    (object) securitySelect.Id, Main.Period + 1, securityFile.Dat.Day + 1,
+                                    securityFile.Dat.Month - 1, securityFile.Dat.Year, Main.DateTo.Day,
+                                    Main.DateTo.Month - 1, Main.DateTo.Year, (object) securitySelect.Code, "txt", 5,
+                                    (object) securitySelect.Code, Main.TimeCandle, Main.SplitChar,
+                                    Convert.ToInt32(Main.FileheaderRow));
                             Log.Debug("Скачиваю " + address);
 
 
@@ -121,24 +140,23 @@ namespace FinamDownloader
                                 {
                                     Main.SaveToFile(str2, securitySelect);
                                 }
-                                
+
                             }
                             catch (Exception ex)
                             {
-                                str2 = "Exception"; Log.Info("Ошибка при скачивании " + ex);
+                                str2 = "Exception";
+                                Log.Info("Ошибка при скачивании " + ex);
                             }
                         }
-                        
+
                     }
-                    
+
                 }
 
 
 
-            }
 
-             
-        }
+            }}
 
     }
 }

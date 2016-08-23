@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -21,12 +22,20 @@ namespace FinamDownloader
         public List<SecurityInfo> Security = new List<SecurityInfo>();
 
         private bool firststart = true;
+
+
         public Main()
         {
             
-
             InitializeComponent();
-            
+
+            this.backgroundWorker1.WorkerReportsProgress = true;
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
+
+
             this.comboBoxPeriod.Items.AddRange(new object[]
             {
                 (object) "tics",
@@ -60,6 +69,39 @@ namespace FinamDownloader
             
         }
 
+       public void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+       {
+            backgroundWorker1.ReportProgress(10);
+
+            if (checkBoxDateFromTxt.Checked)
+            {
+                var fileData = LoadTxtFile();
+                FinamLoading.Download(Security, fileData);
+
+            }
+            else
+            {
+                var fileData = new List<FileSecurity>();FinamLoading.Download(Security, fileData);
+            }
+            backgroundWorker1.ReportProgress(100);
+
+        }
+       public void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            progressBar1.Value = e.ProgressPercentage;
+            
+        }
+        void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            MessageBox.Show(this, @"Download complite");
+        }
+        
+        private void buttonCancelDownload_Click(object sender, EventArgs e)
+        {
+            backgroundWorker1.CancelAsync();
+        }
+
+
         private void WriteSetting()
         {
             _props.Fields.Folder = textBoxTXTDir.Text ;
@@ -79,6 +121,8 @@ namespace FinamDownloader
             _props.Fields.DateFromTxt =  checkBoxDateFromTxt.Checked ;
 
             _props.Fields.MergeFiles = checkBoxMergeFiles.Checked;
+
+            _props.Fields.Yesterday = checkBoxYesterday.Checked;
 
             _props.Fields.Security = Security;
 
@@ -106,6 +150,8 @@ namespace FinamDownloader
 
             checkBoxMergeFiles.Checked = _props.Fields.MergeFiles;
 
+            checkBoxYesterday.Checked =  _props.Fields.Yesterday;
+
             Security = _props.Fields.Security;
             
             LoadTreeview();
@@ -119,6 +165,10 @@ namespace FinamDownloader
             get { return comboBoxPeriod.SelectedIndex; }
         }
 
+        public object PeriodItem
+        {
+            get { return comboBoxPeriod.SelectedItem; }
+        }
         public DateTime DateFrom
         {
             get { return dateTimePickerFrom.Value; }
@@ -152,10 +202,7 @@ namespace FinamDownloader
         {
             get { return checkBoxMergeFiles.Checked; }
         }
-        public List<SecurityInfo> SecInfo;
-        //{
-        //    //get { return 1; }
-        //} 
+       
         private void buttonTXTDir_Click(object sender, EventArgs e)
         {
             this.folderBrowserDialog1.SelectedPath = Environment.CurrentDirectory;
@@ -177,28 +224,19 @@ namespace FinamDownloader
 
         private void buttonDownloadTxt_Click(object sender, EventArgs e)
         {
-            var fileData = LoadTxtFile();
 
-            if (checkBoxDateFromTxt.Checked)
-            {
-                FinamLoading.Download(Security, fileData);
+            backgroundWorker1.RunWorkerAsync();
 
-            }
-            else
-            {
-                fileData = null;
-                FinamLoading.Download(Security,fileData);
-            }
-             
+
         }
 
         public void SaveToFile(string data, SecurityInfo security)
         {
-            Directory.CreateDirectory(textBoxTXTDir.Text+ @"\" + comboBoxPeriod.SelectedItem);
+            
+            Directory.CreateDirectory(textBoxTXTDir.Text + @"\" + comboBoxPeriod.SelectedItem);
 
-            string filename = textBoxTXTDir.Text+@"\"+comboBoxPeriod.SelectedItem + @"\" + security.Name + @"-"+DateTo.Day+@"."+DateTo.Month + @"."+DateTo.Year+@"-"+comboBoxPeriod.SelectedItem+@".txt";
-             
-             
+            string filename = textBoxTXTDir.Text + @"\" + comboBoxPeriod.SelectedItem + @"\" + security.Name + @"-" + DateTo.Day + @"." + DateTo.Month + @"." + DateTo.Year + @"-" + comboBoxPeriod.SelectedItem + @".txt";
+
             if (filename != "")
             {
                 using (StreamWriter sw = new StreamWriter(filename, false, Encoding.UTF8))
@@ -208,7 +246,7 @@ namespace FinamDownloader
                     sw.Close();
 
                 }
-                }
+            }
 
         }
 
@@ -231,7 +269,7 @@ namespace FinamDownloader
         public List<FileSecurity> LoadTxtFile()
         {
             List<FileSecurity> fileHeader = new List<FileSecurity>();
-            var dir = new DirectoryInfo(textBoxTXTDir.Text+@"\"+comboBoxPeriod.SelectedItem); // папка с файлами 
+            var dir = new DirectoryInfo(textBoxTXTDir.Text+@"\"+ PeriodItem); // папка с файлами 
             var filescount = dir.GetFiles();
             //foreach (FileInfo file in dir.GetFiles()) // извлекаем все файлы и кидаем их в список 
             //{
@@ -297,11 +335,7 @@ namespace FinamDownloader
             }
         }
 
-       
-
-       
-
-        private void treeViewSecurity_AfterCheck(object sender, TreeViewEventArgs e)
+       private void treeViewSecurity_AfterCheck(object sender, TreeViewEventArgs e)
         {
             if (!firststart)
             {
@@ -317,5 +351,39 @@ namespace FinamDownloader
             }
 
         }
+
+        private void checkBoxDateFromTxt_CheckStateChanged(object sender, EventArgs e){
+            dateTimePickerFrom.Enabled = !checkBoxDateFromTxt.Checked;
+        }
+
+        private void checkBoxYesterday_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxYesterday.Checked)
+            {
+                dateTimePickerTo.Value = DateTime.Today.AddDays(-1);
+                dateTimePickerTo.Enabled = false;
+            }
+            else
+            {
+                dateTimePickerTo.Value = _props.Fields.TimeTo;
+                dateTimePickerTo.Enabled = true;
+            }
+        }
+
+        private void checkBoxMergeFiles_CheckedChanged(object sender, EventArgs e)
+        {
+            if(checkBoxMergeFiles.Checked)
+            {
+                checkBoxFileheaderRow.Checked = false;
+                checkBoxFileheaderRow.Enabled = false;
+
+            }
+            else{
+                checkBoxFileheaderRow.Checked = true;
+                checkBoxFileheaderRow.Enabled = true;
+            }
+        }
+
+        
     }
 }
