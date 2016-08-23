@@ -10,7 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using FinamDownloader.Properties; 
+using FinamDownloader.Properties;
+using static System.String;
 
 namespace FinamDownloader
 {
@@ -28,16 +29,16 @@ namespace FinamDownloader
             
             this.comboBoxPeriod.Items.AddRange(new object[]
             {
-                (object) "тики",
-                (object) "1 мин",
-                (object) "5 мин",
-                (object) "10 мин",
-                (object) "15 мин",
-                (object) "30 мин",
-                (object) "1 час",
-                (object) "1 день",
-                (object) "1 неделя",
-                (object) "1 месяц"
+                (object) "tics",
+                (object) "1 min",
+                (object) "5 min",
+                (object) "10 min",
+                (object) "15 min",
+                (object) "30 min",
+                (object) "1 hour",
+                (object) "1 day",
+                (object) "1 weak",
+                (object) "1 month"
             });
             this.comboBoxSplitChar.Items.AddRange(new object[]
             {
@@ -56,6 +57,7 @@ namespace FinamDownloader
 
             });
             ReadSetting();
+            
         }
 
         private void WriteSetting()
@@ -107,7 +109,8 @@ namespace FinamDownloader
             Security = _props.Fields.Security;
             
             LoadTreeview();
-            firststart = false;
+            
+            firststart = false; // для проверки изменения состояния чекбокса treeview
         }
 
          
@@ -144,6 +147,11 @@ namespace FinamDownloader
         {
             get { return checkBoxFileheaderRow.Checked; }
         }
+
+        public bool MergeFile
+        {
+            get { return checkBoxMergeFiles.Checked; }
+        }
         public List<SecurityInfo> SecInfo;
         //{
         //    //get { return 1; }
@@ -169,46 +177,93 @@ namespace FinamDownloader
 
         private void buttonDownloadTxt_Click(object sender, EventArgs e)
         {
+            var fileData = LoadTxtFile();
+
             if (checkBoxDateFromTxt.Checked)
             {
-                LoadTxtFile();
+                FinamLoading.Download(Security, fileData);
+
             }
-            //FinamLoading.Download(Security);
+            else
+            {
+                fileData = null;
+                FinamLoading.Download(Security,fileData);
+            }
+             
         }
 
         public void SaveToFile(string data, SecurityInfo security)
         {
+            Directory.CreateDirectory(textBoxTXTDir.Text+ @"\" + comboBoxPeriod.SelectedItem);
+
+            string filename = textBoxTXTDir.Text+@"\"+comboBoxPeriod.SelectedItem + @"\" + security.Name + @"-"+DateTo.Day+@"."+DateTo.Month + @"."+DateTo.Year+@"-"+comboBoxPeriod.SelectedItem+@".txt";
              
-            string filename = textBoxTXTDir.Text+@"\"+security.Code+@"-"+DateTo.Day+@"."+DateTo.Month + @"."+ DateTo.Year+@".txt";
              
-             
-            if (filename != ""){
+            if (filename != "")
+            {
                 using (StreamWriter sw = new StreamWriter(filename, false, Encoding.UTF8))
                 {
-
-                    sw.WriteLine(data);
+                    string newdata = data;
+                    sw.Write(data);
+                    sw.Close();
 
                 }
-
-            }
+                }
 
         }
 
-        public void LoadTxtFile()
+        public void ChangeFile(string data, FileSecurity fileSec)
         {
-            var fileName = Directory.GetFiles(textBoxTXTDir.Text, "*.txt");
+            
+            string filename = textBoxTXTDir.Text + @"\" + comboBoxPeriod.SelectedItem + @"\" + fileSec.Sec + @"-" + fileSec.Dat.Day + @"." + fileSec.Dat.Month + @"." + fileSec.Dat.Year + @"-" + comboBoxPeriod.SelectedItem + @".txt";
 
-            if (fileName.ToString() == @"{string[0]}")
+            string newfilename = textBoxTXTDir.Text + @"\" + comboBoxPeriod.SelectedItem + @"\" + fileSec.Sec + @"-" +
+                                 DateTo.Day + @"." + DateTo.Month + @"." + DateTo.Year + @"-" +
+                                 comboBoxPeriod.SelectedItem + @".txt";
+            using (var destination = File.AppendText(filename))
             {
-                MessageBox.Show(@"нет файлов");
+                 
+                destination.Write(data); // записываем дату время и сотояние портфеля
             }
+
+            File.Move(filename,newfilename);
+            }
+        public List<FileSecurity> LoadTxtFile()
+        {
+            List<FileSecurity> fileHeader = new List<FileSecurity>();
+            var dir = new DirectoryInfo(textBoxTXTDir.Text+@"\"+comboBoxPeriod.SelectedItem); // папка с файлами 
+            var filescount = dir.GetFiles();
+            //foreach (FileInfo file in dir.GetFiles()) // извлекаем все файлы и кидаем их в список 
+            //{
+            //    Char delimiter = '-';
+            //    String[] substrings = Path.GetFileNameWithoutExtension(file.FullName).Split(delimiter);
+            //    fileHeader[0].Sec = substrings[0].ToString();
+
+            //    files.Add(Path.GetFileNameWithoutExtension(file.FullName)); // получаем полный путь к файлу и потом вычищаем ненужное, оставляем только имя файла. 
+            //}
+            
+            for (int i = 0; i < filescount.Length; i++)
+            {
+                Char delimiter = '-';
+                String[] substrings = Path.GetFileNameWithoutExtension(filescount[i].FullName).Split(delimiter);
+                
+               fileHeader.Add(new FileSecurity() { Sec = substrings[0], Dat = DateTime.Parse(substrings[1]), Per = substrings[2] });
+                 
+            }
+            return fileHeader;
         }
 
+        public class FileSecurity
+        {
+            public string Sec { get; set; }
+            public DateTime Dat { get; set; }
+            public string Per { get; set; }
+        }
 
         private void LoadTreeview()
         {
             
-            string checkname = String.Empty;
+            string checkname = Empty;
             for (int i = 0; i < Security.Count; i++)
             {
                 if (checkname == "")
@@ -244,20 +299,22 @@ namespace FinamDownloader
 
        
 
-        private void treeViewSecurity_BeforeCheck(object sender, TreeViewCancelEventArgs e)
+       
+
+        private void treeViewSecurity_AfterCheck(object sender, TreeViewEventArgs e)
         {
-            if(!firststart)
+            if (!firststart)
             {
                 for (int i = 0; i < Security.Count; i++)
                 {
+                    
                     if (e.Node.Text == Security[i].Name)
                     {
-                        Security[i].Checed = e.Cancel;
+                        Security[i].Checed = e.Node.Checked;
                         return;
                     }
                 }
             }
-            
 
         }
     }

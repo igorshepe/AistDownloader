@@ -315,9 +315,9 @@
             this.treeViewSecurity.CheckBoxes = true;
             this.treeViewSecurity.Location = new System.Drawing.Point(6, 173);
             this.treeViewSecurity.Name = "treeViewSecurity";
-            this.treeViewSecurity.Size = new System.Drawing.Size(421, 151);
+            this.treeViewSecurity.Size = new System.Drawing.Size(417, 151);
             this.treeViewSecurity.TabIndex = 26;
-            this.treeViewSecurity.BeforeCheck += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeViewSecurity_BeforeCheck);
+            this.treeViewSecurity.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeViewSecurity_AfterCheck);
             // 
             // buttonDownloadTxt
             // 
