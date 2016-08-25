@@ -137,6 +137,7 @@
             this.checkBoxDateFromTxt.TabIndex = 20;
             this.checkBoxDateFromTxt.Text = "FromTXT";
             this.checkBoxDateFromTxt.UseVisualStyleBackColor = true;
+             
             this.checkBoxDateFromTxt.CheckStateChanged += new System.EventHandler(this.checkBoxDateFromTxt_CheckStateChanged);
             // 
             // label4
@@ -381,13 +382,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(456, 530);
+            this.ClientSize = new System.Drawing.Size(456, 527);
             this.Controls.Add(this.buttonCancelDownload);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.buttonDownloadTxt);
             this.Controls.Add(this.groupBox1);
-            this.MinimumSize = new System.Drawing.Size(472, 516);
+            this.MaximumSize = new System.Drawing.Size(472, 566);
+            this.MinimumSize = new System.Drawing.Size(472, 566);
             this.Name = "Main";
             this.Text = "Main";
             this.tabControl1.ResumeLayout(false);
@@ -406,7 +408,6 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.CheckBox checkBoxDateFromTxt;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DateTimePicker dateTimePickerTo;
@@ -433,9 +434,10 @@
         private System.Windows.Forms.CheckBox checkBoxMergeFiles;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.CheckBox checkBoxYesterday;
-        private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Button buttonCancelDownload;
         public System.ComponentModel.BackgroundWorker backgroundWorker1;
+        public System.Windows.Forms.ProgressBar progressBar1;
+        public System.Windows.Forms.CheckBox checkBoxDateFromTxt;
     }
 }
 

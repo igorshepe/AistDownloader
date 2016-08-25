@@ -17,7 +17,7 @@ namespace FinamDownloader
         public DateTime TimeFrom = DateTime.Today.AddDays(-2);
         public DateTime TimeTo = DateTime.Today.AddDays(-1);
         public int Period = 1;
-        public int TimeCandle = 1;
+        public int TimeCandle = 0;
         public bool FileheaderRow = true;
         public bool DateFromTxt = false;
         public bool MergeFiles = false;

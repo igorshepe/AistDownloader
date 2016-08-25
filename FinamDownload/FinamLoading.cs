@@ -5,7 +5,9 @@ using System.Net;
 using System.Security.AccessControl;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using FinamDownloader.Properties;
 using log4net;
 
@@ -66,11 +68,12 @@ namespace FinamDownloader
 
             for (int i = 0; i < security.Count; i++)
             {
-
+                 
+                //Main.backgroundWorker1.ReportProgress((i+1)*10);
                 var securitySelect = security[i];
 
 
-                if (!Main.DateFromeTxt)
+                if (Main.DateFromeTxt == CheckState.Checked)
                 {
 
                     if (securitySelect.Checed)
@@ -153,7 +156,7 @@ namespace FinamDownloader
 
                 }
 
-
+               
 
 
             }}
