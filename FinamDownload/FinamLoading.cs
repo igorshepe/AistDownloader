@@ -62,8 +62,9 @@ namespace FinamDownloader
         }
 
         
-        public static void Download(List<SecurityInfo> security, List<Main.FileSecurity> filesSecurities )
+        public static void Download(List<SecurityInfo> security, List<Main.FileSecurity> filesSecurities, List<Main.SettingsMain> settingsData )
         {
+            var settings = settingsData[0];
             string str2 = String.Empty;
 
             for (int i = 0; i < security.Count; i++)
@@ -73,7 +74,7 @@ namespace FinamDownloader
                 var securitySelect = security[i];
 
 
-                if (Main.DateFromeTxt == CheckState.Checked)
+                if (!settings.DateFromeTxt)
                 {
 
                     if (securitySelect.Checed)
@@ -85,10 +86,10 @@ namespace FinamDownloader
                             string.Format(
                                 "http://195.128.78.52/{0}.{1}?d=d&market={2}&em={3}&p={4}&df={5}&mf={6}&yf={7}&dt={8}&mt={9}&yt={10}&f={11}&e=.{12}&datf={13}&cn={14}&dtf=1&tmf=1&MSOR={15}&sep={16}&sep2=1&at={17}",
                                 (object) securitySelect.Code, "txt", (object) securitySelect.MarketId,
-                                (object) securitySelect.Id, Main.Period + 1, Main.DateFrom.Day, Main.DateFrom.Month - 1,
-                                Main.DateFrom.Year, Main.DateTo.Day, Main.DateTo.Month - 1, Main.DateTo.Year,
-                                (object) securitySelect.Code, "txt", 5, (object) securitySelect.Code, Main.TimeCandle,
-                                Main.SplitChar, Convert.ToInt32(Main.FileheaderRow));
+                                (object) securitySelect.Id, settings.Period + 1, settings.DateFrom.Day, settings.DateFrom.Month - 1,
+                                settings.DateFrom.Year, settings.DateTo.Day, settings.DateTo.Month - 1, settings.DateTo.Year,
+                                (object) securitySelect.Code, "txt", 5, (object) securitySelect.Code, settings.TimeCandle,
+                                settings.SplitChar, Convert.ToInt32(settings.FileheaderRow));
 
                         Log.Debug("Скачиваю " + address);
                         WebClient webClient = InitWebClient();
@@ -99,7 +100,7 @@ namespace FinamDownloader
                             str2 = webClient.DownloadString(address);
                             //forBackground.Add(new DataBackground() {QuotesData = str2, SecurityInfo = securitySelect });
                             //Main.backgroundWorker1.RunWorkerAsync(forBackground);
-                            Main.SaveToFile(str2, securitySelect);
+                            Main.SaveToFile(str2, securitySelect, settings);
 
                         }
                         catch (Exception ex)
@@ -116,40 +117,46 @@ namespace FinamDownloader
                     {
                         if (securitySelect.Name == filesSecurities[j].Sec)
                         {
-                            var securityFile = filesSecurities[j];
-                            string address =
-                                string.Format(
-                                    "http://195.128.78.52/{0}.{1}?d=d&market={2}&em={3}&p={4}&df={5}&mf={6}&yf={7}&dt={8}&mt={9}&yt={10}&f={11}&e=.{12}&datf={13}&cn={14}&dtf=1&tmf=1&MSOR={15}&sep={16}&sep2=1&at={17}",
-                                    (object) securitySelect.Code, "txt", (object) securitySelect.MarketId,
-                                    (object) securitySelect.Id, Main.Period + 1, securityFile.Dat.Day + 1,
-                                    securityFile.Dat.Month - 1, securityFile.Dat.Year, Main.DateTo.Day,
-                                    Main.DateTo.Month - 1, Main.DateTo.Year, (object) securitySelect.Code, "txt", 5,
-                                    (object) securitySelect.Code, Main.TimeCandle, Main.SplitChar,
-                                    Convert.ToInt32(Main.FileheaderRow));
-                            Log.Debug("Скачиваю " + address);
-
-
-                            WebClient webClient = InitWebClient();
-                            webClient.Headers.Add("Referer", "http://www.finam.ru/analysis/export/default.asp");
-
-                            try
+                            if (!(filesSecurities[j].Dat == settings.DateTo))
                             {
-                                str2 = webClient.DownloadString(address);
-                                if (Main.MergeFile)
-                                {
-                                    Main.ChangeFile(str2, securityFile);
-                                }
-                                else
-                                {
-                                    Main.SaveToFile(str2, securitySelect);
-                                }
+                                var securityFile = filesSecurities[j];
+                                string address =
+                                    string.Format(
+                                        "http://195.128.78.52/{0}.{1}?d=d&market={2}&em={3}&p={4}&df={5}&mf={6}&yf={7}&dt={8}&mt={9}&yt={10}&f={11}&e=.{12}&datf={13}&cn={14}&dtf=1&tmf=1&MSOR={15}&sep={16}&sep2=1&at={17}",
+                                        (object)securitySelect.Code, "txt", (object)securitySelect.MarketId,
+                                        (object)securitySelect.Id, settings.Period + 1, securityFile.Dat.Day + 1,
+                                        securityFile.Dat.Month - 1, securityFile.Dat.Year, settings.DateTo.Day,
+                                        settings.DateTo.Month - 1, settings.DateTo.Year, (object)securitySelect.Code, "txt", 5,
+                                        (object)securitySelect.Code, settings.TimeCandle, settings.SplitChar,
+                                        Convert.ToInt32(settings.FileheaderRow));
+                                Log.Debug("Скачиваю " + address);
 
+
+                                WebClient webClient = InitWebClient();
+                                webClient.Headers.Add("Referer", "http://www.finam.ru/analysis/export/default.asp");
+
+                                try
+                                {
+                                    str2 = webClient.DownloadString(address);
+                                    if (settings.MergeFile)
+                                    {
+                                        Main.ChangeFile(str2, securityFile, settings);
+                                    }
+                                    else
+                                    {
+                                        Main.SaveToFile(str2, securitySelect, settings);
+                                    }
+
+                                }
+                                catch (Exception ex)
+                                {
+                                    str2 = "Exception";
+                                    Log.Info("Ошибка при скачивании " + ex);
+                                }
                             }
-                            catch (Exception ex)
-                            {
-                                str2 = "Exception";
-                                Log.Info("Ошибка при скачивании " + ex);
-                            }
+                                 
+
+                            
                         }
 
                     }

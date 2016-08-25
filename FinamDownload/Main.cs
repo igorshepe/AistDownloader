@@ -12,9 +12,9 @@ namespace FinamDownloader
     {
         readonly Props _props = new Props();
         public List<SecurityInfo> Security = new List<SecurityInfo>();
-
+        public List<SettingsMain> SettingsData = new List<SettingsMain>(); 
         private bool _firststart = true;
-        public int LoadinProgressBar = 0;
+        public int cancelAsync = 0; // 1 нет файлов для объединения 2 отмена кнопкой
 
         public Main()
         {
@@ -65,6 +65,8 @@ namespace FinamDownloader
        {
             //TODO: Разобраться с доступом к обьектам из другого потока и с прогрессбаром из другого потока
 
+           List<SettingsMain>  SettingsData = GetSettings();
+
             backgroundWorker1.ReportProgress(10);
 
             if (backgroundWorker1.CancellationPending)
@@ -72,18 +74,19 @@ namespace FinamDownloader
 
             if (checkBoxDateFromTxt.Checked)
             {
-                var fileData = LoadTxtFile();
-                //backgroundWorker1.ReportProgress(20);
-                FinamLoading.Download(Security, fileData);
-                //backgroundWorker1.ReportProgress(50);
+                var fileData = LoadTxtFile();if (backgroundWorker1.CancellationPending)
+                    return;
+                backgroundWorker1.ReportProgress(20);
+                FinamLoading.Download(Security, fileData, SettingsData);
+                backgroundWorker1.ReportProgress(50);
 
             }
             else
             {
-               // backgroundWorker1.ReportProgress(20);
+                backgroundWorker1.ReportProgress(20);
                 var fileData = new List<FileSecurity>();
-                FinamLoading.Download(Security, fileData);
-               // backgroundWorker1.ReportProgress(50);
+                FinamLoading.Download(Security, fileData,  SettingsData);
+                backgroundWorker1.ReportProgress(50);
             }
            backgroundWorker1.ReportProgress(100);
 
@@ -96,11 +99,19 @@ namespace FinamDownloader
         }
         void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            MessageBox.Show(this, @"Download complite");
-        }
+            if (cancelAsync == 1)
+                MessageBox.Show(this, @"There are no files to merge");
+            else if (cancelAsync == 2)
+                MessageBox.Show(this, @"Cancel");
+            else
+                MessageBox.Show(this, @"Download complite");
+
+            cancelAsync = 0;
+            progressBar1.Value = 0;}
         
         private void buttonCancelDownload_Click(object sender, EventArgs e)
         {
+            cancelAsync = 2;
             backgroundWorker1.CancelAsync();
         }
 
@@ -161,58 +172,7 @@ namespace FinamDownloader
             
             _firststart = false; // для проверки изменения состояния чекбокса treeview
         }
-
-         
-        public int Period
-        {
-            get { return comboBoxPeriod.SelectedIndex; }
-        }
-
-        public object PeriodItem
-        {
-            get { return comboBoxPeriod.SelectedItem; }
-        }
-        public DateTime DateFrom
-        {
-            get { return dateTimePickerFrom.Value; }
-        }
-
-        public DateTime DateTo
-        {
-            get { return dateTimePickerTo.Value; }}
-
-        public int SplitChar
-        {
-            get { return comboBoxSplitChar.SelectedIndex+1; }// нет значения 0
-        }
-
-        public int TimeCandle
-        {
-            get { return comboBoxTimeCandle.SelectedIndex; }
-        }
-
-        public CheckState DateFromeTxt
-        {
-            get { return checkBoxDateFromTxt.CheckState; }
-        }
-         
-
-        public bool FileheaderRow
-        {
-            get { return checkBoxFileheaderRow.Checked; }
-        }
-
-        public bool MergeFile
-        {
-            get { return checkBoxMergeFiles.Checked; }
-        }
-
-        public int LoadingProgressBar
-        {
-            get { return LoadinProgressBar; }
-            
-        }
-       
+ 
         private void buttonTXTDir_Click(object sender, EventArgs e)
         {
             folderBrowserDialog1.SelectedPath = Environment.CurrentDirectory;
@@ -240,14 +200,17 @@ namespace FinamDownloader
 
         }
 
-        public void SaveToFile(string data, SecurityInfo security)
+        public void SaveToFile(string data, SecurityInfo security, SettingsMain settingsData)
         {
             if (backgroundWorker1.CancellationPending)
                 return;
 
+            var settings = settingsData;
+            
+
             Directory.CreateDirectory(textBoxTXTDir.Text + @"\" + comboBoxPeriod.SelectedItem);
 
-            string filename = textBoxTXTDir.Text + @"\" + comboBoxPeriod.SelectedItem + @"\" + security.Name + @"-" + DateTo.Day + @"." + DateTo.Month + @"." + DateTo.Year + @"-" + comboBoxPeriod.SelectedItem + @".txt";
+            string filename = textBoxTXTDir.Text + @"\" + comboBoxPeriod.SelectedItem + @"\" + security.Name + @"-" + settings.DateTo.Day + @"." + settings.DateTo.Month + @"." + settings.DateTo.Year + @"-" + comboBoxPeriod.SelectedItem + @".txt";
 
             if (filename != "")
             {
@@ -261,16 +224,18 @@ namespace FinamDownloader
 
         }
 
-        public void ChangeFile(string data, FileSecurity fileSec)
+        public void ChangeFile(string data, FileSecurity fileSec, SettingsMain settingsData)
         {
-            string periodTheader = GetPeriodData();
             if (backgroundWorker1.CancellationPending)
                 return;
+            var settings2 = settingsData;
+            //string periodTheader = GetPeriodData();
+           
 
-            string filename = textBoxTXTDir.Text + @"\" + periodTheader + @"\" + fileSec.Sec + @"-" + fileSec.Dat.Day + @"." + fileSec.Dat.Month + @"." + fileSec.Dat.Year + @"-" + comboBoxPeriod.SelectedItem + @".txt";
+            string filename = textBoxTXTDir.Text + @"\" + settings2.PeriodItem + @"\" + fileSec.Sec + @"-" + fileSec.Dat.Day + @"." + fileSec.Dat.Month + @"." + fileSec.Dat.Year + @"-" + comboBoxPeriod.SelectedItem + @".txt";
 
-            string newfilename = textBoxTXTDir.Text + @"\" + periodTheader + @"\" + fileSec.Sec + @"-" +
-                                 DateTo.Day + @"." + DateTo.Month + @"." + DateTo.Year + @"-" +
+            string newfilename = textBoxTXTDir.Text + @"\" + settings2.PeriodItem + @"\" + fileSec.Sec + @"-" +
+                                 settings2.DateTo.Day + @"." + settings2.DateTo.Month + @"." + settings2.DateTo.Year + @"-" +
                                  comboBoxPeriod.SelectedItem + @".txt";
 
             try
@@ -300,9 +265,9 @@ namespace FinamDownloader
         }
         public List<FileSecurity> LoadTxtFile()
         {
-            backgroundWorker1.ReportProgress(30);
+             
             List<FileSecurity> fileHeader = new List<FileSecurity>();
-            var dir = new DirectoryInfo(textBoxTXTDir.Text+@"\"+ PeriodItem); // папка с файлами 
+            var dir = new DirectoryInfo(textBoxTXTDir.Text+@"\"+ SettingsData[0].PeriodItem); // папка с файлами 
             var filescount = dir.GetFiles();
              
             for (int i = 0; i < filescount.Length; i++)
@@ -313,7 +278,12 @@ namespace FinamDownloader
                fileHeader.Add(new FileSecurity() { Sec = substrings[0], Dat = DateTime.Parse(substrings[1]), Per = substrings[2] });
                  
             }
-            backgroundWorker1.ReportProgress(30,fileHeader.Count);
+            if (fileHeader.Count == 0)
+            {
+                cancelAsync = 1;
+                backgroundWorker1.CancelAsync();
+
+            }
             return fileHeader;
         }
 
@@ -363,6 +333,37 @@ namespace FinamDownloader
 
        private void treeViewSecurity_AfterCheck(object sender, TreeViewEventArgs e)
         {
+            if (e.Node.Checked == true)
+            {
+                for (int i = 0; i < e.Node.Nodes.Count; i++)
+                {
+                    e.Node.Nodes[i].Checked = true;
+                    for (int j = 0; j < e.Node.Nodes[i].Nodes.Count; j++)
+                    {
+                        e.Node.Nodes[i].Nodes[j].Checked = true;
+                        for (int k = 0; k < e.Node.Nodes[i].Nodes[j].Nodes.Count; k++)
+                        {
+                            e.Node.Nodes[i].Nodes[j].Nodes[k].Checked = true;
+                        }
+                    }
+                }
+            }
+
+            if (e.Node.Checked == false)
+            {
+                for (int i = 0; i < e.Node.Nodes.Count; i++)
+                {
+                    e.Node.Nodes[i].Checked = false;
+                    for (int j = 0; j < e.Node.Nodes[i].Nodes.Count; j++)
+                    {
+                        e.Node.Nodes[i].Nodes[j].Checked = false;
+                        for (int k = 0; k < e.Node.Nodes[i].Nodes[j].Nodes.Count; k++)
+                        {
+                            e.Node.Nodes[i].Nodes[j].Nodes[k].Checked = false;
+                        }
+                    }
+                }
+            }
             if (!_firststart)
             {
                 for (int i = 0; i < Security.Count; i++)
@@ -411,6 +412,59 @@ namespace FinamDownloader
             }
         }
 
-         
+        public List<SettingsMain> GetSettings()
+        {
+            SettingsData.Clear();
+            SettingsData.Add(new SettingsMain
+            {
+                Period = comboBoxPeriod.SelectedIndex,
+                PeriodItem = comboBoxPeriod.SelectedItem,
+                DateFrom = dateTimePickerFrom.Value,
+                DateTo = dateTimePickerTo.Value,
+                SplitChar = comboBoxSplitChar.SelectedIndex,
+                TimeCandle = comboBoxTimeCandle.SelectedIndex,
+                DateFromeTxt = checkBoxDateFromTxt.Checked,
+                FileheaderRow = checkBoxFileheaderRow.Checked,
+                MergeFile = checkBoxMergeFiles.Checked
+
+            });
+
+            return SettingsData;
+        } 
+        public class SettingsMain
+        {
+            public int Period = 1;
+
+
+            public object PeriodItem = Empty;
+
+            public DateTime DateFrom = DateTime.Now;
+            
+
+            public DateTime DateTo = DateTime.Now;
+
+
+            public int SplitChar = 1;
+
+
+            public int TimeCandle = 1;
+
+
+            public bool DateFromeTxt = false;
+
+
+
+            public bool FileheaderRow = false;
+
+
+            public bool MergeFile = false;
+
+        }
+
+        
+
+        private void treeViewSecurity_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+           }
     }
 }

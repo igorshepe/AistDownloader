@@ -137,7 +137,6 @@
             this.checkBoxDateFromTxt.TabIndex = 20;
             this.checkBoxDateFromTxt.Text = "FromTXT";
             this.checkBoxDateFromTxt.UseVisualStyleBackColor = true;
-             
             this.checkBoxDateFromTxt.CheckStateChanged += new System.EventHandler(this.checkBoxDateFromTxt_CheckStateChanged);
             // 
             // label4
@@ -318,6 +317,7 @@
             this.textBoxUrlSecurity.Size = new System.Drawing.Size(100, 20);
             this.textBoxUrlSecurity.TabIndex = 23;
             this.textBoxUrlSecurity.Text = "http://www.finam.ru/profile/mosbirzha-fyuchersy/si/";
+            this.textBoxUrlSecurity.Visible = false;
             // 
             // buttonAddUrlSecurity
             // 
@@ -327,6 +327,7 @@
             this.buttonAddUrlSecurity.TabIndex = 24;
             this.buttonAddUrlSecurity.Text = "Add security";
             this.buttonAddUrlSecurity.UseVisualStyleBackColor = true;
+            this.buttonAddUrlSecurity.Visible = false;
             this.buttonAddUrlSecurity.Click += new System.EventHandler(this.buttonAddUrlSecurity_Click);
             // 
             // treeViewSecurity
@@ -337,6 +338,7 @@
             this.treeViewSecurity.Size = new System.Drawing.Size(417, 151);
             this.treeViewSecurity.TabIndex = 26;
             this.treeViewSecurity.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeViewSecurity_AfterCheck);
+            this.treeViewSecurity.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewSecurity_NodeMouseDoubleClick);
             // 
             // buttonDownloadTxt
             // 
