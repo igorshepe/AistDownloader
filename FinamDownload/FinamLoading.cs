@@ -16,7 +16,7 @@ namespace FinamDownloader
     internal class FinamLoading
     {
        
-        static readonly Main Main = new Main();
+        static readonly Main Main = new Main(new[] {"_"});
         
                      
         private static readonly ILog Log = LogManager.GetLogger(typeof(FinamLoading));
@@ -116,7 +116,7 @@ namespace FinamDownloader
                     {
                         if (securitySelect.Name == filesSecurities[j].Sec)
                         {
-                            if (!(filesSecurities[j].Dat == settings.DateTo))
+                            if (!(filesSecurities[j].Dat.AddDays(-1) == settings.DateTo))
                             {
                                 var securityFile = filesSecurities[j];
                                 string address = string.Format(

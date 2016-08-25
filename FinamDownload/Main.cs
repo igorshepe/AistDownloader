@@ -10,15 +10,17 @@ namespace FinamDownloader
 {
     public partial class Main : Form
     {
+
+        private string[] arg;
         readonly Props _props = new Props();
         public List<SecurityInfo> Security = new List<SecurityInfo>();
         public List<SettingsMain> SettingsData = new List<SettingsMain>(); 
         private bool _firststart = true;
         public int cancelAsync = 0; // 1 нет файлов для объединения 2 отмена кнопкой
 
-        public Main()
+        public Main(string[] args)
         {
-            
+            arg = args;
             InitializeComponent();
 
             backgroundWorker1.WorkerReportsProgress = true;
@@ -35,8 +37,7 @@ namespace FinamDownloader
                  "5 min",
                  "10 min",
                  "15 min",
-                 "30 min",
-                 "1 hour",
+                 "30 min","1 hour",
                  "1 day",
                  "1 weak",
                  "1 month"
@@ -58,10 +59,28 @@ namespace FinamDownloader
 
             });
             ReadSetting();
-            
+            if (arg.Length > 0)
+            {
+                if (arg[0] == "autoloading")
+                {
+                    AutoLoading();
+                }
+            }
+           
+           //AutoLoading();
+
         }
 
-       public void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+
+        public void AutoLoading()
+        {
+            cancelAsync = 3;
+            checkBoxMergeFiles.Checked = true;
+            checkBoxYesterday.Checked = true;
+            backgroundWorker1.RunWorkerAsync();
+        }
+
+        public void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
        {
             //TODO: Разобраться с доступом к обьектам из другого потока и с прогрессбаром из другого потока
 
@@ -103,7 +122,9 @@ namespace FinamDownloader
                 MessageBox.Show(this, @"There are no files to merge");
             else if (cancelAsync == 2)
                 MessageBox.Show(this, @"Cancel");
-            else
+            else if (cancelAsync == 3)
+                Application.Exit();
+            else 
                 MessageBox.Show(this, @"Download complite");
 
             cancelAsync = 0;
