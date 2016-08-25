@@ -113,3 +113,4 @@ C:\Repository\AistDownloader\FinamDownload\obj\Debug\FinamDownloader.csproj.Gene
 C:\Repository\AistDownloader\FinamDownload\obj\Debug\FinamDownloader.exe.licenses
 C:\Repository\AistDownloader\FinamDownload\obj\Debug\FinamDownloader.exe
 C:\Repository\AistDownloader\FinamDownload\obj\Debug\FinamDownloader.pdb
+C:\Repository\AistDownloader\FinamDownload\obj\Debug\FinamDownloader.csprojResolveAssemblyReference.cache

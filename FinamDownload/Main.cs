@@ -229,10 +229,10 @@ namespace FinamDownloader
             if (backgroundWorker1.CancellationPending)
                 return;
             var settings2 = settingsData;
-            //string periodTheader = GetPeriodData();
-           
+            
+            DateTime datatrue = fileSec.Dat.AddDays(-1); // для устранения лишнего дня в имени файла
 
-            string filename = textBoxTXTDir.Text + @"\" + settings2.PeriodItem + @"\" + fileSec.Sec + @"-" + fileSec.Dat.Day + @"." + fileSec.Dat.Month + @"." + fileSec.Dat.Year + @"-" + comboBoxPeriod.SelectedItem + @".txt";
+            string filename = textBoxTXTDir.Text + @"\" + settings2.PeriodItem + @"\" + fileSec.Sec + @"-" + datatrue.Day + @"." + datatrue.Month + @"." + datatrue.Year + @"-" + comboBoxPeriod.SelectedItem + @".txt";
 
             string newfilename = textBoxTXTDir.Text + @"\" + settings2.PeriodItem + @"\" + fileSec.Sec + @"-" +
                                  settings2.DateTo.Day + @"." + settings2.DateTo.Month + @"." + settings2.DateTo.Year + @"-" +
@@ -256,13 +256,7 @@ namespace FinamDownloader
             File.Move(filename,newfilename);
             }
 
-        public string GetPeriodData()
-        {
-            string dd = Empty;
-            if (comboBoxPeriod.InvokeRequired) comboBoxPeriod.Invoke(new Action<string>((s) => dd = comboBoxPeriod.SelectedItem.ToString()), comboBoxPeriod.SelectedItem.ToString());
-            else dd = comboBoxPeriod.SelectedItem.ToString();
-            return dd;
-        }
+       
         public List<FileSecurity> LoadTxtFile()
         {
              
@@ -275,7 +269,7 @@ namespace FinamDownloader
                 Char delimiter = '-';
                 String[] substrings = Path.GetFileNameWithoutExtension(filescount[i].FullName).Split(delimiter);
                 
-               fileHeader.Add(new FileSecurity() { Sec = substrings[0], Dat = DateTime.Parse(substrings[1]), Per = substrings[2] });
+               fileHeader.Add(new FileSecurity() { Sec = substrings[0], Dat = DateTime.Parse(substrings[1]).AddDays(1), Per = substrings[2] });
                  
             }
             if (fileHeader.Count == 0)
@@ -404,11 +398,16 @@ namespace FinamDownloader
             {
                 checkBoxFileheaderRow.Checked = false;
                 checkBoxFileheaderRow.Enabled = false;
+                checkBoxDateFromTxt.Checked = true;
+                checkBoxDateFromTxt.Enabled = false;
 
             }
-            else{
-                checkBoxFileheaderRow.Checked = true;
+            else
+            {
+                checkBoxFileheaderRow.Checked = _props.Fields.FileheaderRow;
                 checkBoxFileheaderRow.Enabled = true;
+                checkBoxDateFromTxt.Checked = _props.Fields.DateFromTxt;
+                checkBoxDateFromTxt.Enabled = true;
             }
         }
 
@@ -421,7 +420,7 @@ namespace FinamDownloader
                 PeriodItem = comboBoxPeriod.SelectedItem,
                 DateFrom = dateTimePickerFrom.Value,
                 DateTo = dateTimePickerTo.Value,
-                SplitChar = comboBoxSplitChar.SelectedIndex,
+                SplitChar = comboBoxSplitChar.SelectedIndex+1,
                 TimeCandle = comboBoxTimeCandle.SelectedIndex,
                 DateFromeTxt = checkBoxDateFromTxt.Checked,
                 FileheaderRow = checkBoxFileheaderRow.Checked,

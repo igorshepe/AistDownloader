@@ -18,7 +18,7 @@
       <MarketName>Фьючерсы ФОРТС</MarketName>
       <Name>BR</Name>
       <Code>SPFB.BR</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>14</MarketId>
@@ -26,7 +26,7 @@
       <MarketName>Фьючерсы ФОРТС</MarketName>
       <Name>Eu</Name>
       <Code>SPFB.Eu</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>14</MarketId>
@@ -34,7 +34,7 @@
       <MarketName>Фьючерсы ФОРТС</MarketName>
       <Name>GAZP</Name>
       <Code>SPFB.GAZR</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>14</MarketId>
@@ -90,7 +90,7 @@
       <MarketName>Валюта</MarketName>
       <Name>EURRUB_TOM</Name>
       <Code>EUR_RUB__TOM</Code>
-      <Checed>true</Checed>
+      <Checed>false</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>45</MarketId>
@@ -98,7 +98,7 @@
       <MarketName>Валюта</MarketName>
       <Name>USDRUB_TOM</Name>
       <Code>USD000UTSTOM</Code>
-      <Checed>true</Checed>
+      <Checed>false</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>45</MarketId>
@@ -106,7 +106,7 @@
       <MarketName>Валюта</MarketName>
       <Name>EURUSD_TOM</Name>
       <Code>EURUSD000TOM</Code>
-      <Checed>true</Checed>
+      <Checed>false</Checed>
     </SecurityInfo>
   </Security>
 </PropsFields>

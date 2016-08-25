@@ -91,8 +91,7 @@ namespace FinamDownloader
                                 (object) securitySelect.Code, "txt", 5, (object) securitySelect.Code, settings.TimeCandle,
                                 settings.SplitChar, Convert.ToInt32(settings.FileheaderRow));
 
-                        Log.Debug("Скачиваю " + address);
-                        WebClient webClient = InitWebClient();
+                        Log.Debug("Скачиваю " + address);WebClient webClient = InitWebClient();
                         webClient.Headers.Add("Referer", "http://www.finam.ru/analysis/export/default.asp");
                         try
                         {
@@ -120,11 +119,10 @@ namespace FinamDownloader
                             if (!(filesSecurities[j].Dat == settings.DateTo))
                             {
                                 var securityFile = filesSecurities[j];
-                                string address =
-                                    string.Format(
+                                string address = string.Format(
                                         "http://195.128.78.52/{0}.{1}?d=d&market={2}&em={3}&p={4}&df={5}&mf={6}&yf={7}&dt={8}&mt={9}&yt={10}&f={11}&e=.{12}&datf={13}&cn={14}&dtf=1&tmf=1&MSOR={15}&sep={16}&sep2=1&at={17}",
                                         (object)securitySelect.Code, "txt", (object)securitySelect.MarketId,
-                                        (object)securitySelect.Id, settings.Period + 1, securityFile.Dat.Day + 1,
+                                        (object)securitySelect.Id, settings.Period + 1, securityFile.Dat.Day,
                                         securityFile.Dat.Month - 1, securityFile.Dat.Year, settings.DateTo.Day,
                                         settings.DateTo.Month - 1, settings.DateTo.Year, (object)securitySelect.Code, "txt", 5,
                                         (object)securitySelect.Code, settings.TimeCandle, settings.SplitChar,

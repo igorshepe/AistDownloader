@@ -355,7 +355,7 @@
             this.textBox1.Location = new System.Drawing.Point(12, 423);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(421, 36);
+            this.textBox1.Size = new System.Drawing.Size(421, 56);
             this.textBox1.TabIndex = 28;
             // 
             // progressBar1
@@ -378,6 +378,7 @@
             this.buttonCancelDownload.TabIndex = 30;
             this.buttonCancelDownload.Text = "Cancel";
             this.buttonCancelDownload.UseVisualStyleBackColor = true;
+            this.buttonCancelDownload.Visible = false;
             this.buttonCancelDownload.Click += new System.EventHandler(this.buttonCancelDownload_Click);
             // 
             // Main
