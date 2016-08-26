@@ -18,6 +18,7 @@ namespace FinamDownloader
         private bool _firststart = true;
         public int cancelAsync = 0; // 1 нет файлов для объединения 2 отмена кнопкой
 
+        private string settingsFolder = Environment.CurrentDirectory + "\\settings.xml";
         public Main(string[] args)
         {
             arg = args;
@@ -67,12 +68,12 @@ namespace FinamDownloader
                 }
             }
            
-           //AutoLoading();
+           
 
         }
 
 
-        public void AutoLoading()
+        public void AutoLoading() // запуск с ключом autoloading
         {
             cancelAsync = 3;
             checkBoxMergeFiles.Checked = true;
@@ -86,6 +87,10 @@ namespace FinamDownloader
 
            List<SettingsMain>  SettingsData = GetSettings();
 
+            if(SettingsData == null)
+                backgroundWorker1.CancelAsync();
+
+
             backgroundWorker1.ReportProgress(10);
 
             if (backgroundWorker1.CancellationPending)
@@ -93,7 +98,9 @@ namespace FinamDownloader
 
             if (checkBoxDateFromTxt.Checked)
             {
-                var fileData = LoadTxtFile();if (backgroundWorker1.CancellationPending)
+                var fileData = LoadTxtFile(SettingsData);
+
+                if (backgroundWorker1.CancellationPending)
                     return;
                 backgroundWorker1.ReportProgress(20);
                 FinamLoading.Download(Security, fileData, SettingsData);
@@ -124,11 +131,14 @@ namespace FinamDownloader
                 MessageBox.Show(this, @"Cancel");
             else if (cancelAsync == 3)
                 Application.Exit();
+            else if (cancelAsync == 4)
+                MessageBox.Show(@"Incorrect date");
             else 
                 MessageBox.Show(this, @"Download complite");
 
             cancelAsync = 0;
-            progressBar1.Value = 0;}
+            progressBar1.Value = 0;
+        }
         
         private void buttonCancelDownload_Click(object sender, EventArgs e)
         {
@@ -166,6 +176,14 @@ namespace FinamDownloader
         private void ReadSetting()
         {
             _props.ReadXml();
+
+            if (_props.Fields.XmlFileName != settingsFolder)
+            {
+                _props.Fields.XmlFileName = settingsFolder;
+                _props.WriteXml();
+                MessageBox.Show(this, @"Сhange the settings folder");
+            }
+
 
             textBoxTXTDir.Text = _props.Fields.Folder;
 
@@ -229,9 +247,9 @@ namespace FinamDownloader
             var settings = settingsData;
             
 
-            Directory.CreateDirectory(textBoxTXTDir.Text + @"\" + comboBoxPeriod.SelectedItem);
+            Directory.CreateDirectory(settings.DirTxt + @"\" + settings.PeriodItem);
 
-            string filename = textBoxTXTDir.Text + @"\" + comboBoxPeriod.SelectedItem + @"\" + security.Name + @"-" + settings.DateTo.Day + @"." + settings.DateTo.Month + @"." + settings.DateTo.Year + @"-" + comboBoxPeriod.SelectedItem + @".txt";
+            string filename = settings.DirTxt + @"\" + settings.PeriodItem + @"\" + security.Name + @"-" + settings.DateTo.Day + @"." + settings.DateTo.Month + @"." + settings.DateTo.Year + @"-" + settings.PeriodItem + @".txt";
 
             if (filename != "")
             {
@@ -253,11 +271,11 @@ namespace FinamDownloader
             
             DateTime datatrue = fileSec.Dat.AddDays(-1); // для устранения лишнего дня в имени файла
 
-            string filename = textBoxTXTDir.Text + @"\" + settings2.PeriodItem + @"\" + fileSec.Sec + @"-" + datatrue.Day + @"." + datatrue.Month + @"." + datatrue.Year + @"-" + comboBoxPeriod.SelectedItem + @".txt";
+            string filename = settings2.DirTxt + @"\" + settings2.PeriodItem + @"\" + fileSec.Sec + @"-" + datatrue.Day + @"." + datatrue.Month + @"." + datatrue.Year + @"-" + settings2.PeriodItem + @".txt";
 
-            string newfilename = textBoxTXTDir.Text + @"\" + settings2.PeriodItem + @"\" + fileSec.Sec + @"-" +
+            string newfilename = settings2.DirTxt + @"\" + settings2.PeriodItem + @"\" + fileSec.Sec + @"-" +
                                  settings2.DateTo.Day + @"." + settings2.DateTo.Month + @"." + settings2.DateTo.Year + @"-" +
-                                 comboBoxPeriod.SelectedItem + @".txt";
+                                 settings2.PeriodItem + @".txt";
 
             try
             {
@@ -278,11 +296,13 @@ namespace FinamDownloader
             }
 
        
-        public List<FileSecurity> LoadTxtFile()
+        public List<FileSecurity> LoadTxtFile(List<SettingsMain> settingsData3)
+
         {
-             
+            var settings3 = settingsData3[0];
+
             List<FileSecurity> fileHeader = new List<FileSecurity>();
-            var dir = new DirectoryInfo(textBoxTXTDir.Text+@"\"+ SettingsData[0].PeriodItem); // папка с файлами 
+            var dir = new DirectoryInfo(settings3.DirTxt+@"\"+ settings3.PeriodItem); // папка с файлами 
             var filescount = dir.GetFiles();
              
             for (int i = 0; i < filescount.Length; i++)
@@ -434,6 +454,13 @@ namespace FinamDownloader
 
         public List<SettingsMain> GetSettings()
         {
+            if (dateTimePickerTo.Value < dateTimePickerFrom.Value)
+            {
+
+                cancelAsync = 4;
+                return null;
+            }
+
             SettingsData.Clear();
             SettingsData.Add(new SettingsMain
             {
@@ -445,7 +472,8 @@ namespace FinamDownloader
                 TimeCandle = comboBoxTimeCandle.SelectedIndex,
                 DateFromeTxt = checkBoxDateFromTxt.Checked,
                 FileheaderRow = checkBoxFileheaderRow.Checked,
-                MergeFile = checkBoxMergeFiles.Checked
+                MergeFile = checkBoxMergeFiles.Checked,
+                DirTxt = textBoxTXTDir.Text
 
             });
 
@@ -472,12 +500,13 @@ namespace FinamDownloader
 
             public bool DateFromeTxt = false;
 
-
-
+            
             public bool FileheaderRow = false;
 
 
             public bool MergeFile = false;
+
+            public string DirTxt = Empty;
 
         }
 

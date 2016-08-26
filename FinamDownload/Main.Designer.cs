@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -61,10 +62,12 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.buttonCancelDownload = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -342,9 +345,9 @@
             // 
             // buttonDownloadTxt
             // 
-            this.buttonDownloadTxt.Location = new System.Drawing.Point(360, 387);
+            this.buttonDownloadTxt.Location = new System.Drawing.Point(343, 16);
             this.buttonDownloadTxt.Name = "buttonDownloadTxt";
-            this.buttonDownloadTxt.Size = new System.Drawing.Size(75, 23);
+            this.buttonDownloadTxt.Size = new System.Drawing.Size(80, 23);
             this.buttonDownloadTxt.TabIndex = 27;
             this.buttonDownloadTxt.Text = "Download";
             this.buttonDownloadTxt.UseVisualStyleBackColor = true;
@@ -352,17 +355,17 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 423);
+            this.textBox1.Location = new System.Drawing.Point(6, 45);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(421, 56);
+            this.textBox1.Size = new System.Drawing.Size(417, 56);
             this.textBox1.TabIndex = 28;
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 485);
+            this.progressBar1.Location = new System.Drawing.Point(6, 107);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(423, 23);
+            this.progressBar1.Size = new System.Drawing.Size(417, 23);
             this.progressBar1.TabIndex = 29;
             // 
             // backgroundWorker1
@@ -372,7 +375,7 @@
             // 
             // buttonCancelDownload
             // 
-            this.buttonCancelDownload.Location = new System.Drawing.Point(252, 387);
+            this.buttonCancelDownload.Location = new System.Drawing.Point(262, 16);
             this.buttonCancelDownload.Name = "buttonCancelDownload";
             this.buttonCancelDownload.Size = new System.Drawing.Size(75, 23);
             this.buttonCancelDownload.TabIndex = 30;
@@ -381,16 +384,26 @@
             this.buttonCancelDownload.Visible = false;
             this.buttonCancelDownload.Click += new System.EventHandler(this.buttonCancelDownload_Click);
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.textBox1);
+            this.groupBox2.Controls.Add(this.progressBar1);
+            this.groupBox2.Controls.Add(this.buttonCancelDownload);
+            this.groupBox2.Controls.Add(this.buttonDownloadTxt);
+            this.groupBox2.Location = new System.Drawing.Point(12, 383);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(430, 136);
+            this.groupBox2.TabIndex = 31;
+            this.groupBox2.TabStop = false;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(456, 527);
-            this.Controls.Add(this.buttonCancelDownload);
-            this.Controls.Add(this.progressBar1);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.buttonDownloadTxt);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(472, 566);
             this.MinimumSize = new System.Drawing.Size(472, 566);
             this.Name = "Main";
@@ -402,8 +415,9 @@
             this.tabPage2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -441,6 +455,7 @@
         public System.ComponentModel.BackgroundWorker backgroundWorker1;
         public System.Windows.Forms.ProgressBar progressBar1;
         public System.Windows.Forms.CheckBox checkBoxDateFromTxt;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }
 
