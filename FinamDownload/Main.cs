@@ -134,7 +134,7 @@ namespace FinamDownloader
             else if (cancelAsync == 4)
                 MessageBox.Show(@"Incorrect date");
             else 
-                MessageBox.Show(this, @"Download complite");
+                MessageBox.Show(this, @"Download complete");
 
             cancelAsync = 0;
             progressBar1.Value = 0;
