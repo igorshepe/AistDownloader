@@ -60,6 +60,8 @@ namespace FinamDownloader
 
             });
             ReadSetting();
+
+
             if (arg.Length > 0)
             {
                 if (arg[0] == "autoloading")
@@ -85,13 +87,13 @@ namespace FinamDownloader
        {
             //TODO: Разобраться с доступом к обьектам из другого потока и с прогрессбаром из другого потока
 
-           List<SettingsMain>  SettingsData = GetSettings();
+            List<SettingsMain> SettingsData = GetSettings();
 
-            if(SettingsData == null)
+            if (SettingsData == null)
                 backgroundWorker1.CancelAsync();
 
 
-            backgroundWorker1.ReportProgress(10);
+            backgroundWorker1.ReportProgress(10, "Start download");
 
             if (backgroundWorker1.CancellationPending)
                 return;
@@ -102,10 +104,11 @@ namespace FinamDownloader
 
                 if (backgroundWorker1.CancellationPending)
                     return;
-                backgroundWorker1.ReportProgress(20);
-                FinamLoading.Download(Security, fileData, SettingsData);
-                backgroundWorker1.ReportProgress(50);
+                backgroundWorker1.ReportProgress(20, "Files in the folder: "+fileData.Count);
 
+                FinamLoading.Download(Security, fileData, SettingsData);
+
+                backgroundWorker1.ReportProgress(50);
             }
             else
             {
@@ -119,9 +122,16 @@ namespace FinamDownloader
         }
        public void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
        {
-            
-
-            progressBar1.Value = e.ProgressPercentage;
+            if (!string.IsNullOrEmpty(e.UserState as string))
+            {
+                TextBox textBox = this.textBoxLog;
+                string str = textBox.Text + (e.UserState as string) + Environment.NewLine;
+                textBox.Text = str;
+               
+            }
+            this.textBoxLog.SelectionStart = this.textBoxLog.TextLength;
+            this.textBoxLog.ScrollToCaret();
+            this.progressBar1.Value = e.ProgressPercentage;
         }
         void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -133,7 +143,7 @@ namespace FinamDownloader
                 Application.Exit();
             else if (cancelAsync == 4)
                 MessageBox.Show(@"Incorrect date");
-            else 
+            else
                 MessageBox.Show(this, @"Download complete");
 
             cancelAsync = 0;
@@ -235,8 +245,7 @@ namespace FinamDownloader
         {
 
             backgroundWorker1.RunWorkerAsync();
-
-
+            
         }
 
         public void SaveToFile(string data, SecurityInfo security, SettingsMain settingsData)
@@ -315,6 +324,7 @@ namespace FinamDownloader
             }
             if (fileHeader.Count == 0)
             {
+                backgroundWorker1.ReportProgress(20, "There are no files to merge");
                 cancelAsync = 1;
                 backgroundWorker1.CancelAsync();
 
@@ -512,8 +522,6 @@ namespace FinamDownloader
 
         
 
-        private void treeViewSecurity_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
-           }
+        
     }
 }

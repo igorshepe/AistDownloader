@@ -58,7 +58,7 @@
             this.buttonAddUrlSecurity = new System.Windows.Forms.Button();
             this.treeViewSecurity = new System.Windows.Forms.TreeView();
             this.buttonDownloadTxt = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxLog = new System.Windows.Forms.TextBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.buttonCancelDownload = new System.Windows.Forms.Button();
@@ -291,7 +291,7 @@
             // 
             // buttonSaveSettings
             // 
-            this.buttonSaveSettings.Location = new System.Drawing.Point(343, 330);
+            this.buttonSaveSettings.Location = new System.Drawing.Point(342, 269);
             this.buttonSaveSettings.Name = "buttonSaveSettings";
             this.buttonSaveSettings.Size = new System.Drawing.Size(80, 23);
             this.buttonSaveSettings.TabIndex = 21;
@@ -308,14 +308,14 @@
             this.groupBox1.Controls.Add(this.treeViewSecurity);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(430, 369);
+            this.groupBox1.Size = new System.Drawing.Size(430, 299);
             this.groupBox1.TabIndex = 22;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
             // 
             // textBoxUrlSecurity
             // 
-            this.textBoxUrlSecurity.Location = new System.Drawing.Point(6, 330);
+            this.textBoxUrlSecurity.Location = new System.Drawing.Point(5, 269);
             this.textBoxUrlSecurity.Name = "textBoxUrlSecurity";
             this.textBoxUrlSecurity.Size = new System.Drawing.Size(100, 20);
             this.textBoxUrlSecurity.TabIndex = 23;
@@ -324,7 +324,7 @@
             // 
             // buttonAddUrlSecurity
             // 
-            this.buttonAddUrlSecurity.Location = new System.Drawing.Point(210, 330);
+            this.buttonAddUrlSecurity.Location = new System.Drawing.Point(209, 269);
             this.buttonAddUrlSecurity.Name = "buttonAddUrlSecurity";
             this.buttonAddUrlSecurity.Size = new System.Drawing.Size(75, 23);
             this.buttonAddUrlSecurity.TabIndex = 24;
@@ -338,10 +338,9 @@
             this.treeViewSecurity.CheckBoxes = true;
             this.treeViewSecurity.Location = new System.Drawing.Point(6, 173);
             this.treeViewSecurity.Name = "treeViewSecurity";
-            this.treeViewSecurity.Size = new System.Drawing.Size(417, 151);
+            this.treeViewSecurity.Size = new System.Drawing.Size(417, 90);
             this.treeViewSecurity.TabIndex = 26;
             this.treeViewSecurity.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeViewSecurity_AfterCheck);
-            this.treeViewSecurity.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewSecurity_NodeMouseDoubleClick);
             // 
             // buttonDownloadTxt
             // 
@@ -353,19 +352,21 @@
             this.buttonDownloadTxt.UseVisualStyleBackColor = true;
             this.buttonDownloadTxt.Click += new System.EventHandler(this.buttonDownloadTxt_Click);
             // 
-            // textBox1
+            // textBoxLog
             // 
-            this.textBox1.Location = new System.Drawing.Point(6, 45);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(417, 56);
-            this.textBox1.TabIndex = 28;
+            this.textBoxLog.Location = new System.Drawing.Point(6, 45);
+            this.textBoxLog.Multiline = true;
+            this.textBoxLog.Name = "textBoxLog";
+            this.textBoxLog.ReadOnly = true;
+            this.textBoxLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxLog.Size = new System.Drawing.Size(417, 122);
+            this.textBoxLog.TabIndex = 28;
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(6, 107);
+            this.progressBar1.Location = new System.Drawing.Point(5, 173);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(417, 23);
+            this.progressBar1.Size = new System.Drawing.Size(419, 23);
             this.progressBar1.TabIndex = 29;
             // 
             // backgroundWorker1
@@ -386,13 +387,13 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.textBox1);
+            this.groupBox2.Controls.Add(this.textBoxLog);
             this.groupBox2.Controls.Add(this.progressBar1);
             this.groupBox2.Controls.Add(this.buttonCancelDownload);
             this.groupBox2.Controls.Add(this.buttonDownloadTxt);
-            this.groupBox2.Location = new System.Drawing.Point(12, 383);
+            this.groupBox2.Location = new System.Drawing.Point(12, 317);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(430, 136);
+            this.groupBox2.Size = new System.Drawing.Size(430, 202);
             this.groupBox2.TabIndex = 31;
             this.groupBox2.TabStop = false;
             // 
@@ -447,7 +448,7 @@
         private System.Windows.Forms.Button buttonAddUrlSecurity;
         private System.Windows.Forms.TreeView treeViewSecurity;
         private System.Windows.Forms.Button buttonDownloadTxt;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxLog;
         private System.Windows.Forms.CheckBox checkBoxMergeFiles;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.CheckBox checkBoxYesterday;
