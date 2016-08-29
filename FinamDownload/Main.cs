@@ -85,7 +85,7 @@ namespace FinamDownloader
 
         public void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
        {
-            //TODO: Разобраться с доступом к обьектам из другого потока и с прогрессбаром из другого потока
+             
 
             List<SettingsMain> SettingsData = GetSettings();
 
@@ -108,24 +108,25 @@ namespace FinamDownloader
 
                 FinamLoading.Download(Security, fileData, SettingsData);
 
-                backgroundWorker1.ReportProgress(50);
+                backgroundWorker1.ReportProgress(50, "All files save");
             }
             else
             {
                 backgroundWorker1.ReportProgress(20);
                 var fileData = new List<FileSecurity>();
                 FinamLoading.Download(Security, fileData,  SettingsData);
-                backgroundWorker1.ReportProgress(50);
+                backgroundWorker1.ReportProgress(50, "All files save");
             }
-           backgroundWorker1.ReportProgress(100);
+           backgroundWorker1.ReportProgress(100, "Download complete");
 
         }
        public void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
        {
             if (!string.IsNullOrEmpty(e.UserState as string))
             {
+                var time = DateTime.Now.ToString("T")+": ";
                 TextBox textBox = this.textBoxLog;
-                string str = textBox.Text + (e.UserState as string) + Environment.NewLine;
+                string str = textBox.Text + time+(e.UserState as string) + Environment.NewLine;
                 textBox.Text = str;
                
             }
@@ -252,7 +253,17 @@ namespace FinamDownloader
         {
             if (backgroundWorker1.CancellationPending)
                 return;
-
+            if (data == "Вы запросили данные за слишком большой временной период.")
+            {
+                MessageBox.Show(this, data);
+                return;
+            }
+            else if (data == "Система уже обрабатывает Ваш запрос. Дождитесь окончания обработки.")
+            {
+                MessageBox.Show(this, data);
+                return;
+            }
+                
             var settings = settingsData;
             
 
@@ -276,6 +287,12 @@ namespace FinamDownloader
         {
             if (backgroundWorker1.CancellationPending)
                 return;
+
+            if (data == "Вы запросили данные за слишком большой временной период.")
+            {
+                MessageBox.Show(this, data);
+                return;
+            }
             var settings2 = settingsData;
             
             DateTime datatrue = fileSec.Dat.AddDays(-1); // для устранения лишнего дня в имени файла

@@ -408,7 +408,7 @@
             this.MaximumSize = new System.Drawing.Size(472, 566);
             this.MinimumSize = new System.Drawing.Size(472, 566);
             this.Name = "Main";
-            this.Text = "Main";
+            this.Text = "Download quotes from Finam";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();

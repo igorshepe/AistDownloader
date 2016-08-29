@@ -95,10 +95,7 @@ namespace FinamDownloader
                         webClient.Headers.Add("Referer", "http://www.finam.ru/analysis/export/default.asp");
                         try
                         {
-                            //List<DataBackground> forBackground = new List<DataBackground>();
                             str2 = webClient.DownloadString(address);
-                            //forBackground.Add(new DataBackground() {QuotesData = str2, SecurityInfo = securitySelect });
-                            //Main.backgroundWorker1.RunWorkerAsync(forBackground);
                             Main.SaveToFile(str2, securitySelect, settings);
 
                         }
