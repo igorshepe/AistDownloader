@@ -306,10 +306,14 @@ namespace FinamDownloader
 
         public void SaveToFile(string data, SecurityInfo security, SettingsMain settingsData)
         {
-            L.Info("Start SaveToFile: " + security.Name);
+            CheckStringData(data);
 
             if (backgroundWorker1.CancellationPending)
                 return;
+
+            L.Info("Start SaveToFile: " + security.Name);
+
+            
                
             var settings = settingsData;
             
@@ -332,9 +336,12 @@ namespace FinamDownloader
         public void ChangeFile(string data, FileSecurity fileSec, SettingsMain settingsData)
         {
             CheckStringData(data);
-             L.Info("Start ChangeFile: "+fileSec.Sec);
+
             if (backgroundWorker1.CancellationPending)
                 return;
+
+            L.Info("Start ChangeFile: "+fileSec.Sec);
+            
 
             //TODO разобраться почему не отправляются сообщения в ReportProgress
             //backgroundWorker1.ReportProgress(70, "Start ChangeFile: " + fileSec.Sec);
@@ -588,13 +595,13 @@ namespace FinamDownloader
             {
                 L.Info(str);
                 MessageBox.Show(this, str);
-                return;
+                backgroundWorker1.CancelAsync();
             }
             if (str == "Система уже обрабатывает Ваш запрос. Дождитесь окончания обработки.")
             {
                 L.Info(str);
                 MessageBox.Show(this, str);
-                return;
+                backgroundWorker1.CancelAsync();
             }
         }
     }
