@@ -1,11 +1,14 @@
-﻿namespace FinamDownloader
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace FinamDownloader
 {
     partial class Main
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -382,7 +385,6 @@
             this.buttonCancelDownload.TabIndex = 30;
             this.buttonCancelDownload.Text = "Cancel";
             this.buttonCancelDownload.UseVisualStyleBackColor = true;
-            this.buttonCancelDownload.Visible = false;
             this.buttonCancelDownload.Click += new System.EventHandler(this.buttonCancelDownload_Click);
             // 
             // groupBox2
@@ -423,40 +425,40 @@
         }
 
         #endregion
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.DateTimePicker dateTimePickerTo;
-        private System.Windows.Forms.DateTimePicker dateTimePickerFrom;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button buttonTXTDir;
-        private System.Windows.Forms.TextBox textBoxTXTDir;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.ComboBox comboBoxTimeCandle;
-        private System.Windows.Forms.CheckBox checkBoxFileheaderRow;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox comboBoxSplitChar;
-        private System.Windows.Forms.Label labelSplitChar;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBoxPeriod;
-        private System.Windows.Forms.Button buttonSaveSettings;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox textBoxUrlSecurity;
-        private System.Windows.Forms.Button buttonAddUrlSecurity;
-        private System.Windows.Forms.TreeView treeViewSecurity;
-        private System.Windows.Forms.Button buttonDownloadTxt;
-        private System.Windows.Forms.TextBox textBoxLog;
-        private System.Windows.Forms.CheckBox checkBoxMergeFiles;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.CheckBox checkBoxYesterday;
-        private System.Windows.Forms.Button buttonCancelDownload;
-        public System.ComponentModel.BackgroundWorker backgroundWorker1;
-        public System.Windows.Forms.ProgressBar progressBar1;
-        public System.Windows.Forms.CheckBox checkBoxDateFromTxt;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private FolderBrowserDialog folderBrowserDialog1;
+        private TabControl tabControl1;
+        private TabPage tabPage1;
+        private Label label4;
+        private Label label3;
+        private DateTimePicker dateTimePickerTo;
+        private DateTimePicker dateTimePickerFrom;
+        private Label label1;
+        private Button buttonTXTDir;
+        private TextBox textBoxTXTDir;
+        private TabPage tabPage2;
+        private ComboBox comboBoxTimeCandle;
+        private CheckBox checkBoxFileheaderRow;
+        private Label label5;
+        private ComboBox comboBoxSplitChar;
+        private Label labelSplitChar;
+        private Label label6;
+        private Label label2;
+        private ComboBox comboBoxPeriod;
+        private Button buttonSaveSettings;
+        private GroupBox groupBox1;
+        private TextBox textBoxUrlSecurity;
+        private Button buttonAddUrlSecurity;
+        private TreeView treeViewSecurity;
+        private Button buttonDownloadTxt;
+        private TextBox textBoxLog;
+        private CheckBox checkBoxMergeFiles;
+        private Label label7;
+        private CheckBox checkBoxYesterday;
+        private Button buttonCancelDownload;
+        public BackgroundWorker backgroundWorker1;
+        public ProgressBar progressBar1;
+        public CheckBox checkBoxDateFromTxt;
+        private GroupBox groupBox2;
     }
 }
 

@@ -1,0 +1,1 @@
+C:\Repository\AistDownloader\FinamDownload\bin\Release\FinamDownloader.exe.config

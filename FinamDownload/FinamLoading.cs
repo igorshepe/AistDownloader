@@ -1,14 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Security.AccessControl;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using FinamDownloader.Properties;
 using log4net;
 
 namespace FinamDownloader
@@ -22,7 +15,7 @@ namespace FinamDownloader
         private static readonly ILog Log = LogManager.GetLogger(typeof(FinamLoading));
         private static WebClient InitWebClient ()
         {
-            WebClient webClient = (WebClient)new TimeoutWebClient();return webClient;
+            WebClient webClient = new TimeoutWebClient();return webClient;
         }
 
         public static List<string> AddSecurity(string url)
@@ -79,7 +72,7 @@ namespace FinamDownloader
 
                     if (securitySelect.Checed)
                     {
-
+                        Log.Info("Start download: "+securitySelect.Name+" date from: "+settings.DateFrom.ToString("d")+" date to: "+settings.DateTo.ToString("d"));
                         //TODO: Проверить , почему верные значения fileheaderRow получаем только после сохранения настроек
 
                         string address =
@@ -115,7 +108,9 @@ namespace FinamDownloader
                         {
                             if (!(filesSecurities[j].Dat.AddDays(-1) == settings.DateTo))
                             {
+                                
                                 var securityFile = filesSecurities[j];
+                                Log.Info("Start merge file download: " + securitySelect.Name + " date from: " + securityFile.Dat.ToString("d") + " date to: " + settings.DateTo.ToString("d"));
                                 string address = string.Format(
                                         "http://195.128.78.52/{0}.{1}?d=d&market={2}&em={3}&p={4}&df={5}&mf={6}&yf={7}&dt={8}&mt={9}&yt={10}&f={11}&e=.{12}&datf={13}&cn={14}&dtf=1&tmf=1&MSOR={15}&sep={16}&sep2=1&at={17}",
                                         (object)securitySelect.Code, "txt", (object)securitySelect.MarketId,

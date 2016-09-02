@@ -95,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="1472210989_download.ico" />
+    <None Include="log4net.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
