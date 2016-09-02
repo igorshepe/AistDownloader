@@ -454,11 +454,11 @@ namespace FinamDownloader
         private CheckBox checkBoxMergeFiles;
         private Label label7;
         private CheckBox checkBoxYesterday;
-        private Button buttonCancelDownload;
         public BackgroundWorker backgroundWorker1;
         public ProgressBar progressBar1;
         public CheckBox checkBoxDateFromTxt;
         private GroupBox groupBox2;
+        public Button buttonCancelDownload;
     }
 }
 

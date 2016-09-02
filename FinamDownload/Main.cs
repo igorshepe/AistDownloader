@@ -38,7 +38,7 @@ namespace FinamDownloader
             backgroundWorker1.DoWork += backgroundWorker1_DoWork;
             backgroundWorker1.RunWorkerCompleted += backgroundWorker1_RunWorkerCompleted;
             backgroundWorker1.ProgressChanged += backgroundWorker1_ProgressChanged;
-
+            buttonCancelDownload.Enabled = false;
 
             comboBoxPeriod.Items.AddRange(new object[]
             {
@@ -92,9 +92,26 @@ namespace FinamDownloader
             backgroundWorker1.RunWorkerAsync();
         }
 
+        private delegate void StateButtonDownload(bool state);
+
+
+        private void StateButton(bool state)
+        {
+            if (this.buttonCancelDownload.InvokeRequired)
+            {
+                StateButtonDownload dd = StateButton;
+                Invoke(dd, state);
+            }
+            else
+            {
+                buttonCancelDownload.Enabled = state;
+            } 
+
+       }
         public void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-       {
-             
+        {
+
+            StateButton(true);
 
             List<SettingsMain> settingsData = GetSettings();
 
@@ -127,22 +144,32 @@ namespace FinamDownloader
                 backgroundWorker1.ReportProgress(50, "All files save");
             }
            backgroundWorker1.ReportProgress(100, "Download complete");
+           StateButton(false);
+        }
 
-        }
-       public void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        public delegate void ProgressBarChange(object sender, ProgressChangedEventArgs e);
+        public void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
        {
-            if (!IsNullOrEmpty(e.UserState as string))
+            if (progressBar1.InvokeRequired)
             {
-                var time = DateTime.Now.ToString("T")+": ";
-                TextBox textBox = textBoxLog;
-                string str = textBox.Text + time+(e.UserState as string) + Environment.NewLine;
-                textBox.Text = str;
-               
+                ProgressBarChange dd = backgroundWorker1_ProgressChanged;
+                Invoke(dd, sender, e);
             }
-            textBoxLog.SelectionStart = textBoxLog.TextLength;
-            textBoxLog.ScrollToCaret();
-            progressBar1.Value = e.ProgressPercentage;
-        }
+            else
+            {
+                if (!IsNullOrEmpty(e.UserState as string))
+                {
+                    var time = DateTime.Now.ToString("T") + ": ";
+                    TextBox textBox = textBoxLog;
+                    string str = textBox.Text + time + (e.UserState as string) + Environment.NewLine;
+                    textBox.Text = str;
+
+                }
+                textBoxLog.SelectionStart = textBoxLog.TextLength;
+                textBoxLog.ScrollToCaret();
+                progressBar1.Value = e.ProgressPercentage;
+            }
+       }
         void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (CancelAsync == 1)
@@ -175,10 +202,11 @@ namespace FinamDownloader
             CancelAsync = 0;
             progressBar1.Value = 0;
         }
-        
+
         private void buttonCancelDownload_Click(object sender, EventArgs e)
         {
             CancelAsync = 2;
+           
             backgroundWorker1.CancelAsync();
         }
 
@@ -307,7 +335,11 @@ namespace FinamDownloader
              L.Info("Start ChangeFile: "+fileSec.Sec);
             if (backgroundWorker1.CancellationPending)
                 return;
- 
+
+            //TODO разобраться почему не отправляются сообщения в ReportProgress
+            //backgroundWorker1.ReportProgress(70, "Start ChangeFile: " + fileSec.Sec);
+            
+
             var settings2 = settingsData;
             
             DateTime datatrue = fileSec.Dat.AddDays(-1); // для устранения лишнего дня в имени файла

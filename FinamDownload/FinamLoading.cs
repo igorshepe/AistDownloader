@@ -72,6 +72,7 @@ namespace FinamDownloader
 
                     if (securitySelect.Checed)
                     {
+                        Main.backgroundWorker1.ReportProgress(70, "Start download: " + securitySelect.Name);
                         Log.Info("Start download: "+securitySelect.Name+" date from: "+settings.DateFrom.ToString("d")+" date to: "+settings.DateTo.ToString("d"));
                         //TODO: Проверить , почему верные значения fileheaderRow получаем только после сохранения настроек
 
