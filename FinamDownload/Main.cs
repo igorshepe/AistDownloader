@@ -20,7 +20,7 @@ namespace FinamDownloader
         public List<SettingsMain> SettingsData = new List<SettingsMain>();
         private bool _firststart = true;
         public int CancelAsync; // 1 нет файлов для объединения 2 отмена кнопкой
-
+        public bool AutoloadingStart = false ;
         private readonly string _settingsFolder = Environment.CurrentDirectory + "\\settings.xml";
         public Main(string[] args)
         {
@@ -87,6 +87,7 @@ namespace FinamDownloader
         public void AutoLoading() // запуск с ключом autoloading
         {
             L.Debug("AutoLoading()");
+            AutoloadingStart = true;
             CancelAsync = 3;
             checkBoxMergeFiles.Checked = true;
             checkBoxYesterday.Checked = true;
@@ -284,7 +285,7 @@ namespace FinamDownloader
 
         public void SaveToFile(string data, SecurityInfo security, SettingsMain settingsData)
         {
-            CheckStringData(data);
+            CheckStringData(data, settingsData.Autostart);
 
             L.Info("Start SaveToFile: " + security.Name);
 
@@ -311,7 +312,7 @@ namespace FinamDownloader
 
         public void ChangeFile(string data, FileSecurity fileSec, SettingsMain settingsData)
         {
-            CheckStringData(data);
+            CheckStringData(data, settingsData.Autostart);
             L.Info("Start ChangeFile: " + fileSec.Sec);
             if (backgroundWorker1.CancellationPending)
                 return;
@@ -522,7 +523,9 @@ namespace FinamDownloader
                 DateFromeTxt = checkBoxDateFromTxt.Checked,
                 FileheaderRow = checkBoxFileheaderRow.Checked,
                 MergeFile = checkBoxMergeFiles.Checked,
-                DirTxt = textBoxTXTDir.Text
+                DirTxt = textBoxTXTDir.Text,
+                Autostart = AutoloadingStart
+
 
             });
             L.Debug("Setting: " + SettingsData[0].Period + " " + SettingsData[0].PeriodItem + " " + SettingsData[0].DateFrom + " " + SettingsData[0].DateTo + " " + SettingsData[0].SplitChar + " " + SettingsData[0].TimeCandle + " " + SettingsData[0].DateFromeTxt + " " + SettingsData[0].FileheaderRow + " " + SettingsData[0].MergeFile + " " + SettingsData[0].DirTxt);
@@ -558,27 +561,32 @@ namespace FinamDownloader
 
             public string DirTxt = Empty;
 
+            public bool Autostart = false;
         }
 
-
-        private void CheckStringData(string str)
+        private delegate void DelegAutoLoading(bool state);
+        private void CheckStringData(string str, bool auto)
         {
             if (str == "Вы запросили данные за слишком большой временной период.")
             {
                 L.Info(str);
-                MessageBox.Show(this, str);
+                if (!auto) MessageBox.Show(this, str);
+
                 return;
             }
             if (str == "Система уже обрабатывает Ваш запрос. Дождитесь окончания обработки.")
             {
                 L.Info(str);
-                MessageBox.Show(this, str);
+                if (!auto)
+                    MessageBox.Show(this, str);
                 return;
             }
             if (str == "")
             {
                 L.Info("За эту дату нет данных");
-                MessageBox.Show(this, @"За эту дату нет данных");
+                
+                if ( !auto)
+                    MessageBox.Show(this, @"За эту дату нет данных");
             }
         }
     }
