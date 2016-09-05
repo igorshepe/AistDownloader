@@ -110,6 +110,6 @@ C:\Repository\AistDownloader\FinamDownload\bin\Debug\log4net.dll
 C:\Repository\AistDownloader\FinamDownload\obj\Debug\FinamDownloader.Main.resources
 C:\Repository\AistDownloader\FinamDownload\obj\Debug\FinamDownloader.Properties.Resources.resources
 C:\Repository\AistDownloader\FinamDownload\obj\Debug\FinamDownloader.csproj.GenerateResource.Cache
-C:\Repository\AistDownloader\FinamDownload\obj\Debug\FinamDownloader.exe.licenses
 C:\Repository\AistDownloader\FinamDownload\obj\Debug\FinamDownloader.exe
 C:\Repository\AistDownloader\FinamDownload\obj\Debug\FinamDownloader.pdb
+C:\Repository\AistDownloader\FinamDownload\obj\Debug\FinamDownloader.csprojResolveAssemblyReference.cache

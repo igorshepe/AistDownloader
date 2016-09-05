@@ -147,7 +147,7 @@ namespace FinamDownloader
                             }
                             else
                             {
-                                Log.Info("Дата файла и дата загрузки истории совпадают: " + filesSecurities[j].Sec + " Date from: " + filesSecurities[j].Dat.AddDays(-1) + ". Date to: " + settings.DateTo);
+                                Log.Info("Дата файла и дата загрузки истории совпадают: " + filesSecurities[j].Sec + " Date from: " + filesSecurities[j].Dat.AddDays(-1).ToString("d") + ". Date to: " + settings.DateTo.ToString("d"));
                             }
 
 

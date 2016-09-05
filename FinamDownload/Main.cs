@@ -101,8 +101,7 @@ namespace FinamDownloader
         {
             if (buttonCancelDownload.InvokeRequired)
             {
-                StateButtonDownload dd = StateButton;
-                Invoke(dd, state);
+                StateButtonDownload dd = StateButton;Invoke(dd, state);
             }
             else
             {
