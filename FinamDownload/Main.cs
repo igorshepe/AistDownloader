@@ -80,6 +80,7 @@ namespace FinamDownloader
                 }
             }
 
+            buttonCancelDownload.Enabled = false;
 
         }
 
@@ -94,50 +95,83 @@ namespace FinamDownloader
             backgroundWorker1.RunWorkerAsync();
         }
 
-        public void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        private delegate void StateButtonDownload(bool state);
+        
+        private void StateButton(bool state)
         {
+            if (buttonCancelDownload.InvokeRequired)
+            {
+                StateButtonDownload dd = StateButton;
+                Invoke(dd, state);
+            }
+            else
+            {
+                buttonCancelDownload.Enabled = state;
+            }
 
+        }
+        public void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        { 
+                StateButton(true);
             L.Info("Strat backgroundWorker1: " + backgroundWorker1.IsBusy);
 
-            List<SettingsMain> settingsData = GetSettings();
+                List<SettingsMain> settingsData = GetSettings();
 
-            if (settingsData == null)
-                backgroundWorker1.CancelAsync();
+                if (settingsData == null)
+                    backgroundWorker1.CancelAsync();
 
 
-            backgroundWorker1.ReportProgress(10, "Start work");
-
-            if (backgroundWorker1.CancellationPending)
-                return;
-
-            if (checkBoxDateFromTxt.Checked)
-            {
-                L.Debug("Date from TXT: " + checkBoxDateFromTxt.Checked);
-
-                var fileData = LoadTxtFile(settingsData);
-
+                backgroundWorker1.ReportProgress(10, "Start work");
 
                 if (backgroundWorker1.CancellationPending)
                     return;
 
-                backgroundWorker1.ReportProgress(20, "Files in the folder: " + fileData.Count);
+                if (checkBoxDateFromTxt.Checked)
+                {
+                    L.Debug("Date from TXT: " + checkBoxDateFromTxt.Checked);
 
-                FinamLoading.Download(Security, fileData, settingsData);
+                    var fileData = LoadTxtFile(settingsData);
 
-                backgroundWorker1.ReportProgress(50, "All files save");
-            }
-            else
-            {
+
+                    if (backgroundWorker1.CancellationPending)
+                        return;
+
+                    backgroundWorker1.ReportProgress(20, "Files in the folder: " + fileData.Count);
+
+                    FinamLoading.Download(Security, fileData, settingsData);
+
+                    backgroundWorker1.ReportProgress(50, "All files save");
+                }
+                else
+                {
+                if (backgroundWorker1.CancellationPending)
+                    return;
+
+
                 backgroundWorker1.ReportProgress(20);
-                var fileData = new List<FileSecurity>();
+
+                    var fileData = new List<FileSecurity>();
+
+                if (backgroundWorker1.CancellationPending)
+                    return;
+
                 FinamLoading.Download(Security, fileData, settingsData);
                 backgroundWorker1.ReportProgress(50, "All files save");
-            }
-            backgroundWorker1.ReportProgress(100, "Download complete");
+                }
+                backgroundWorker1.ReportProgress(100, "Download complete");
+            
+            
+
 
         }
         public void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
+            if (backgroundWorker1.CancellationPending)
+            {
+                
+                return;
+            }
+
             if (!IsNullOrEmpty(e.UserState as string))
             {
                 var time = DateTime.Now.ToString("T") + ": ";
@@ -159,6 +193,10 @@ namespace FinamDownloader
             }
             else if (CancelAsync == 2)
             {
+                var time = DateTime.Now.ToString("T") + ": ";
+                TextBox textBox = textBoxLog;
+                string str = textBox.Text + time + @"Cancel download" + Environment.NewLine;
+                textBox.Text = str;
                 L.Info("Cancel download");
                 MessageBox.Show(this, @"Cancel download");
             }
@@ -181,12 +219,14 @@ namespace FinamDownloader
 
             CancelAsync = 0;
             progressBar1.Value = 0;
+            StateButton(false);
         }
 
         private void buttonCancelDownload_Click(object sender, EventArgs e)
         {
-            CancelAsync = 2;
             backgroundWorker1.CancelAsync();
+            CancelAsync = 2;
+            
         }
 
 
@@ -264,7 +304,6 @@ namespace FinamDownloader
             textBoxTXTDir.Text = folderBrowserDialog1.SelectedPath;
         }
 
-
         private void buttonSaveSettings_Click(object sender, EventArgs e)
         {
             L.Info(@"Save settings button");
@@ -279,8 +318,16 @@ namespace FinamDownloader
         private void buttonDownloadTxt_Click(object sender, EventArgs e)
         {
             L.Info(@"Start backgroundWorker");
-            backgroundWorker1.RunWorkerAsync();
-
+            if (!backgroundWorker1.IsBusy)
+            {
+                backgroundWorker1.RunWorkerAsync();
+            }
+            else
+            {
+                MessageBox.Show(this, @"backgroundWorker is busy");
+                L.Debug("backgroundWorker is busy"); 
+            }
+            
         }
 
         public void SaveToFile(string data, SecurityInfo security, SettingsMain settingsData)
@@ -314,6 +361,8 @@ namespace FinamDownloader
         {
             CheckStringData(data, settingsData.Autostart, fileSec.Sec);
             L.Info("Start ChangeFile: " + fileSec.Sec);
+
+
             if (backgroundWorker1.CancellationPending)
                 return;
             var settings2 = settingsData;
@@ -511,24 +560,32 @@ namespace FinamDownloader
             }
 
             SettingsData.Clear();
-            SettingsData.Add(new SettingsMain
+            try
             {
-                Period = comboBoxPeriod.SelectedIndex,
-                PeriodItem = comboBoxPeriod.SelectedItem,
-                DateFrom = dateTimePickerFrom.Value,
-                DateTo = dateTimePickerTo.Value,
-                SplitChar = comboBoxSplitChar.SelectedIndex + 1,
-                TimeCandle = comboBoxTimeCandle.SelectedIndex,
-                DateFromeTxt = checkBoxDateFromTxt.Checked,
-                FileheaderRow = checkBoxFileheaderRow.Checked,
-                MergeFile = checkBoxMergeFiles.Checked,
-                DirTxt = textBoxTXTDir.Text,
-                Autostart = AutoloadingStart
+                SettingsData.Add(new SettingsMain
+                {
+                    Period = comboBoxPeriod.SelectedIndex,
+                    PeriodItem = comboBoxPeriod.SelectedItem,
+                    DateFrom = dateTimePickerFrom.Value,
+                    DateTo = dateTimePickerTo.Value,
+                    SplitChar = comboBoxSplitChar.SelectedIndex + 1,
+                    TimeCandle = comboBoxTimeCandle.SelectedIndex,
+                    DateFromeTxt = checkBoxDateFromTxt.Checked,
+                    FileheaderRow = checkBoxFileheaderRow.Checked,
+                    MergeFile = checkBoxMergeFiles.Checked,
+                    DirTxt = textBoxTXTDir.Text,
+                    Autostart = AutoloadingStart
 
 
-            });
-            L.Debug("Setting: " + SettingsData[0].Period + " " + SettingsData[0].PeriodItem + " " + SettingsData[0].DateFrom + " " + SettingsData[0].DateTo + " " + SettingsData[0].SplitChar + " " + SettingsData[0].TimeCandle + " " + SettingsData[0].DateFromeTxt + " " + SettingsData[0].FileheaderRow + " " + SettingsData[0].MergeFile + " " + SettingsData[0].DirTxt);
+                });
+                L.Debug("Setting: " + SettingsData[0].Period + " " + SettingsData[0].PeriodItem + " " + SettingsData[0].DateFrom.ToString("d") + " " + SettingsData[0].DateTo.ToString("d") + " " + SettingsData[0].SplitChar + " " + SettingsData[0].TimeCandle + " " + SettingsData[0].DateFromeTxt + " " + SettingsData[0].FileheaderRow + " " + SettingsData[0].MergeFile + " " + SettingsData[0].DirTxt);
 
+            }
+            catch (Exception e)
+            {
+
+                L.Debug(e);}
+            
             return SettingsData;
         }
         public class SettingsMain
