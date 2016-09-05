@@ -3,8 +3,8 @@
   <XmlFileName>C:\Repository\AistDownloader\FinamDownload\bin\Debug\settings.xml</XmlFileName>
   <Folder>C:\Users\oemnau\Desktop\TestHistory</Folder>
   <SplitChar>0</SplitChar>
-  <TimeFrom>2016-08-01T00:00:00</TimeFrom>
-  <TimeTo>2016-08-10T00:00:00</TimeTo>
+  <TimeFrom>2016-08-06T00:00:00</TimeFrom>
+  <TimeTo>2016-08-07T00:00:00</TimeTo>
   <Period>1</Period>
   <TimeCandle>0</TimeCandle>
   <FileheaderRow>true</FileheaderRow>
