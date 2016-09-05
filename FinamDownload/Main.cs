@@ -285,7 +285,7 @@ namespace FinamDownloader
 
         public void SaveToFile(string data, SecurityInfo security, SettingsMain settingsData)
         {
-            CheckStringData(data, settingsData.Autostart);
+            CheckStringData(data, settingsData.Autostart, security.Name);
 
             L.Info("Start SaveToFile: " + security.Name);
 
@@ -312,11 +312,10 @@ namespace FinamDownloader
 
         public void ChangeFile(string data, FileSecurity fileSec, SettingsMain settingsData)
         {
-            CheckStringData(data, settingsData.Autostart);
+            CheckStringData(data, settingsData.Autostart, fileSec.Sec);
             L.Info("Start ChangeFile: " + fileSec.Sec);
             if (backgroundWorker1.CancellationPending)
                 return;
-
             var settings2 = settingsData;
 
             DateTime datatrue = fileSec.Dat.AddDays(-1); // для устранения лишнего дня в имени файла
@@ -565,12 +564,12 @@ namespace FinamDownloader
         }
 
         private delegate void DelegAutoLoading(bool state);
-        private void CheckStringData(string str, bool auto)
+        private void CheckStringData(string str, bool auto, string sec)
         {
             if (str == "Вы запросили данные за слишком большой временной период.")
             {
                 L.Info(str);
-                if (!auto) MessageBox.Show(this, str);
+                if (!auto) MessageBox.Show(this, str, @"Security: " + sec);
 
                 return;
             }
@@ -578,7 +577,7 @@ namespace FinamDownloader
             {
                 L.Info(str);
                 if (!auto)
-                    MessageBox.Show(this, str);
+                    MessageBox.Show(this, str,@"Security: "+sec);
                 return;
             }
             if (str == "")
@@ -586,7 +585,7 @@ namespace FinamDownloader
                 L.Info("За эту дату нет данных");
                 
                 if ( !auto)
-                    MessageBox.Show(this, @"За эту дату нет данных");
+                    MessageBox.Show(this, @"За эту дату нет данных", @"Security: " + sec);
             }
         }
     }

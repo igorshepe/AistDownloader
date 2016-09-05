@@ -464,3 +464,229 @@
 05.09.16 11:24:29.656;[3];INFO;За эту дату нет данных;
 05.09.16 11:24:31.734;[3];INFO;Start SaveToFile: Eu;
 05.09.16 11:24:31.741;[1];INFO;Download complete;
+05.09.16 11:30:22.964;[8];DEBUG;Приложение стартовало;
+05.09.16 11:30:23.047;[8];INFO;Start with an attribute (autoloading);
+05.09.16 11:30:23.047;[8];DEBUG;AutoLoading();
+05.09.16 11:30:23.111;[9];INFO;Strat backgroundWorker1: True;
+05.09.16 11:30:23.112;[9];DEBUG;Setting: 1 1 min 06.08.2016 0:00:00 04.09.2016 0:00:00 1 0 True False True C:\Users\oemnau\Desktop\TestHistory;
+05.09.16 11:30:23.113;[9];DEBUG;Date from TXT: True;
+05.09.16 11:30:23.114;[9];DEBUG;Load txt file in folder;
+05.09.16 11:30:23.114;[9];DEBUG;Folder: C:\Users\oemnau\Desktop\TestHistory\1 min;
+05.09.16 11:30:23.128;[9];DEBUG;Приложение стартовало;
+05.09.16 11:30:23.130;[9];INFO;Start merge file download: BR date from: 03.09.2016 date to: 04.09.2016;
+05.09.16 11:30:23.130;[9];DEBUG;Скачиваю http://195.128.78.52/SPFB.BR.txt?d=d&market=14&em=22460&p=2&df=3&mf=8&yf=2016&dt=4&mt=8&yt=2016&f=SPFB.BR&e=.txt&datf=5&cn=SPFB.BR&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=0;
+05.09.16 11:30:23.280;[9];INFO;За эту дату нет данных;
+05.09.16 11:30:23.280;[9];INFO;Start ChangeFile: BR;
+05.09.16 11:30:23.281;[9];INFO;Start merge file download: Eu date from: 03.09.2016 date to: 04.09.2016;
+05.09.16 11:30:23.281;[9];DEBUG;Скачиваю http://195.128.78.52/SPFB.Eu.txt?d=d&market=14&em=22010&p=2&df=3&mf=8&yf=2016&dt=4&mt=8&yt=2016&f=SPFB.Eu&e=.txt&datf=5&cn=SPFB.Eu&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=0;
+05.09.16 11:30:23.353;[9];INFO;За эту дату нет данных;
+05.09.16 11:30:23.353;[9];INFO;Start ChangeFile: Eu;
+05.09.16 11:30:23.355;[8];INFO;Exit after autoloading;
+05.09.16 11:30:35.942;[10];DEBUG;Приложение стартовало;
+05.09.16 11:30:37.408;[10];INFO;Start backgroundWorker;
+05.09.16 11:30:37.411;[6];INFO;Strat backgroundWorker1: True;
+05.09.16 11:30:37.413;[6];DEBUG;Setting: 1 1 min 06.08.2016 0:00:00 07.08.2016 0:00:00 1 0 False True False C:\Users\oemnau\Desktop\TestHistory;
+05.09.16 11:30:37.426;[6];DEBUG;Приложение стартовало;
+05.09.16 11:30:37.428;[6];INFO;Start download: BR date from: 06.08.2016 date to: 07.08.2016;
+05.09.16 11:30:37.428;[6];DEBUG;Скачиваю http://195.128.78.52/SPFB.BR.txt?d=d&market=14&em=22460&p=2&df=6&mf=7&yf=2016&dt=7&mt=7&yt=2016&f=SPFB.BR&e=.txt&datf=5&cn=SPFB.BR&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=1;
+05.09.16 11:30:37.562;[6];INFO;За эту дату нет данных;
+05.09.16 11:30:38.809;[6];INFO;Start SaveToFile: BR;
+05.09.16 11:30:38.809;[6];INFO;Start download: Eu date from: 06.08.2016 date to: 07.08.2016;
+05.09.16 11:30:38.809;[6];DEBUG;Скачиваю http://195.128.78.52/SPFB.Eu.txt?d=d&market=14&em=22010&p=2&df=6&mf=7&yf=2016&dt=7&mt=7&yt=2016&f=SPFB.Eu&e=.txt&datf=5&cn=SPFB.Eu&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=1;
+05.09.16 11:30:38.875;[6];INFO;За эту дату нет данных;
+05.09.16 11:30:39.302;[6];INFO;Start SaveToFile: Eu;
+05.09.16 11:30:39.304;[10];INFO;Download complete;
+05.09.16 11:31:54.505;[9];DEBUG;Приложение стартовало;
+05.09.16 11:31:55.726;[9];INFO;Start backgroundWorker;
+05.09.16 11:31:55.730;[10];INFO;Strat backgroundWorker1: True;
+05.09.16 11:31:55.732;[10];DEBUG;Setting: 1 1 min 06.08.2016 0:00:00 07.08.2016 0:00:00 1 0 False True False C:\Users\oemnau\Desktop\TestHistory;
+05.09.16 11:31:55.744;[10];DEBUG;Приложение стартовало;
+05.09.16 11:31:55.746;[10];INFO;Start download: BR date from: 06.08.2016 date to: 07.08.2016;
+05.09.16 11:31:55.746;[10];DEBUG;Скачиваю http://195.128.78.52/SPFB.BR.txt?d=d&market=14&em=22460&p=2&df=6&mf=7&yf=2016&dt=7&mt=7&yt=2016&f=SPFB.BR&e=.txt&datf=5&cn=SPFB.BR&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=1;
+05.09.16 11:31:55.876;[10];INFO;За эту дату нет данных;
+05.09.16 11:31:57.000;[10];INFO;Start SaveToFile: BR;
+05.09.16 11:31:57.000;[10];INFO;Start download: Eu date from: 06.08.2016 date to: 07.08.2016;
+05.09.16 11:31:57.000;[10];DEBUG;Скачиваю http://195.128.78.52/SPFB.Eu.txt?d=d&market=14&em=22010&p=2&df=6&mf=7&yf=2016&dt=7&mt=7&yt=2016&f=SPFB.Eu&e=.txt&datf=5&cn=SPFB.Eu&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=1;
+05.09.16 11:31:57.066;[10];INFO;За эту дату нет данных;
+05.09.16 11:31:57.582;[10];INFO;Start SaveToFile: Eu;
+05.09.16 11:31:57.584;[9];INFO;Download complete;
+05.09.16 11:32:38.288;[10];DEBUG;Приложение стартовало;
+05.09.16 11:32:39.527;[10];INFO;Start backgroundWorker;
+05.09.16 11:32:39.532;[11];INFO;Strat backgroundWorker1: True;
+05.09.16 11:32:39.533;[11];DEBUG;Setting: 1 1 min 06.08.2016 0:00:00 07.08.2016 0:00:00 1 0 False True False C:\Users\oemnau\Desktop\TestHistory;
+05.09.16 11:32:39.545;[11];DEBUG;Приложение стартовало;
+05.09.16 11:32:39.547;[11];INFO;Start download: BR date from: 06.08.2016 date to: 07.08.2016;
+05.09.16 11:32:39.547;[11];DEBUG;Скачиваю http://195.128.78.52/SPFB.BR.txt?d=d&market=14&em=22460&p=2&df=6&mf=7&yf=2016&dt=7&mt=7&yt=2016&f=SPFB.BR&e=.txt&datf=5&cn=SPFB.BR&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=1;
+05.09.16 11:32:39.681;[11];INFO;За эту дату нет данных;
+05.09.16 11:32:41.039;[11];INFO;Start SaveToFile: BR;
+05.09.16 11:32:41.040;[11];INFO;Start download: Eu date from: 06.08.2016 date to: 07.08.2016;
+05.09.16 11:32:41.040;[11];DEBUG;Скачиваю http://195.128.78.52/SPFB.Eu.txt?d=d&market=14&em=22010&p=2&df=6&mf=7&yf=2016&dt=7&mt=7&yt=2016&f=SPFB.Eu&e=.txt&datf=5&cn=SPFB.Eu&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=1;
+05.09.16 11:32:41.146;[11];INFO;За эту дату нет данных;
+05.09.16 11:32:45.790;[11];INFO;Start SaveToFile: Eu;
+05.09.16 11:32:45.792;[10];INFO;Download complete;
+05.09.16 11:33:18.757;[10];INFO;Start backgroundWorker;
+05.09.16 11:33:18.759;[12];INFO;Strat backgroundWorker1: True;
+05.09.16 11:33:18.759;[12];DEBUG;Setting: 1 1 min 06.08.2016 0:00:00 09.08.2016 0:00:00 1 0 True False True C:\Users\oemnau\Desktop\TestHistory;
+05.09.16 11:33:18.759;[12];DEBUG;Date from TXT: True;
+05.09.16 11:33:18.761;[12];DEBUG;Load txt file in folder;
+05.09.16 11:33:18.761;[12];DEBUG;Folder: C:\Users\oemnau\Desktop\TestHistory\1 min;
+05.09.16 11:33:18.762;[12];INFO;Start merge file download: BR date from: 05.09.2016 date to: 09.08.2016;
+05.09.16 11:33:18.762;[12];DEBUG;Скачиваю http://195.128.78.52/SPFB.BR.txt?d=d&market=14&em=22460&p=2&df=5&mf=8&yf=2016&dt=9&mt=7&yt=2016&f=SPFB.BR&e=.txt&datf=5&cn=SPFB.BR&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=0;
+05.09.16 11:33:18.856;[12];INFO;За эту дату нет данных;
+05.09.16 11:33:18.890;[12];INFO;Ошибка при скачивании System.InvalidOperationException: Недопустимая операция в нескольких потоках: попытка доступа к элементу управления 'Main' не из того потока, в котором он был создан.
+   в System.Windows.Forms.Control.get_Handle()
+   в System.Windows.Forms.Control.GetSafeHandle(IWin32Window window)
+   в System.Windows.Forms.MessageBox.ShowCore(IWin32Window owner, String text, String caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton, MessageBoxOptions options, Boolean showHelp)
+   в System.Windows.Forms.MessageBox.Show(IWin32Window owner, String text, String caption)
+   в FinamDownloader.Main.CheckStringData(String str, Boolean auto, String sec) в C:\Repository\AistDownloader\FinamDownload\Main.cs:строка 588
+   в FinamDownloader.Main.ChangeFile(String data, FileSecurity fileSec, SettingsMain settingsData) в C:\Repository\AistDownloader\FinamDownload\Main.cs:строка 315
+   в FinamDownloader.FinamLoading.Download(List`1 security, List`1 filesSecurities, List`1 settingsData) в C:\Repository\AistDownloader\FinamDownload\FinamLoading.cs:строка 134;
+05.09.16 11:33:18.890;[12];INFO;Start merge file download: BR date from: 08.08.2016 date to: 09.08.2016;
+05.09.16 11:33:18.890;[12];DEBUG;Скачиваю http://195.128.78.52/SPFB.BR.txt?d=d&market=14&em=22460&p=2&df=8&mf=7&yf=2016&dt=9&mt=7&yt=2016&f=SPFB.BR&e=.txt&datf=5&cn=SPFB.BR&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=0;
+05.09.16 11:33:19.332;[12];INFO;Start ChangeFile: BR;
+05.09.16 11:33:19.335;[12];INFO;Start merge file download: Eu date from: 05.09.2016 date to: 09.08.2016;
+05.09.16 11:33:19.335;[12];DEBUG;Скачиваю http://195.128.78.52/SPFB.Eu.txt?d=d&market=14&em=22010&p=2&df=5&mf=8&yf=2016&dt=9&mt=7&yt=2016&f=SPFB.Eu&e=.txt&datf=5&cn=SPFB.Eu&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=0;
+05.09.16 11:33:19.402;[12];INFO;За эту дату нет данных;
+05.09.16 11:33:19.409;[12];INFO;Ошибка при скачивании System.InvalidOperationException: Недопустимая операция в нескольких потоках: попытка доступа к элементу управления 'Main' не из того потока, в котором он был создан.
+   в System.Windows.Forms.Control.get_Handle()
+   в System.Windows.Forms.Control.GetSafeHandle(IWin32Window window)
+   в System.Windows.Forms.MessageBox.ShowCore(IWin32Window owner, String text, String caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton, MessageBoxOptions options, Boolean showHelp)
+   в System.Windows.Forms.MessageBox.Show(IWin32Window owner, String text, String caption)
+   в FinamDownloader.Main.CheckStringData(String str, Boolean auto, String sec) в C:\Repository\AistDownloader\FinamDownload\Main.cs:строка 588
+   в FinamDownloader.Main.ChangeFile(String data, FileSecurity fileSec, SettingsMain settingsData) в C:\Repository\AistDownloader\FinamDownload\Main.cs:строка 315
+   в FinamDownloader.FinamLoading.Download(List`1 security, List`1 filesSecurities, List`1 settingsData) в C:\Repository\AistDownloader\FinamDownload\FinamLoading.cs:строка 134;
+05.09.16 11:33:19.409;[12];INFO;Start merge file download: Eu date from: 08.08.2016 date to: 09.08.2016;
+05.09.16 11:33:19.409;[12];DEBUG;Скачиваю http://195.128.78.52/SPFB.Eu.txt?d=d&market=14&em=22010&p=2&df=8&mf=7&yf=2016&dt=9&mt=7&yt=2016&f=SPFB.Eu&e=.txt&datf=5&cn=SPFB.Eu&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=0;
+05.09.16 11:33:19.774;[12];INFO;Start ChangeFile: Eu;
+05.09.16 11:33:19.778;[10];INFO;Download complete;
+05.09.16 11:33:45.109;[10];INFO;Start backgroundWorker;
+05.09.16 11:33:45.111;[11];INFO;Strat backgroundWorker1: True;
+05.09.16 11:33:45.111;[11];DEBUG;Setting: 1 1 min 06.08.2016 0:00:00 12.08.2016 0:00:00 1 0 True False True C:\Users\oemnau\Desktop\TestHistory;
+05.09.16 11:33:45.112;[11];DEBUG;Date from TXT: True;
+05.09.16 11:33:45.112;[11];DEBUG;Load txt file in folder;
+05.09.16 11:33:45.112;[11];DEBUG;Folder: C:\Users\oemnau\Desktop\TestHistory\1 min;
+05.09.16 11:33:45.113;[11];INFO;Start merge file download: BR date from: 05.09.2016 date to: 12.08.2016;
+05.09.16 11:33:45.113;[11];DEBUG;Скачиваю http://195.128.78.52/SPFB.BR.txt?d=d&market=14&em=22460&p=2&df=5&mf=8&yf=2016&dt=12&mt=7&yt=2016&f=SPFB.BR&e=.txt&datf=5&cn=SPFB.BR&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=0;
+05.09.16 11:33:45.205;[11];INFO;За эту дату нет данных;
+05.09.16 11:33:45.213;[11];INFO;Ошибка при скачивании System.InvalidOperationException: Недопустимая операция в нескольких потоках: попытка доступа к элементу управления 'Main' не из того потока, в котором он был создан.
+   в System.Windows.Forms.Control.get_Handle()
+   в System.Windows.Forms.Control.GetSafeHandle(IWin32Window window)
+   в System.Windows.Forms.MessageBox.ShowCore(IWin32Window owner, String text, String caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton, MessageBoxOptions options, Boolean showHelp)
+   в System.Windows.Forms.MessageBox.Show(IWin32Window owner, String text, String caption)
+   в FinamDownloader.Main.CheckStringData(String str, Boolean auto, String sec) в C:\Repository\AistDownloader\FinamDownload\Main.cs:строка 588
+   в FinamDownloader.Main.ChangeFile(String data, FileSecurity fileSec, SettingsMain settingsData) в C:\Repository\AistDownloader\FinamDownload\Main.cs:строка 315
+   в FinamDownloader.FinamLoading.Download(List`1 security, List`1 filesSecurities, List`1 settingsData) в C:\Repository\AistDownloader\FinamDownload\FinamLoading.cs:строка 134;
+05.09.16 11:33:45.213;[11];INFO;Start merge file download: BR date from: 10.08.2016 date to: 12.08.2016;
+05.09.16 11:33:45.213;[11];DEBUG;Скачиваю http://195.128.78.52/SPFB.BR.txt?d=d&market=14&em=22460&p=2&df=10&mf=7&yf=2016&dt=12&mt=7&yt=2016&f=SPFB.BR&e=.txt&datf=5&cn=SPFB.BR&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=0;
+05.09.16 11:33:45.711;[11];INFO;Start ChangeFile: BR;
+05.09.16 11:33:45.713;[11];INFO;Start merge file download: Eu date from: 05.09.2016 date to: 12.08.2016;
+05.09.16 11:33:45.713;[11];DEBUG;Скачиваю http://195.128.78.52/SPFB.Eu.txt?d=d&market=14&em=22010&p=2&df=5&mf=8&yf=2016&dt=12&mt=7&yt=2016&f=SPFB.Eu&e=.txt&datf=5&cn=SPFB.Eu&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=0;
+05.09.16 11:33:45.781;[11];INFO;За эту дату нет данных;
+05.09.16 11:33:45.788;[11];INFO;Ошибка при скачивании System.InvalidOperationException: Недопустимая операция в нескольких потоках: попытка доступа к элементу управления 'Main' не из того потока, в котором он был создан.
+   в System.Windows.Forms.Control.get_Handle()
+   в System.Windows.Forms.Control.GetSafeHandle(IWin32Window window)
+   в System.Windows.Forms.MessageBox.ShowCore(IWin32Window owner, String text, String caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton, MessageBoxOptions options, Boolean showHelp)
+   в System.Windows.Forms.MessageBox.Show(IWin32Window owner, String text, String caption)
+   в FinamDownloader.Main.CheckStringData(String str, Boolean auto, String sec) в C:\Repository\AistDownloader\FinamDownload\Main.cs:строка 588
+   в FinamDownloader.Main.ChangeFile(String data, FileSecurity fileSec, SettingsMain settingsData) в C:\Repository\AistDownloader\FinamDownload\Main.cs:строка 315
+   в FinamDownloader.FinamLoading.Download(List`1 security, List`1 filesSecurities, List`1 settingsData) в C:\Repository\AistDownloader\FinamDownload\FinamLoading.cs:строка 134;
+05.09.16 11:33:45.788;[11];INFO;Start merge file download: Eu date from: 10.08.2016 date to: 12.08.2016;
+05.09.16 11:33:45.788;[11];DEBUG;Скачиваю http://195.128.78.52/SPFB.Eu.txt?d=d&market=14&em=22010&p=2&df=10&mf=7&yf=2016&dt=12&mt=7&yt=2016&f=SPFB.Eu&e=.txt&datf=5&cn=SPFB.Eu&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=0;
+05.09.16 11:33:46.230;[11];INFO;Start ChangeFile: Eu;
+05.09.16 11:33:46.237;[10];INFO;Download complete;
+05.09.16 11:35:56.781;[10];DEBUG;Приложение стартовало;
+05.09.16 11:36:08.974;[10];INFO;Start backgroundWorker;
+05.09.16 11:36:08.978;[6];INFO;Strat backgroundWorker1: True;
+05.09.16 11:36:08.980;[6];DEBUG;Setting: 1 1 min 06.08.2016 0:00:00 07.08.2016 0:00:00 1 0 False True False C:\Users\oemnau\Desktop\TestHistory;
+05.09.16 11:36:08.993;[6];DEBUG;Приложение стартовало;
+05.09.16 11:36:08.995;[6];INFO;Start download: BR date from: 06.08.2016 date to: 07.08.2016;
+05.09.16 11:36:08.995;[6];DEBUG;Скачиваю http://195.128.78.52/SPFB.BR.txt?d=d&market=14&em=22460&p=2&df=6&mf=7&yf=2016&dt=7&mt=7&yt=2016&f=SPFB.BR&e=.txt&datf=5&cn=SPFB.BR&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=1;
+05.09.16 11:36:09.139;[6];INFO;За эту дату нет данных;
+05.09.16 11:36:10.711;[6];INFO;Start SaveToFile: BR;
+05.09.16 11:36:10.711;[6];INFO;Start download: Eu date from: 06.08.2016 date to: 07.08.2016;
+05.09.16 11:36:10.711;[6];DEBUG;Скачиваю http://195.128.78.52/SPFB.Eu.txt?d=d&market=14&em=22010&p=2&df=6&mf=7&yf=2016&dt=7&mt=7&yt=2016&f=SPFB.Eu&e=.txt&datf=5&cn=SPFB.Eu&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=1;
+05.09.16 11:36:10.778;[6];INFO;За эту дату нет данных;
+05.09.16 11:36:11.209;[6];INFO;Start SaveToFile: Eu;
+05.09.16 11:36:11.211;[10];INFO;Download complete;
+05.09.16 11:36:18.580;[10];INFO;Start backgroundWorker;
+05.09.16 11:36:18.580;[6];INFO;Strat backgroundWorker1: True;
+05.09.16 11:36:18.581;[6];DEBUG;Setting: 1 1 min 06.08.2016 0:00:00 09.08.2016 0:00:00 1 0 False True False C:\Users\oemnau\Desktop\TestHistory;
+05.09.16 11:36:18.581;[6];INFO;Start download: BR date from: 06.08.2016 date to: 09.08.2016;
+05.09.16 11:36:18.581;[6];DEBUG;Скачиваю http://195.128.78.52/SPFB.BR.txt?d=d&market=14&em=22460&p=2&df=6&mf=7&yf=2016&dt=9&mt=7&yt=2016&f=SPFB.BR&e=.txt&datf=5&cn=SPFB.BR&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=1;
+05.09.16 11:36:19.105;[6];INFO;Start SaveToFile: BR;
+05.09.16 11:36:19.106;[6];INFO;Start download: Eu date from: 06.08.2016 date to: 09.08.2016;
+05.09.16 11:36:19.106;[6];DEBUG;Скачиваю http://195.128.78.52/SPFB.Eu.txt?d=d&market=14&em=22010&p=2&df=6&mf=7&yf=2016&dt=9&mt=7&yt=2016&f=SPFB.Eu&e=.txt&datf=5&cn=SPFB.Eu&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=1;
+05.09.16 11:36:19.425;[6];INFO;Start SaveToFile: Eu;
+05.09.16 11:36:19.428;[10];INFO;Download complete;
+05.09.16 11:36:31.585;[10];INFO;Start backgroundWorker;
+05.09.16 11:36:31.585;[11];INFO;Strat backgroundWorker1: True;
+05.09.16 11:36:31.586;[11];DEBUG;Setting: 1 1 min 06.08.2016 0:00:00 12.08.2016 0:00:00 1 0 True False True C:\Users\oemnau\Desktop\TestHistory;
+05.09.16 11:36:31.587;[11];DEBUG;Date from TXT: True;
+05.09.16 11:36:31.589;[11];DEBUG;Load txt file in folder;
+05.09.16 11:36:31.590;[11];DEBUG;Folder: C:\Users\oemnau\Desktop\TestHistory\1 min;
+05.09.16 11:36:31.591;[11];INFO;Start merge file download: BR date from: 08.08.2016 date to: 12.08.2016;
+05.09.16 11:36:31.591;[11];DEBUG;Скачиваю http://195.128.78.52/SPFB.BR.txt?d=d&market=14&em=22460&p=2&df=8&mf=7&yf=2016&dt=12&mt=7&yt=2016&f=SPFB.BR&e=.txt&datf=5&cn=SPFB.BR&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=0;
+05.09.16 11:36:32.540;[11];INFO;Start ChangeFile: BR;
+05.09.16 11:36:32.543;[11];INFO;Start merge file download: BR date from: 10.08.2016 date to: 12.08.2016;
+05.09.16 11:36:32.543;[11];DEBUG;Скачиваю http://195.128.78.52/SPFB.BR.txt?d=d&market=14&em=22460&p=2&df=10&mf=7&yf=2016&dt=12&mt=7&yt=2016&f=SPFB.BR&e=.txt&datf=5&cn=SPFB.BR&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=0;
+05.09.16 11:36:33.098;[11];INFO;Start ChangeFile: BR;
+05.09.16 11:36:33.129;[11];INFO;Ошибка при скачивании System.IO.IOException: Невозможно создать файл, так как он уже существует.
+
+   в System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   в System.IO.__Error.WinIOError()
+   в System.IO.File.InternalMove(String sourceFileName, String destFileName, Boolean checkHost)
+   в System.IO.File.Move(String sourceFileName, String destFileName)
+   в FinamDownloader.Main.ChangeFile(String data, FileSecurity fileSec, SettingsMain settingsData) в C:\Repository\AistDownloader\FinamDownload\Main.cs:строка 344
+   в FinamDownloader.FinamLoading.Download(List`1 security, List`1 filesSecurities, List`1 settingsData) в C:\Repository\AistDownloader\FinamDownload\FinamLoading.cs:строка 134;
+05.09.16 11:36:33.129;[11];INFO;Start merge file download: Eu date from: 08.08.2016 date to: 12.08.2016;
+05.09.16 11:36:33.129;[11];DEBUG;Скачиваю http://195.128.78.52/SPFB.Eu.txt?d=d&market=14&em=22010&p=2&df=8&mf=7&yf=2016&dt=12&mt=7&yt=2016&f=SPFB.Eu&e=.txt&datf=5&cn=SPFB.Eu&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=0;
+05.09.16 11:36:33.949;[11];INFO;Start ChangeFile: Eu;
+05.09.16 11:36:33.953;[11];INFO;Start merge file download: Eu date from: 10.08.2016 date to: 12.08.2016;
+05.09.16 11:36:33.953;[11];DEBUG;Скачиваю http://195.128.78.52/SPFB.Eu.txt?d=d&market=14&em=22010&p=2&df=10&mf=7&yf=2016&dt=12&mt=7&yt=2016&f=SPFB.Eu&e=.txt&datf=5&cn=SPFB.Eu&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=0;
+05.09.16 11:36:34.445;[11];INFO;Start ChangeFile: Eu;
+05.09.16 11:36:34.458;[11];INFO;Ошибка при скачивании System.IO.IOException: Невозможно создать файл, так как он уже существует.
+
+   в System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   в System.IO.__Error.WinIOError()
+   в System.IO.File.InternalMove(String sourceFileName, String destFileName, Boolean checkHost)
+   в System.IO.File.Move(String sourceFileName, String destFileName)
+   в FinamDownloader.Main.ChangeFile(String data, FileSecurity fileSec, SettingsMain settingsData) в C:\Repository\AistDownloader\FinamDownload\Main.cs:строка 344
+   в FinamDownloader.FinamLoading.Download(List`1 security, List`1 filesSecurities, List`1 settingsData) в C:\Repository\AistDownloader\FinamDownload\FinamLoading.cs:строка 134;
+05.09.16 11:36:34.462;[10];INFO;Download complete;
+05.09.16 11:37:41.237;[10];INFO;Start backgroundWorker;
+05.09.16 11:37:41.239;[13];INFO;Strat backgroundWorker1: True;
+05.09.16 11:37:41.239;[13];DEBUG;Setting: 1 1 min 06.08.2016 0:00:00 08.08.2016 0:00:00 1 0 False True False C:\Users\oemnau\Desktop\TestHistory;
+05.09.16 11:37:41.239;[13];INFO;Start download: BR date from: 06.08.2016 date to: 08.08.2016;
+05.09.16 11:37:41.239;[13];DEBUG;Скачиваю http://195.128.78.52/SPFB.BR.txt?d=d&market=14&em=22460&p=2&df=6&mf=7&yf=2016&dt=8&mt=7&yt=2016&f=SPFB.BR&e=.txt&datf=5&cn=SPFB.BR&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=1;
+05.09.16 11:37:41.462;[13];INFO;Start SaveToFile: BR;
+05.09.16 11:37:41.463;[13];INFO;Start download: Eu date from: 06.08.2016 date to: 08.08.2016;
+05.09.16 11:37:41.463;[13];DEBUG;Скачиваю http://195.128.78.52/SPFB.Eu.txt?d=d&market=14&em=22010&p=2&df=6&mf=7&yf=2016&dt=8&mt=7&yt=2016&f=SPFB.Eu&e=.txt&datf=5&cn=SPFB.Eu&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=1;
+05.09.16 11:37:41.639;[13];INFO;Start SaveToFile: Eu;
+05.09.16 11:37:41.643;[10];INFO;Download complete;
+05.09.16 11:38:11.147;[10];INFO;Start backgroundWorker;
+05.09.16 11:38:11.150;[14];INFO;Strat backgroundWorker1: True;
+05.09.16 11:38:11.150;[14];DEBUG;Setting: 1 1 min 06.08.2016 0:00:00 12.08.2016 0:00:00 1 0 True False True C:\Users\oemnau\Desktop\TestHistory;
+05.09.16 11:38:11.150;[14];DEBUG;Date from TXT: True;
+05.09.16 11:38:11.150;[14];DEBUG;Load txt file in folder;
+05.09.16 11:38:11.150;[14];DEBUG;Folder: C:\Users\oemnau\Desktop\TestHistory\1 min;
+05.09.16 11:38:11.151;[14];INFO;Start merge file download: BR date from: 09.08.2016 date to: 12.08.2016;
+05.09.16 11:38:11.152;[14];DEBUG;Скачиваю http://195.128.78.52/SPFB.BR.txt?d=d&market=14&em=22460&p=2&df=9&mf=7&yf=2016&dt=12&mt=7&yt=2016&f=SPFB.BR&e=.txt&datf=5&cn=SPFB.BR&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=0;
+05.09.16 11:38:11.774;[14];INFO;Start ChangeFile: BR;
+05.09.16 11:38:11.775;[14];INFO;Start merge file download: Eu date from: 09.08.2016 date to: 12.08.2016;
+05.09.16 11:38:11.775;[14];DEBUG;Скачиваю http://195.128.78.52/SPFB.Eu.txt?d=d&market=14&em=22010&p=2&df=9&mf=7&yf=2016&dt=12&mt=7&yt=2016&f=SPFB.Eu&e=.txt&datf=5&cn=SPFB.Eu&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=0;
+05.09.16 11:38:12.335;[14];INFO;Start ChangeFile: Eu;
+05.09.16 11:38:12.340;[10];INFO;Download complete;
+05.09.16 11:38:33.253;[10];INFO;Start backgroundWorker;
+05.09.16 11:38:33.255;[13];INFO;Strat backgroundWorker1: True;
+05.09.16 11:38:33.255;[13];DEBUG;Setting: 1 1 min 06.08.2016 0:00:00 15.08.2016 0:00:00 1 0 True False True C:\Users\oemnau\Desktop\TestHistory;
+05.09.16 11:38:33.255;[13];DEBUG;Date from TXT: True;
+05.09.16 11:38:33.255;[13];DEBUG;Load txt file in folder;
+05.09.16 11:38:33.255;[13];DEBUG;Folder: C:\Users\oemnau\Desktop\TestHistory\1 min;
+05.09.16 11:38:33.256;[13];INFO;Start merge file download: BR date from: 13.08.2016 date to: 15.08.2016;
+05.09.16 11:38:33.256;[13];DEBUG;Скачиваю http://195.128.78.52/SPFB.BR.txt?d=d&market=14&em=22460&p=2&df=13&mf=7&yf=2016&dt=15&mt=7&yt=2016&f=SPFB.BR&e=.txt&datf=5&cn=SPFB.BR&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=0;
+05.09.16 11:38:33.473;[13];INFO;Start ChangeFile: BR;
+05.09.16 11:38:33.475;[13];INFO;Start merge file download: Eu date from: 13.08.2016 date to: 15.08.2016;
+05.09.16 11:38:33.475;[13];DEBUG;Скачиваю http://195.128.78.52/SPFB.Eu.txt?d=d&market=14&em=22010&p=2&df=13&mf=7&yf=2016&dt=15&mt=7&yt=2016&f=SPFB.Eu&e=.txt&datf=5&cn=SPFB.Eu&dtf=1&tmf=1&MSOR=0&sep=1&sep2=1&at=0;
+05.09.16 11:38:33.639;[13];INFO;Start ChangeFile: Eu;
+05.09.16 11:38:33.644;[10];INFO;Download complete;
+05.09.16 11:40:49.522;[9];DEBUG;Приложение стартовало;
