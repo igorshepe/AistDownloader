@@ -15,7 +15,7 @@
     <SecurityInfo>
       <MarketId>14</MarketId>
       <Id>22460</Id>
-      <MarketName>Фьючерсы ФОРТС</MarketName>
+      <MarketName>МосБиржа фьючерсы</MarketName>
       <Name>BR</Name>
       <Code>SPFB.BR</Code>
       <Checed>true</Checed>
@@ -23,7 +23,7 @@
     <SecurityInfo>
       <MarketId>14</MarketId>
       <Id>22010</Id>
-      <MarketName>Фьючерсы ФОРТС</MarketName>
+      <MarketName>МосБиржа фьючерсы</MarketName>
       <Name>Eu</Name>
       <Code>SPFB.Eu</Code>
       <Checed>true</Checed>
@@ -31,7 +31,7 @@
     <SecurityInfo>
       <MarketId>14</MarketId>
       <Id>17451</Id>
-      <MarketName>Фьючерсы ФОРТС</MarketName>
+      <MarketName>МосБиржа фьючерсы</MarketName>
       <Name>GAZP</Name>
       <Code>SPFB.GAZR</Code>
       <Checed>false</Checed>
@@ -39,7 +39,7 @@
     <SecurityInfo>
       <MarketId>14</MarketId>
       <Id>17453</Id>
-      <MarketName>Фьючерсы ФОРТС</MarketName>
+      <MarketName>МосБиржа фьючерсы</MarketName>
       <Name>LKOH</Name>
       <Code>SPFB.LKOH</Code>
       <Checed>false</Checed>
@@ -47,7 +47,7 @@
     <SecurityInfo>
       <MarketId>14</MarketId>
       <Id>81408</Id>
-      <MarketName>Фьючерсы ФОРТС</MarketName>
+      <MarketName>МосБиржа фьючерсы</MarketName>
       <Name>MIX</Name>
       <Code>SPFB.MIX</Code>
       <Checed>false</Checed>
@@ -55,7 +55,7 @@
     <SecurityInfo>
       <MarketId>14</MarketId>
       <Id>17455</Id>
-      <MarketName>Фьючерсы ФОРТС</MarketName>
+      <MarketName>МосБиржа фьючерсы</MarketName>
       <Name>RTS</Name>
       <Code>SPFB.RTS</Code>
       <Checed>false</Checed>
@@ -63,7 +63,7 @@
     <SecurityInfo>
       <MarketId>14</MarketId>
       <Id>17456</Id>
-      <MarketName>Фьючерсы ФОРТС</MarketName>
+      <MarketName>МосБиржа фьючерсы</MarketName>
       <Name>SBRF</Name>
       <Code>SPFB.SBRF</Code>
       <Checed>false</Checed>
@@ -71,7 +71,7 @@
     <SecurityInfo>
       <MarketId>14</MarketId>
       <Id>19899</Id>
-      <MarketName>Фьючерсы ФОРТС</MarketName>
+      <MarketName>МосБиржа фьючерсы</MarketName>
       <Name>Si</Name>
       <Code>SPFB.Si</Code>
       <Checed>false</Checed>
@@ -79,9 +79,17 @@
     <SecurityInfo>
       <MarketId>14</MarketId>
       <Id>19891</Id>
-      <MarketName>Фьючерсы ФОРТС</MarketName>
+      <MarketName>МосБиржа фьючерсы</MarketName>
       <Name>VTBR</Name>
       <Code>SPFB.VTBR</Code>
+      <Checed>false</Checed>
+    </SecurityInfo>
+	<SecurityInfo>
+      <MarketId>14</MarketId>
+      <Id>21989</Id>
+      <MarketName>МосБиржа фьючерсы</MarketName>
+      <Name>ED</Name>
+      <Code>SPFB.ED</Code>
       <Checed>false</Checed>
     </SecurityInfo>
     <SecurityInfo>
@@ -108,5 +116,5 @@
       <Code>EURUSD000TOM</Code>
       <Checed>false</Checed>
     </SecurityInfo>
-  </Security>
+	  </Security>
 </PropsFields>
