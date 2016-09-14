@@ -85,7 +85,7 @@ namespace FinamDownloader
             }
 
             buttonCancelDownload.Enabled = false;
-
+            buttonAddUrlSecurity.Enabled = false;
         }
 
 
@@ -837,6 +837,11 @@ namespace FinamDownloader
 
                  
             }
+        }
+
+        private void textBoxUrlSecurity_TextChanged(object sender, EventArgs e)
+        {
+            buttonAddUrlSecurity.Enabled = textBoxUrlSecurity.Text != "";
         }
     }
 }

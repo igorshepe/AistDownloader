@@ -327,6 +327,7 @@ namespace FinamDownloader
             this.textBoxUrlSecurity.Size = new System.Drawing.Size(364, 20);
             this.textBoxUrlSecurity.TabIndex = 23;
             this.textBoxUrlSecurity.Tag = "";
+            this.textBoxUrlSecurity.TextChanged += new System.EventHandler(this.textBoxUrlSecurity_TextChanged);
             // 
             // buttonAddUrlSecurity
             // 
