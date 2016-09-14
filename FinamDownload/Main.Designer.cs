@@ -66,6 +66,8 @@ namespace FinamDownloader
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.buttonCancelDownload = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.label8 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -294,7 +296,7 @@ namespace FinamDownloader
             // 
             // buttonSaveSettings
             // 
-            this.buttonSaveSettings.Location = new System.Drawing.Point(342, 269);
+            this.buttonSaveSettings.Location = new System.Drawing.Point(343, 348);
             this.buttonSaveSettings.Name = "buttonSaveSettings";
             this.buttonSaveSettings.Size = new System.Drawing.Size(80, 23);
             this.buttonSaveSettings.TabIndex = 21;
@@ -304,6 +306,8 @@ namespace FinamDownloader
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.linkLabel1);
             this.groupBox1.Controls.Add(this.tabControl1);
             this.groupBox1.Controls.Add(this.buttonSaveSettings);
             this.groupBox1.Controls.Add(this.textBoxUrlSecurity);
@@ -311,29 +315,27 @@ namespace FinamDownloader
             this.groupBox1.Controls.Add(this.treeViewSecurity);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(430, 299);
+            this.groupBox1.Size = new System.Drawing.Size(430, 377);
             this.groupBox1.TabIndex = 22;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
             // 
             // textBoxUrlSecurity
             // 
-            this.textBoxUrlSecurity.Location = new System.Drawing.Point(5, 269);
+            this.textBoxUrlSecurity.Location = new System.Drawing.Point(59, 322);
             this.textBoxUrlSecurity.Name = "textBoxUrlSecurity";
-            this.textBoxUrlSecurity.Size = new System.Drawing.Size(100, 20);
+            this.textBoxUrlSecurity.Size = new System.Drawing.Size(364, 20);
             this.textBoxUrlSecurity.TabIndex = 23;
-            this.textBoxUrlSecurity.Text = "http://www.finam.ru/profile/mosbirzha-fyuchersy/si/";
-            this.textBoxUrlSecurity.Visible = false;
+            this.textBoxUrlSecurity.Tag = "";
             // 
             // buttonAddUrlSecurity
             // 
-            this.buttonAddUrlSecurity.Location = new System.Drawing.Point(209, 269);
+            this.buttonAddUrlSecurity.Location = new System.Drawing.Point(262, 348);
             this.buttonAddUrlSecurity.Name = "buttonAddUrlSecurity";
             this.buttonAddUrlSecurity.Size = new System.Drawing.Size(75, 23);
             this.buttonAddUrlSecurity.TabIndex = 24;
             this.buttonAddUrlSecurity.Text = "Add security";
             this.buttonAddUrlSecurity.UseVisualStyleBackColor = true;
-            this.buttonAddUrlSecurity.Visible = false;
             this.buttonAddUrlSecurity.Click += new System.EventHandler(this.buttonAddUrlSecurity_Click);
             // 
             // treeViewSecurity
@@ -341,9 +343,10 @@ namespace FinamDownloader
             this.treeViewSecurity.CheckBoxes = true;
             this.treeViewSecurity.Location = new System.Drawing.Point(6, 173);
             this.treeViewSecurity.Name = "treeViewSecurity";
-            this.treeViewSecurity.Size = new System.Drawing.Size(417, 90);
+            this.treeViewSecurity.Size = new System.Drawing.Size(417, 143);
             this.treeViewSecurity.TabIndex = 26;
             this.treeViewSecurity.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeViewSecurity_AfterCheck);
+            this.treeViewSecurity.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treeViewSecurity_MouseDown);
             // 
             // buttonDownloadTxt
             // 
@@ -393,22 +396,43 @@ namespace FinamDownloader
             this.groupBox2.Controls.Add(this.progressBar1);
             this.groupBox2.Controls.Add(this.buttonCancelDownload);
             this.groupBox2.Controls.Add(this.buttonDownloadTxt);
-            this.groupBox2.Location = new System.Drawing.Point(12, 317);
+            this.groupBox2.Location = new System.Drawing.Point(12, 395);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(430, 202);
             this.groupBox2.TabIndex = 31;
             this.groupBox2.TabStop = false;
             // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(3, 348);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(65, 13);
+            this.linkLabel1.TabIndex = 27;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Finam quote";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(3, 325);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(53, 13);
+            this.label8.TabIndex = 28;
+            this.label8.Text = "Url quote:";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(456, 527);
+            this.ClientSize = new System.Drawing.Size(456, 607);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(472, 566);
-            this.MinimumSize = new System.Drawing.Size(472, 566);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(472, 646);
+            this.MinimumSize = new System.Drawing.Size(472, 646);
             this.Name = "Main";
             this.Text = "Download quotes from Finam";
             this.tabControl1.ResumeLayout(false);
@@ -459,6 +483,8 @@ namespace FinamDownloader
         public CheckBox checkBoxDateFromTxt;
         private GroupBox groupBox2;
         public Button buttonCancelDownload;
+        private LinkLabel linkLabel1;
+        private Label label8;
     }
 }
 

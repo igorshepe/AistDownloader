@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml;
 using FinamDownloader.Properties;
+using HtmlAgilityPack;
 using log4net;
 using log4net.Config;
 using static System.String;
@@ -309,8 +313,118 @@ namespace FinamDownloader
             WriteSetting();
         }
 
-        private void buttonAddUrlSecurity_Click(object sender, EventArgs e)
+        private void buttonAddUrlSecurity_Click(object sender, EventArgs e)// Добавление инструмента по ссылке с finam
         {
+            if (textBoxUrlSecurity.Text == "")
+            {
+                return;
+            }
+
+            L.Info(@"Add new Security");
+            var webGet = new HtmlWeb { OverrideEncoding = Encoding.GetEncoding(1251) };
+            var doc = webGet.Load(textBoxUrlSecurity.Text);
+
+            HtmlNode ournote = doc.DocumentNode.SelectSingleNode("//*[@id='content-block']/script[1]/text()");
+            if (ournote == null)
+            {
+                L.Info(@"Нет данных для парсинга");
+                MessageBox.Show(@"Нет данных для парсинга");
+                return;
+            }
+
+            string dd = ournote.InnerText;
+            var delimiter = ';';
+            String[] substrings = dd.Split(delimiter);
+            string bb = substrings[3];
+
+
+            string re1 = "(\\{)";   // Any Single Character 1
+            string re2 = "(\"quote\")"; // Double Quote String 1
+            string re3 = "(:)"; // Any Single Character 2
+            string re4 = "( )"; // White Space 1
+            string re5 = "(\\{)";   // Any Single Character 3
+            string re6 = "(\".*?\")";   // Double Quote String 2
+            string re7 = "(:)"; // Any Single Character 4
+            string re8 = "( )"; // White Space 2
+            string re9 = "(\\d+)";  // Integer Number 1
+            string re10 = "(,)";    // Any Single Character 5
+            string re11 = "( )";    // White Space 3
+            string re12 = "(\"code\")"; // Double Quote String 3
+            string re13 = "(:)";    // Any Single Character 6
+            string re14 = "( )";    // White Space 4
+            string re15 = "(\".*?\")";  // Double Quote String 4
+            string re16 = ".*?";    // Non-greedy match on filler
+            string re17 = " ";  // Uninteresting: ws
+            string re18 = ".*?";    // Non-greedy match on filler
+            string re19 = " ";  // Uninteresting: ws
+            string re20 = ".*?";    // Non-greedy match on filler
+            string re21 = "( )";    // White Space 5
+            string re22 = "(\"title\")";    // Double Quote String 5
+            string re23 = "(:)";    // Any Single Character 7
+            string re24 = "( )";    // White Space 6
+            string re25 = "(\".*?\")";  // Double Quote String 6
+            string re26 = ".*?";    // Non-greedy match on filler
+            string re27 = " ";  // Uninteresting: ws
+            string re28 = ".*?";    // Non-greedy match on filler
+            string re29 = " ";  // Uninteresting: ws
+            string re30 = ".*?";    // Non-greedy match on filler
+            string re31 = " ";  // Uninteresting: ws
+            string re32 = ".*?";    // Non-greedy match on filler
+            string re33 = " ";  // Uninteresting: ws
+            string re34 = ".*?";    // Non-greedy match on filler
+            string re35 = "( )";    // White Space 7
+            string re36 = "(\"market\")";   // Double Quote String 7
+            string re37 = "(:)";    // Any Single Character 8
+            string re38 = "( )";    // White Space 8
+            string re39 = "(\\{)";  // Any Single Character 9
+            string re40 = "(\"id\")";   // Double Quote String 8
+            string re41 = "(:)";    // Any Single Character 10
+            string re42 = "( )";    // White Space 9
+            string re43 = "(\\d+)"; // Integer Number 2
+            string re44 = "(,)";    // Any Single Character 11
+            string re45 = "( )";    // White Space 10
+            string re46 = "(\"title\")";    // Double Quote String 9
+            string re47 = "(:)";    // Any Single Character 12
+            string re48 = "( )";    // White Space 11
+            string re49 = "(\".*?\")";  // Double Quote String 10
+            String[] quoting = { };
+            Regex r = new Regex(re1 + re2 + re3 + re4 + re5 + re6 + re7 + re8 + re9 + re10 + re11 + re12 + re13 + re14 + re15 + re16 + re17 + re18 + re19 + re20 + re21 + re22 + re23 + re24 + re25 + re26 + re27 + re28 + re29 + re30 + re31 + re32 + re33 + re34 + re35 + re36 + re37 + re38 + re39 + re40 + re41 + re42 + re43 + re44 + re45 + re46 + re47 + re48 + re49, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+            Match m = r.Match(bb);
+
+            if (m.Success)
+            {
+                char[] charsToTrim = { '"', ' ', '\'' };
+                 
+                var id = Convert.ToInt32(m.Groups[9].Value); // Id 
+                 
+                var code = m.Groups[15].ToString().Trim(charsToTrim); // Code
+                 
+                var name = m.Groups[20].ToString().Trim(charsToTrim); // Name
+                
+                var marketId = Convert.ToInt32(m.Groups[29].Value);  // MarketId
+                
+               var marketName = m.Groups[35].ToString().Trim(charsToTrim); // MarketName
+
+                if (Security.Any(t => t.Code == code))
+                {
+                    L.Info(@"Инструмент " + name + @" уже есть в коллекции");
+                    MessageBox.Show(@"Инструмент "+ name +@" уже есть в коллекции"  );
+                    textBoxUrlSecurity.Clear();
+                    return;
+                }
+
+                Security.Add(new SecurityInfo { Checed = true, Code = code, Id = id, MarketId = marketId, MarketName = marketName,Name = name });
+                L.Info($"New security:id {id},code {code},name {name},marketId {marketId}, marketName {marketName} ");
+
+                var time = DateTime.Now.ToString("T") + ": ";
+                TextBox textBox = textBoxLog;
+                string str = textBox.Text + time + ($"New security: {id}, {code}, {name}, {marketId}, {marketName} ") + Environment.NewLine;
+                textBox.Text = str;
+            }
+            textBoxUrlSecurity.Clear();
+            WriteSetting();
+            LoadTreeview();
+
 
         }
 
@@ -431,6 +545,10 @@ namespace FinamDownloader
 
         private void LoadTreeview()
         {
+            if (treeViewSecurity != null)
+            {
+                treeViewSecurity.Nodes.Clear();
+            }
 
             string checkname = Empty;
             foreach (SecurityInfo t in Security)
@@ -446,8 +564,23 @@ namespace FinamDownloader
                 }
                 else
                 {
+                    bool compare = false;
                     checkname = t.MarketName;
-                    treeViewSecurity.Nodes.Add(t.MarketName);
+                    for (int i = 0; i < treeViewSecurity.Nodes.Count; i++)
+                    {
+                       var dd =  treeViewSecurity.Nodes[i].Text;
+                        if (dd == checkname)
+                        {
+                            compare = true;
+                        }
+                    
+                    }
+
+                    if (!compare)
+                    {
+                        treeViewSecurity.Nodes.Add(t.MarketName); 
+                     }
+                    
                 }
             }
 
@@ -642,6 +775,67 @@ namespace FinamDownloader
                 
                 if ( !auto)
                     MessageBox.Show(this, @"За эту дату нет данных", @"Security: " + sec);
+            }
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            this.linkLabel1.LinkVisited = true;
+
+            // Navigate to a URL.
+            System.Diagnostics.Process.Start("http://www.finam.ru/analysis/quotes/");
+        }
+
+        private void treeViewSecurity_MouseDown(object sender, MouseEventArgs e)
+        {
+            switch (e.Button)
+            {
+                // Remove the TreeNode under the mouse cursor 
+                // if the right mouse button was clicked. 
+                case MouseButtons.Right:
+                {
+                        var nameDelSec = treeViewSecurity.GetNodeAt(e.X, e.Y);
+
+                    if (Security.Any(t => t.MarketName == nameDelSec.Text))
+                    {
+                        return;
+                    }
+
+                        string message = ($"Delete security: {nameDelSec.Text} ?");
+                        const string caption = "Delete data";
+                        var result = MessageBox.Show(message, caption,
+                                                     MessageBoxButtons.YesNo,
+                                                     MessageBoxIcon.Question);
+
+                        // If the no button was pressed ...
+                        if (result == DialogResult.Yes)
+                        {
+                            
+                            foreach (var t in Security)
+                            {
+                                if (t.Name == nameDelSec.Text)
+                                {
+                                    L.Info($"Delete {t.Name}, {t.Code}, {t.Id}, {t.MarketName}, {t.MarketId}");
+
+                                    var time = DateTime.Now.ToString("T") + ": ";
+                                    TextBox textBox = textBoxLog;
+                                    string str = textBox.Text + time + ($"Delete {t.Name}, {t.Code}, {t.Id}, {t.MarketName}, {t.MarketId}") + Environment.NewLine;
+                                    textBox.Text = str;
+
+                                    Security.Remove(t);
+                                   break;
+                                }
+
+                                 
+                            }
+                            LoadTreeview();
+                        }
+
+                        WriteSetting();
+                }
+                    break;
+
+                 
             }
         }
     }

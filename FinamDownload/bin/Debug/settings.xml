@@ -14,22 +14,6 @@
   <Security>
     <SecurityInfo>
       <MarketId>14</MarketId>
-      <Id>22460</Id>
-      <MarketName>МосБиржа фьючерсы</MarketName>
-      <Name>BR</Name>
-      <Code>SPFB.BR</Code>
-      <Checed>true</Checed>
-    </SecurityInfo>
-    <SecurityInfo>
-      <MarketId>14</MarketId>
-      <Id>22010</Id>
-      <MarketName>МосБиржа фьючерсы</MarketName>
-      <Name>Eu</Name>
-      <Code>SPFB.Eu</Code>
-      <Checed>true</Checed>
-    </SecurityInfo>
-    <SecurityInfo>
-      <MarketId>14</MarketId>
       <Id>17451</Id>
       <MarketName>МосБиржа фьючерсы</MarketName>
       <Name>GAZP</Name>
@@ -84,20 +68,12 @@
       <Code>SPFB.VTBR</Code>
       <Checed>false</Checed>
     </SecurityInfo>
-	<SecurityInfo>
+    <SecurityInfo>
       <MarketId>14</MarketId>
       <Id>21989</Id>
       <MarketName>МосБиржа фьючерсы</MarketName>
       <Name>ED</Name>
       <Code>SPFB.ED</Code>
-      <Checed>false</Checed>
-    </SecurityInfo>
-    <SecurityInfo>
-      <MarketId>45</MarketId>
-      <Id>182398</Id>
-      <MarketName>Валюта</MarketName>
-      <Name>EURRUB_TOM</Name>
-      <Code>EUR_RUB__TOM</Code>
       <Checed>false</Checed>
     </SecurityInfo>
     <SecurityInfo>
@@ -108,13 +84,5 @@
       <Code>USD000UTSTOM</Code>
       <Checed>false</Checed>
     </SecurityInfo>
-    <SecurityInfo>
-      <MarketId>45</MarketId>
-      <Id>182399</Id>
-      <MarketName>Валюта</MarketName>
-      <Name>EURUSD_TOM</Name>
-      <Code>EURUSD000TOM</Code>
-      <Checed>false</Checed>
-    </SecurityInfo>
-	  </Security>
+  </Security>
 </PropsFields>
