@@ -3,8 +3,8 @@
   <XmlFileName>C:\Repository\AistDownloader\FinamDownload\bin\Debug\settings.xml</XmlFileName>
   <Folder>C:\Users\oemnau\Desktop\TestHistory</Folder>
   <SplitChar>0</SplitChar>
-  <TimeFrom>2016-08-06T00:00:00</TimeFrom>
-  <TimeTo>2016-08-20T00:00:00</TimeTo>
+  <TimeFrom>2016-08-01T00:00:00</TimeFrom>
+  <TimeTo>2016-08-10T00:00:00</TimeTo>
   <Period>1</Period>
   <TimeCandle>0</TimeCandle>
   <FileheaderRow>true</FileheaderRow>
@@ -18,7 +18,7 @@
       <MarketName>МосБиржа фьючерсы</MarketName>
       <Name>GAZP</Name>
       <Code>SPFB.GAZR</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>14</MarketId>
@@ -26,7 +26,7 @@
       <MarketName>МосБиржа фьючерсы</MarketName>
       <Name>LKOH</Name>
       <Code>SPFB.LKOH</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>14</MarketId>
@@ -34,7 +34,7 @@
       <MarketName>МосБиржа фьючерсы</MarketName>
       <Name>MIX</Name>
       <Code>SPFB.MIX</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>14</MarketId>
@@ -42,7 +42,7 @@
       <MarketName>МосБиржа фьючерсы</MarketName>
       <Name>RTS</Name>
       <Code>SPFB.RTS</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>14</MarketId>
@@ -50,7 +50,7 @@
       <MarketName>МосБиржа фьючерсы</MarketName>
       <Name>SBRF</Name>
       <Code>SPFB.SBRF</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>14</MarketId>
@@ -58,7 +58,7 @@
       <MarketName>МосБиржа фьючерсы</MarketName>
       <Name>Si</Name>
       <Code>SPFB.Si</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>14</MarketId>
@@ -66,7 +66,7 @@
       <MarketName>МосБиржа фьючерсы</MarketName>
       <Name>VTBR</Name>
       <Code>SPFB.VTBR</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>14</MarketId>
@@ -74,7 +74,7 @@
       <MarketName>МосБиржа фьючерсы</MarketName>
       <Name>ED</Name>
       <Code>SPFB.ED</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>45</MarketId>
@@ -82,7 +82,7 @@
       <MarketName>Валюта</MarketName>
       <Name>USDRUB_TOM</Name>
       <Code>USD000UTSTOM</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
   </Security>
 </PropsFields>

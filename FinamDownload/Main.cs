@@ -26,6 +26,7 @@ namespace FinamDownloader
         public int CancelAsync; // 1 нет файлов для объединения 2 отмена кнопкой
         public bool AutoloadingStart = false ;
         private readonly string _settingsFolder = Environment.CurrentDirectory + "\\settings.xml";
+         
         public Main(string[] args)
         {
             var arg = args;
@@ -114,54 +115,136 @@ namespace FinamDownloader
 
         }
         public void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        { 
-                StateButton(true);
+        {
+            StateButton(true);
             L.Info("Strat backgroundWorker1: " + backgroundWorker1.IsBusy);
 
-                List<SettingsMain> settingsData = GetSettings();
+            List<SettingsMain> settingsData = GetSettings();
+            
+            if (settingsData == null)
+                backgroundWorker1.CancelAsync();
 
-                if (settingsData == null)
-                    backgroundWorker1.CancelAsync();
+            var settings = settingsData[0];
 
+            backgroundWorker1.ReportProgress(10, "Start work");
 
-                backgroundWorker1.ReportProgress(10, "Start work");
+            if (backgroundWorker1.CancellationPending)
+                return;
+
+            if (checkBoxDateFromTxt.Checked) // Берем данные из существующих файлов
+            {
+                L.Debug("Date from TXT: " + checkBoxDateFromTxt.Checked);
+
+                var fileData = LoadTxtFile(settingsData);
+
 
                 if (backgroundWorker1.CancellationPending)
                     return;
 
-                if (checkBoxDateFromTxt.Checked)
+                backgroundWorker1.ReportProgress(20, "Files in the folder: " + fileData.Count);
+
+                 
+                foreach (var security in Security)
                 {
-                    L.Debug("Date from TXT: " + checkBoxDateFromTxt.Checked);
+                    var index = 1;
+                    foreach (var filesSecurities in fileData)
+                    {
+                        if (backgroundWorker1.CancellationPending)
+                            return;
 
-                    var fileData = LoadTxtFile(settingsData);
+                        if (security.Name == filesSecurities.Sec)
+                        {
+                            if (!(filesSecurities.Dat.AddDays(-1) == settings.DateTo))
+                            {
+                                AddTextLog($"Download: {filesSecurities.Sec}");
+                                var str = FinamLoading.DownloadData(security, filesSecurities, settingsData, true);
+                                int state = CheckStringData(str, settingsData[0].Autostart, filesSecurities.Sec);
+                                 
+
+                                if (state == 0 || state == 3)
+                                {
+                                    ChangeFile(str, filesSecurities, settings);
+                                }
+                                else if (state == 2 || state == 4)
+                                {
+                                    backgroundWorker1.CancelAsync();
+                                    CancelAsync = 2;
+                                }
+                                else if (state == 1)
+                                {
+                                    str = Empty;
+                                    ChangeFile(str, filesSecurities, settings);
+                                }
 
 
-                    if (backgroundWorker1.CancellationPending)
-                        return;
+                            }
+                            else
+                            {
+                                AddTextLog("Дата файла и дата загрузки истории совпадают: " + filesSecurities.Sec + " Date from: " + filesSecurities.Dat.AddDays(-1).ToString("d") + ". Date to: " + settings.DateTo.ToString("d"));
+                                L.Info("Дата файла и дата загрузки истории совпадают: " + filesSecurities.Sec + " Date from: " + filesSecurities.Dat.AddDays(-1).ToString("d") + ". Date to: " + settings.DateTo.ToString("d"));
+                            }
 
-                    backgroundWorker1.ReportProgress(20, "Files in the folder: " + fileData.Count);
+                            backgroundWorker1.ReportProgress(100 * index / fileData.Count);
+                            ++index;
+                        }
 
-                    FinamLoading.Download(Security, fileData, settingsData);
 
-                    backgroundWorker1.ReportProgress(50, "All files save");
+                    }
+
+                    
                 }
-                else
-                {
+                
+                //FinamLoading.Download(Security, fileData, settingsData);
+
+                backgroundWorker1.ReportProgress(50, "All files save");
+            }
+            else // Создаем новые файлы
+            {
                 if (backgroundWorker1.CancellationPending)
                     return;
-
 
                 backgroundWorker1.ReportProgress(20);
 
-                    var fileData = new List<FileSecurity>();
-
+                var fileData = new FileSecurity();
+                
                 if (backgroundWorker1.CancellationPending)
                     return;
 
-                FinamLoading.Download(Security, fileData, settingsData);
-                backgroundWorker1.ReportProgress(50, "All files save");
+                foreach (var security in Security)
+                {
+                    if (backgroundWorker1.CancellationPending)
+                        return;
+
+                    if (security.Checed)
+                    {
+                        AddTextLog($"Download: {security.Name}");
+                        var str = FinamLoading.DownloadData(security, fileData, settingsData, false);
+                        int state = CheckStringData(str, settingsData[0].Autostart, security.Name);
+
+                        if (state == 0 || state == 3)
+                        {
+                            SaveToFile(str, security, settings);
+                        }
+                        else if (state == 2 || state == 4)
+                        {
+                            backgroundWorker1.CancelAsync();
+                            CancelAsync = 2;
+                        }
+                        else if (state == 1)
+                        {
+                            str = Empty;
+                            SaveToFile(str, security, settings);
+                        }
+                        
+                    }
                 }
-                backgroundWorker1.ReportProgress(100, "Download complete");
+                //var oldFileData = new List<FileSecurity>();
+                //FinamLoading.Download(Security, oldFileData, settingsData);
+                backgroundWorker1.ReportProgress(50, "All files save");
+            }
+
+
+            backgroundWorker1.ReportProgress(100, "Download complete");
             
             
 
@@ -175,16 +258,8 @@ namespace FinamDownloader
                 return;
             }
 
-            if (!IsNullOrEmpty(e.UserState as string))
-            {
-                var time = DateTime.Now.ToString("T") + ": ";
-                TextBox textBox = textBoxLog;
-                string str = textBox.Text + time + (e.UserState as string) + Environment.NewLine;
-                textBox.Text = str;
-
-            }
-            textBoxLog.SelectionStart = textBoxLog.TextLength;
-            textBoxLog.ScrollToCaret();
+            AddTextLog(e.UserState as string);
+             
             progressBar1.Value = e.ProgressPercentage;
         }
         void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -196,10 +271,7 @@ namespace FinamDownloader
             }
             else if (CancelAsync == 2)
             {
-                var time = DateTime.Now.ToString("T") + ": ";
-                TextBox textBox = textBoxLog;
-                string str = textBox.Text + time + @"Cancel download" + Environment.NewLine;
-                textBox.Text = str;
+                AddTextLog("Cancel download");
                 L.Info("Cancel download");
                 MessageBox.Show(this, @"Cancel download");
             }
@@ -416,10 +488,8 @@ namespace FinamDownloader
                 Security.Add(new SecurityInfo { Checed = true, Code = code, Id = id, MarketId = marketId, MarketName = marketName,Name = name });
                 L.Info($"New security:id {id},code {code},name {name},marketId {marketId}, marketName {marketName} ");
 
-                var time = DateTime.Now.ToString("T") + ": ";
-                TextBox textBox = textBoxLog;
-                string str = textBox.Text + time + ($"New security: {id}, {code}, {name}, {marketId}, {marketName} ") + Environment.NewLine;
-                textBox.Text = str;
+                 AddTextLog($"New security: {id}, {code}, {name}, {marketId}, {marketName} ");
+                 
             }
             textBoxUrlSecurity.Clear();
             WriteSetting();
@@ -445,6 +515,7 @@ namespace FinamDownloader
 
         public void SaveToFile(string data, SecurityInfo security, SettingsMain settingsData)
         {
+           
             CheckStringData(data, settingsData.Autostart, security.Name);
 
             L.Info("Start SaveToFile: " + security.Name);
@@ -464,6 +535,7 @@ namespace FinamDownloader
                 {
                     sw.Write(data);
                     sw.Close();
+                    AddTextLog($"File saved: {security.Name}");
 
                 }
             }
@@ -472,7 +544,8 @@ namespace FinamDownloader
 
         public void ChangeFile(string data, FileSecurity fileSec, SettingsMain settingsData)
         {
-            CheckStringData(data, settingsData.Autostart, fileSec.Sec);
+           
+            
             L.Info("Start ChangeFile: " + fileSec.Sec);
 
 
@@ -504,6 +577,7 @@ namespace FinamDownloader
 
 
             File.Move(filename, newfilename);
+            AddTextLog($"Merge done: {fileSec.Sec }");
         }
 
 
@@ -753,29 +827,41 @@ namespace FinamDownloader
         }
 
         private delegate void DelegAutoLoading(bool state);
-        private void CheckStringData(string str, bool auto, string sec)
+        private int CheckStringData(string str, bool auto, string sec)
         {
+             
+
             if (str == "Вы запросили данные за слишком большой временной период.")
             {
                 L.Info(str);
                 if (!auto) MessageBox.Show(this, str, @"Security: " + sec);
-
-                return;
+                return 1;
             }
             if (str == "Система уже обрабатывает Ваш запрос. Дождитесь окончания обработки.")
             {
+                AddTextLog(str);
                 L.Info(str);
                 if (!auto)
                     MessageBox.Show(this, str,@"Security: "+sec);
-                return;
+                return 2;
             }
             if (str == "")
             {
                 L.Info("За эту дату нет данных");
-                
-                if ( !auto)
+
+                if (!auto)
                     MessageBox.Show(this, @"За эту дату нет данных", @"Security: " + sec);
+                return 3;
             }
+            if (str== "Exception")
+            {
+                L.Info("Exception download");
+
+                if (!auto)
+                    MessageBox.Show(this, @"Exception download", @"Security: " + sec);
+                return 4;
+            }
+            return 0;
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -817,10 +903,9 @@ namespace FinamDownloader
                                 {
                                     L.Info($"Delete {t.Name}, {t.Code}, {t.Id}, {t.MarketName}, {t.MarketId}");
 
-                                    var time = DateTime.Now.ToString("T") + ": ";
-                                    TextBox textBox = textBoxLog;
-                                    string str = textBox.Text + time + ($"Delete {t.Name}, {t.Code}, {t.Id}, {t.MarketName}, {t.MarketId}") + Environment.NewLine;
-                                    textBox.Text = str;
+                                     
+                                    AddTextLog($"Delete {t.Name}, {t.Code}, {t.Id}, {t.MarketName}, {t.MarketId}"); 
+                                    
 
                                     Security.Remove(t);
                                    break;
@@ -842,6 +927,24 @@ namespace FinamDownloader
         private void textBoxUrlSecurity_TextChanged(object sender, EventArgs e)
         {
             buttonAddUrlSecurity.Enabled = textBoxUrlSecurity.Text != "";
+        }
+
+        public void AddTextLog(string message)
+        {
+            if (!IsNullOrEmpty(message))
+            {
+                var time = DateTime.Now.ToString("T") + ": ";
+
+                if (InvokeRequired)
+                {
+                    this.Invoke(new Action<string>(AddTextLog), message);
+                    return;
+                }
+                textBoxLog.AppendText(time + message + Environment.NewLine);
+
+
+            }
+             
         }
     }
 }
