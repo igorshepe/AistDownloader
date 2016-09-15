@@ -126,7 +126,7 @@ namespace FinamDownloader
 
             var settings = settingsData[0];
 
-            backgroundWorker1.ReportProgress(10, "Start work");
+            AddTextLog("Start work");
 
             if (backgroundWorker1.CancellationPending)
                 return;
@@ -141,12 +141,13 @@ namespace FinamDownloader
                 if (backgroundWorker1.CancellationPending)
                     return;
 
-                backgroundWorker1.ReportProgress(20, "Files in the folder: " + fileData.Count);
+                // backgroundWorker1.ReportProgress(20, "Files in the folder: " + fileData.Count);
 
-                 
+                var index = 1;
+
                 foreach (var security in Security)
                 {
-                    var index = 1;
+                    
                     foreach (var filesSecurities in fileData)
                     {
                         if (backgroundWorker1.CancellationPending)
@@ -154,6 +155,8 @@ namespace FinamDownloader
 
                         if (security.Name == filesSecurities.Sec)
                         {
+                           
+
                             if (!(filesSecurities.Dat.AddDays(-1) == settings.DateTo))
                             {
                                 AddTextLog($"Download: {filesSecurities.Sec}");
@@ -176,6 +179,8 @@ namespace FinamDownloader
                                     ChangeFile(str, filesSecurities, settings);
                                 }
 
+                                backgroundWorker1.ReportProgress(100 * index / fileData.Count);
+                                ++index;
 
                             }
                             else
@@ -184,8 +189,7 @@ namespace FinamDownloader
                                 L.Info("Дата файла и дата загрузки истории совпадают: " + filesSecurities.Sec + " Date from: " + filesSecurities.Dat.AddDays(-1).ToString("d") + ". Date to: " + settings.DateTo.ToString("d"));
                             }
 
-                            backgroundWorker1.ReportProgress(100 * index / fileData.Count);
-                            ++index;
+                            
                         }
 
 
@@ -196,19 +200,21 @@ namespace FinamDownloader
                 
                 //FinamLoading.Download(Security, fileData, settingsData);
 
-                backgroundWorker1.ReportProgress(50, "All files save");
+               AddTextLog("All files save");
             }
             else // Создаем новые файлы
             {
                 if (backgroundWorker1.CancellationPending)
                     return;
 
-                backgroundWorker1.ReportProgress(20);
+               
 
                 var fileData = new FileSecurity();
                 
                 if (backgroundWorker1.CancellationPending)
                     return;
+                var checedCount = Security.Count(sec => sec.Checed);
+                var index = 1;
 
                 foreach (var security in Security)
                 {
@@ -217,6 +223,8 @@ namespace FinamDownloader
 
                     if (security.Checed)
                     {
+                        
+
                         AddTextLog($"Download: {security.Name}");
                         var str = FinamLoading.DownloadData(security, fileData, settingsData, false);
                         int state = CheckStringData(str, settingsData[0].Autostart, security.Name);
@@ -235,16 +243,18 @@ namespace FinamDownloader
                             str = Empty;
                             SaveToFile(str, security, settings);
                         }
-                        
+
+                        backgroundWorker1.ReportProgress(100 * index / checedCount);
+                        ++index;
+
                     }
+
                 }
-                //var oldFileData = new List<FileSecurity>();
-                //FinamLoading.Download(Security, oldFileData, settingsData);
-                backgroundWorker1.ReportProgress(50, "All files save");
+               AddTextLog( "All files save");
             }
 
 
-            backgroundWorker1.ReportProgress(100, "Download complete");
+            AddTextLog( "Download complete");
             
             
 
@@ -602,7 +612,7 @@ namespace FinamDownloader
             if (fileHeader.Count == 0)
             {
                 L.Info("There are no files to merge");
-                backgroundWorker1.ReportProgress(20, "There are no files to merge");
+               AddTextLog( "There are no files to merge");
                 CancelAsync = 1;
                 backgroundWorker1.CancelAsync();
 
