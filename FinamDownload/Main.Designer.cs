@@ -57,6 +57,8 @@ namespace FinamDownloader
             this.label6 = new System.Windows.Forms.Label();
             this.buttonSaveSettings = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.textBoxUrlSecurity = new System.Windows.Forms.TextBox();
             this.buttonAddUrlSecurity = new System.Windows.Forms.Button();
             this.treeViewSecurity = new System.Windows.Forms.TreeView();
@@ -66,8 +68,6 @@ namespace FinamDownloader
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.buttonCancelDownload = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.label8 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -320,6 +320,26 @@ namespace FinamDownloader
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Settings";
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(3, 325);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(53, 13);
+            this.label8.TabIndex = 28;
+            this.label8.Text = "Url quote:";
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(3, 348);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(65, 13);
+            this.linkLabel1.TabIndex = 27;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Finam quote";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
             // textBoxUrlSecurity
             // 
             this.textBoxUrlSecurity.Location = new System.Drawing.Point(59, 322);
@@ -403,26 +423,6 @@ namespace FinamDownloader
             this.groupBox2.TabIndex = 31;
             this.groupBox2.TabStop = false;
             // 
-            // linkLabel1
-            // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(3, 348);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(65, 13);
-            this.linkLabel1.TabIndex = 27;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Finam quote";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(3, 325);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(53, 13);
-            this.label8.TabIndex = 28;
-            this.label8.Text = "Url quote:";
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -475,7 +475,6 @@ namespace FinamDownloader
         private Button buttonAddUrlSecurity;
         private TreeView treeViewSecurity;
         private Button buttonDownloadTxt;
-        private TextBox textBoxLog;
         private CheckBox checkBoxMergeFiles;
         private Label label7;
         private CheckBox checkBoxYesterday;
@@ -486,6 +485,7 @@ namespace FinamDownloader
         public Button buttonCancelDownload;
         private LinkLabel linkLabel1;
         private Label label8;
+        private TextBox textBoxLog;
     }
 }
 
