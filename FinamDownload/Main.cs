@@ -101,7 +101,8 @@ namespace FinamDownloader
         }
 
         private delegate void StateButtonDownload(bool state);
-        
+
+        private delegate void StateTreeViewSecurity(bool state);
         private void StateButton(bool state)
         {
             if (buttonCancelDownload.InvokeRequired)
@@ -114,9 +115,24 @@ namespace FinamDownloader
             }
 
         }
+
+        private void StateTreeView (bool state)
+        {
+            if (treeViewSecurity.InvokeRequired)
+            {
+                StateTreeViewSecurity dd = StateTreeView; Invoke(dd, state);
+            }
+            else
+            {
+                treeViewSecurity.Enabled = state;
+            }
+
+        }
         public void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             StateButton(true);
+            StateTreeView(false);
+
             L.Info("Strat backgroundWorker1: " + backgroundWorker1.IsBusy);
 
             List<SettingsMain> settingsData = GetSettings();
@@ -373,6 +389,12 @@ namespace FinamDownloader
             }
 
             AddTextLog(e.UserState as string);
+
+            if (e.ProgressPercentage > 100)
+            {
+                L.Info($"A value greater than 100 : {e.ProgressPercentage}  {e.UserState}");
+                return;
+            }
              
             progressBar1.Value = e.ProgressPercentage;
         }
@@ -409,6 +431,7 @@ namespace FinamDownloader
             CancelAsync = 0;
             progressBar1.Value = 0;
             StateButton(false);
+            StateTreeView(true);
         }
 
         private void buttonCancelDownload_Click(object sender, EventArgs e)
