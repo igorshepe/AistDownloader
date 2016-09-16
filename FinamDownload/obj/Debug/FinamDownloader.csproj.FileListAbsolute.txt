@@ -115,3 +115,4 @@ C:\Repository\AistDownloader\FinamDownload\obj\Debug\FinamDownloader.pdb
 C:\Repository\AistDownloader\FinamDownload\bin\Debug\HtmlAgilityPack.dll
 C:\Repository\AistDownloader\FinamDownload\bin\Debug\HtmlAgilityPack.pdb
 C:\Repository\AistDownloader\FinamDownload\bin\Debug\HtmlAgilityPack.xml
+C:\Repository\AistDownloader\FinamDownload\obj\Debug\FinamDownloader.csprojResolveAssemblyReference.cache
