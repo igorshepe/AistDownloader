@@ -31,6 +31,7 @@ namespace FinamDownloader
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -68,6 +69,7 @@ namespace FinamDownloader
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.buttonCancelDownload = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.toolTipUrlTextBox = new System.Windows.Forms.ToolTip(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -103,7 +105,7 @@ namespace FinamDownloader
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(413, 121);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "System";
+            this.tabPage1.Text = "Системные";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // checkBoxYesterday
@@ -111,16 +113,16 @@ namespace FinamDownloader
             this.checkBoxYesterday.AutoSize = true;
             this.checkBoxYesterday.Location = new System.Drawing.Point(257, 64);
             this.checkBoxYesterday.Name = "checkBoxYesterday";
-            this.checkBoxYesterday.Size = new System.Drawing.Size(73, 17);
+            this.checkBoxYesterday.Size = new System.Drawing.Size(56, 17);
             this.checkBoxYesterday.TabIndex = 23;
-            this.checkBoxYesterday.Text = "Yesterday";
+            this.checkBoxYesterday.Text = "Вчера";
             this.checkBoxYesterday.UseVisualStyleBackColor = true;
             this.checkBoxYesterday.CheckedChanged += new System.EventHandler(this.checkBoxYesterday_CheckedChanged);
             // 
             // checkBoxMergeFiles
             // 
             this.checkBoxMergeFiles.AutoSize = true;
-            this.checkBoxMergeFiles.Location = new System.Drawing.Point(96, 93);
+            this.checkBoxMergeFiles.Location = new System.Drawing.Point(111, 93);
             this.checkBoxMergeFiles.Name = "checkBoxMergeFiles";
             this.checkBoxMergeFiles.Size = new System.Drawing.Size(15, 14);
             this.checkBoxMergeFiles.TabIndex = 22;
@@ -132,38 +134,38 @@ namespace FinamDownloader
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(6, 93);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(58, 13);
+            this.label7.Size = new System.Drawing.Size(103, 13);
             this.label7.TabIndex = 21;
-            this.label7.Text = "Merge files";
+            this.label7.Text = "Объединять фалы ";
             // 
             // checkBoxDateFromTxt
             // 
             this.checkBoxDateFromTxt.AutoSize = true;
             this.checkBoxDateFromTxt.Location = new System.Drawing.Point(257, 37);
             this.checkBoxDateFromTxt.Name = "checkBoxDateFromTxt";
-            this.checkBoxDateFromTxt.Size = new System.Drawing.Size(70, 17);
+            this.checkBoxDateFromTxt.Size = new System.Drawing.Size(75, 17);
             this.checkBoxDateFromTxt.TabIndex = 20;
-            this.checkBoxDateFromTxt.Text = "FromTXT";
+            this.checkBoxDateFromTxt.Text = "Из файла";
             this.checkBoxDateFromTxt.UseVisualStyleBackColor = true;
             this.checkBoxDateFromTxt.CheckStateChanged += new System.EventHandler(this.checkBoxDateFromTxt_CheckStateChanged);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 69);
+            this.label4.Location = new System.Drawing.Point(69, 65);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(20, 13);
+            this.label4.Size = new System.Drawing.Size(21, 13);
             this.label4.TabIndex = 19;
-            this.label4.Text = "To";
+            this.label4.Text = "По";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 42);
+            this.label3.Location = new System.Drawing.Point(44, 38);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(30, 13);
+            this.label3.Size = new System.Drawing.Size(46, 13);
             this.label3.TabIndex = 18;
-            this.label3.Text = "From";
+            this.label3.Text = "Дата: С";
             // 
             // dateTimePickerTo
             // 
@@ -171,6 +173,7 @@ namespace FinamDownloader
             this.dateTimePickerTo.Name = "dateTimePickerTo";
             this.dateTimePickerTo.Size = new System.Drawing.Size(153, 20);
             this.dateTimePickerTo.TabIndex = 17;
+            this.dateTimePickerTo.ValueChanged += new System.EventHandler(this.dateTimePickerTo_ValueChanged);
             // 
             // dateTimePickerFrom
             // 
@@ -178,15 +181,16 @@ namespace FinamDownloader
             this.dateTimePickerFrom.Name = "dateTimePickerFrom";
             this.dateTimePickerFrom.Size = new System.Drawing.Size(153, 20);
             this.dateTimePickerFrom.TabIndex = 16;
+            this.dateTimePickerFrom.ValueChanged += new System.EventHandler(this.dateTimePickerFrom_ValueChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 16);
+            this.label1.Location = new System.Drawing.Point(7, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(69, 13);
+            this.label1.Size = new System.Drawing.Size(84, 13);
             this.label1.TabIndex = 14;
-            this.label1.Text = "Folder history";
+            this.label1.Text = "Путь к истории";
             // 
             // buttonTXTDir
             // 
@@ -200,7 +204,7 @@ namespace FinamDownloader
             // 
             // textBoxTXTDir
             // 
-            this.textBoxTXTDir.Location = new System.Drawing.Point(97, 8);
+            this.textBoxTXTDir.Location = new System.Drawing.Point(97, 9);
             this.textBoxTXTDir.Name = "textBoxTXTDir";
             this.textBoxTXTDir.Size = new System.Drawing.Size(262, 20);
             this.textBoxTXTDir.TabIndex = 11;
@@ -220,7 +224,7 @@ namespace FinamDownloader
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(413, 121);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Finam";
+            this.tabPage2.Text = "Финам";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // label2
@@ -228,15 +232,15 @@ namespace FinamDownloader
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(6, 67);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(37, 13);
+            this.label2.Size = new System.Drawing.Size(45, 13);
             this.label2.TabIndex = 17;
-            this.label2.Text = "Period";
+            this.label2.Text = "Период";
             // 
             // comboBoxPeriod
             // 
             this.comboBoxPeriod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxPeriod.FormattingEnabled = true;
-            this.comboBoxPeriod.Location = new System.Drawing.Point(88, 64);
+            this.comboBoxPeriod.Location = new System.Drawing.Point(118, 64);
             this.comboBoxPeriod.Name = "comboBoxPeriod";
             this.comboBoxPeriod.Size = new System.Drawing.Size(121, 21);
             this.comboBoxPeriod.TabIndex = 16;
@@ -244,7 +248,7 @@ namespace FinamDownloader
             // comboBoxTimeCandle
             // 
             this.comboBoxTimeCandle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxTimeCandle.Location = new System.Drawing.Point(88, 10);
+            this.comboBoxTimeCandle.Location = new System.Drawing.Point(118, 10);
             this.comboBoxTimeCandle.Name = "comboBoxTimeCandle";
             this.comboBoxTimeCandle.Size = new System.Drawing.Size(121, 21);
             this.comboBoxTimeCandle.TabIndex = 14;
@@ -252,7 +256,7 @@ namespace FinamDownloader
             // checkBoxFileheaderRow
             // 
             this.checkBoxFileheaderRow.AutoSize = true;
-            this.checkBoxFileheaderRow.Location = new System.Drawing.Point(88, 96);
+            this.checkBoxFileheaderRow.Location = new System.Drawing.Point(118, 95);
             this.checkBoxFileheaderRow.Name = "checkBoxFileheaderRow";
             this.checkBoxFileheaderRow.Size = new System.Drawing.Size(15, 14);
             this.checkBoxFileheaderRow.TabIndex = 13;
@@ -261,17 +265,17 @@ namespace FinamDownloader
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 96);
+            this.label5.Location = new System.Drawing.Point(6, 95);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(76, 13);
+            this.label5.Size = new System.Drawing.Size(61, 13);
             this.label5.TabIndex = 12;
-            this.label5.Text = "Fileheader row";
+            this.label5.Text = "Заголовок";
             // 
             // comboBoxSplitChar
             // 
             this.comboBoxSplitChar.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSplitChar.FormattingEnabled = true;
-            this.comboBoxSplitChar.Location = new System.Drawing.Point(88, 37);
+            this.comboBoxSplitChar.Location = new System.Drawing.Point(118, 37);
             this.comboBoxSplitChar.Name = "comboBoxSplitChar";
             this.comboBoxSplitChar.Size = new System.Drawing.Size(121, 21);
             this.comboBoxSplitChar.TabIndex = 11;
@@ -281,18 +285,18 @@ namespace FinamDownloader
             this.labelSplitChar.AutoSize = true;
             this.labelSplitChar.Location = new System.Drawing.Point(6, 40);
             this.labelSplitChar.Name = "labelSplitChar";
-            this.labelSplitChar.Size = new System.Drawing.Size(51, 13);
+            this.labelSplitChar.Size = new System.Drawing.Size(106, 13);
             this.labelSplitChar.TabIndex = 10;
-            this.labelSplitChar.Text = "Split char";
+            this.labelSplitChar.Text = "Разделитель полей";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(6, 13);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(65, 13);
+            this.label6.Size = new System.Drawing.Size(92, 13);
             this.label6.TabIndex = 9;
-            this.label6.Text = "Time candle";
+            this.label6.Text = "Выдавать время";
             // 
             // buttonSaveSettings
             // 
@@ -300,7 +304,7 @@ namespace FinamDownloader
             this.buttonSaveSettings.Name = "buttonSaveSettings";
             this.buttonSaveSettings.Size = new System.Drawing.Size(80, 23);
             this.buttonSaveSettings.TabIndex = 21;
-            this.buttonSaveSettings.Text = "Save settings";
+            this.buttonSaveSettings.Text = "Сохранить";
             this.buttonSaveSettings.UseVisualStyleBackColor = true;
             this.buttonSaveSettings.Click += new System.EventHandler(this.buttonSaveSettings_Click);
             // 
@@ -318,35 +322,36 @@ namespace FinamDownloader
             this.groupBox1.Size = new System.Drawing.Size(430, 377);
             this.groupBox1.TabIndex = 22;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Settings";
+            this.groupBox1.Text = "Настройки";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(3, 325);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(53, 13);
+            this.label8.Size = new System.Drawing.Size(91, 13);
             this.label8.TabIndex = 28;
-            this.label8.Text = "Url quote:";
+            this.label8.Text = "Url инструмента:";
             // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Location = new System.Drawing.Point(3, 348);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(65, 13);
+            this.linkLabel1.Size = new System.Drawing.Size(107, 13);
             this.linkLabel1.TabIndex = 27;
             this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Finam quote";
+            this.linkLabel1.Text = "Котировки ФИНАМ";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // textBoxUrlSecurity
             // 
-            this.textBoxUrlSecurity.Location = new System.Drawing.Point(59, 322);
+            this.textBoxUrlSecurity.Location = new System.Drawing.Point(100, 322);
             this.textBoxUrlSecurity.Name = "textBoxUrlSecurity";
-            this.textBoxUrlSecurity.Size = new System.Drawing.Size(364, 20);
+            this.textBoxUrlSecurity.Size = new System.Drawing.Size(323, 20);
             this.textBoxUrlSecurity.TabIndex = 23;
             this.textBoxUrlSecurity.Tag = "";
+            this.toolTipUrlTextBox.SetToolTip(this.textBoxUrlSecurity, "Пример: http://www.finam.ru/profile/mosbirzha-fyuchersy/si/");
             this.textBoxUrlSecurity.TextChanged += new System.EventHandler(this.textBoxUrlSecurity_TextChanged);
             // 
             // buttonAddUrlSecurity
@@ -355,7 +360,7 @@ namespace FinamDownloader
             this.buttonAddUrlSecurity.Name = "buttonAddUrlSecurity";
             this.buttonAddUrlSecurity.Size = new System.Drawing.Size(75, 23);
             this.buttonAddUrlSecurity.TabIndex = 24;
-            this.buttonAddUrlSecurity.Text = "Add security";
+            this.buttonAddUrlSecurity.Text = "Добавить";
             this.buttonAddUrlSecurity.UseVisualStyleBackColor = true;
             this.buttonAddUrlSecurity.Click += new System.EventHandler(this.buttonAddUrlSecurity_Click);
             // 
@@ -375,7 +380,7 @@ namespace FinamDownloader
             this.buttonDownloadTxt.Name = "buttonDownloadTxt";
             this.buttonDownloadTxt.Size = new System.Drawing.Size(80, 23);
             this.buttonDownloadTxt.TabIndex = 27;
-            this.buttonDownloadTxt.Text = "Download";
+            this.buttonDownloadTxt.Text = "Загрузка";
             this.buttonDownloadTxt.UseVisualStyleBackColor = true;
             this.buttonDownloadTxt.Click += new System.EventHandler(this.buttonDownloadTxt_Click);
             // 
@@ -407,7 +412,7 @@ namespace FinamDownloader
             this.buttonCancelDownload.Name = "buttonCancelDownload";
             this.buttonCancelDownload.Size = new System.Drawing.Size(75, 23);
             this.buttonCancelDownload.TabIndex = 30;
-            this.buttonCancelDownload.Text = "Cancel";
+            this.buttonCancelDownload.Text = "Отмена";
             this.buttonCancelDownload.UseVisualStyleBackColor = true;
             this.buttonCancelDownload.Click += new System.EventHandler(this.buttonCancelDownload_Click);
             // 
@@ -422,6 +427,10 @@ namespace FinamDownloader
             this.groupBox2.Size = new System.Drawing.Size(430, 202);
             this.groupBox2.TabIndex = 31;
             this.groupBox2.TabStop = false;
+            // 
+            // toolTipUrlTextBox
+            // 
+            this.toolTipUrlTextBox.ShowAlways = true;
             // 
             // Main
             // 
@@ -486,6 +495,7 @@ namespace FinamDownloader
         private LinkLabel linkLabel1;
         private Label label8;
         private TextBox textBoxLog;
+        private ToolTip toolTipUrlTextBox;
     }
 }
 

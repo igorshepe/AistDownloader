@@ -31,6 +31,7 @@ namespace FinamDownloader
         {
             var arg = args;
             InitializeComponent();
+            Application.ApplicationExit += new EventHandler(this.OnApplicationExit);
 
             XmlDocument objDocument = new XmlDocument();
             objDocument.LoadXml(Resources.log4net);
@@ -80,13 +81,15 @@ namespace FinamDownloader
             {
                 if (arg[0] == "autoloading")
                 {
-                    L.Info("Start with an attribute (autoloading)");
+                    L.Info("Запуск с атрибутом (autoloading)");
                     AutoLoading();
                 }
             }
 
             buttonCancelDownload.Enabled = false;
             buttonAddUrlSecurity.Enabled = false;
+
+            dateTimePickerTo.MaxDate = DateTime.Now.AddDays(-1);
         }
 
 
@@ -133,7 +136,7 @@ namespace FinamDownloader
             StateButton(true);
             StateTreeView(false);
 
-            L.Info("Strat backgroundWorker1: " + backgroundWorker1.IsBusy);
+            L.Info("Запускаем backgroundWorker1: " + backgroundWorker1.IsBusy);
 
             List<SettingsMain> settingsData = GetSettings();
             
@@ -142,7 +145,7 @@ namespace FinamDownloader
 
             var settings = settingsData[0];
 
-            AddTextLog("Start work");
+            AddTextLog("Начинаем работать");
 
             if (backgroundWorker1.CancellationPending)
                 return;
@@ -175,7 +178,7 @@ namespace FinamDownloader
 
                             if (!(filesSecurities.Dat.AddDays(-1) == settings.DateTo))
                             {
-                                AddTextLog($"Download: {filesSecurities.Sec}");
+                                AddTextLog($"Загружаю: {filesSecurities.Sec}");
                                 var str = FinamLoading.DownloadData(security, filesSecurities, settingsData, true);
                                 int state = CheckStringData(str, settingsData[0].Autostart, filesSecurities.Sec);
                                  
@@ -201,8 +204,8 @@ namespace FinamDownloader
                             }
                             else
                             {
-                                AddTextLog("Дата файла и дата загрузки истории совпадают: " + filesSecurities.Sec + " Date from: " + filesSecurities.Dat.AddDays(-1).ToString("d") + ". Date to: " + settings.DateTo.ToString("d"));
-                                L.Info("Дата файла и дата загрузки истории совпадают: " + filesSecurities.Sec + " Date from: " + filesSecurities.Dat.AddDays(-1).ToString("d") + ". Date to: " + settings.DateTo.ToString("d"));
+                                AddTextLog("Дата файла и дата загрузки истории совпадают: " + filesSecurities.Sec + " Дата с: " + filesSecurities.Dat.AddDays(-1).ToString("d") + ". По: " + settings.DateTo.ToString("d"));
+                                L.Info("Дата файла и дата загрузки истории совпадают: " + filesSecurities.Sec + " Дата с: " + filesSecurities.Dat.AddDays(-1).ToString("d") + ". По: " + settings.DateTo.ToString("d"));
                             }
 
                             
@@ -216,7 +219,7 @@ namespace FinamDownloader
                 
                 //FinamLoading.Download(Security, fileData, settingsData);
 
-               AddTextLog("All files save");
+               AddTextLog("Все файлы сохранены");
             }
             else // Создаем новые файлы
             {
@@ -247,7 +250,7 @@ namespace FinamDownloader
                         if (!(relative >= 730))
                             // 730дней это два года, больше запрашивать нельзя с финама придет пустой файл
                         {
-                            AddTextLog($"Download: {security.Name}");
+                            AddTextLog($"Загружаю: {security.Name}");
                             var str = FinamLoading.DownloadData(security, fileData, settingsData, false);
                             var state = CheckStringData(str, settingsData[0].Autostart, security.Name);
 
@@ -268,11 +271,10 @@ namespace FinamDownloader
                         }
                         else
                         {
-                            AddTextLog($"Вы запросили информацию больше чем за 2 года. Ожидайте. Загружаю: {security.Name}");
-                            decimal twoYears = Math.Floor(relative/730);
-
-
-
+                            AddTextLog($"Вы запросили информацию больше чем за 2 года. Ожидайте.");
+                            L.Info($"Вы запросили информацию больше чем за 2 года. Ожидайте. Загружаю: {security.Name}");
+                            decimal twoYears = Math.Floor(relative/365);
+                            
                             var changedata = GetSettings();
                             var changedata2 = GetSettings();
                             bool header = true;
@@ -294,9 +296,10 @@ namespace FinamDownloader
                                 if (i == 1)
                                 {
                                     //var date = changedata[0].DateFrom;
-                                    changedata[0].DateTo = changedata[0].DateFrom.AddYears(+2);
+                                    changedata[0].DateTo = changedata[0].DateFrom.AddYears(+1);
                                     changedata[0].DateTo = changedata[0].DateTo.AddDays(-1);
                                     AddTextLog($"Загружаю: {security.Name} '{changedata[0].DateFrom.ToString("d")} - {changedata[0].DateTo.ToString("d")}'");
+                                    L.Info($"Загружаю: {security.Name} '{changedata[0].DateFrom.ToString("d")} - {changedata[0].DateTo.ToString("d")}'");
                                     var str2 = FinamLoading.DownloadData(security, fileData, changedata, false);
                                     if (str2 != "")
                                     { 
@@ -309,16 +312,16 @@ namespace FinamDownloader
                                     if (!header)
                                     {
                                         changedata[0].FileheaderRow = false;
-                                        header = false;
                                     }
 
                                     var oldDateTo = changedata[0].DateTo;
                                     
                                     
                                     changedata[0].DateFrom = oldDateTo.AddDays(+1);
-                                    changedata[0].DateTo = (changedata[0].DateFrom.AddYears(+2));
+                                    changedata[0].DateTo = (changedata[0].DateFrom.AddYears(+1));
                                     changedata[0].DateTo = changedata[0].DateTo.AddDays(-1);
                                     AddTextLog($"Загружаю: {security.Name} '{changedata[0].DateFrom.ToString("d")} - {changedata[0].DateTo.ToString("d")}'.");
+                                    L.Info($"Загружаю: {security.Name} '{changedata[0].DateFrom.ToString("d")} - {changedata[0].DateTo.ToString("d")}'.");
                                     var str3 = FinamLoading.DownloadData(security, fileData, changedata, false);
                                     if (str3 != "")
                                     {
@@ -335,14 +338,16 @@ namespace FinamDownloader
                             
 
                             changedata2[0].DateFrom = changedata[0].DateTo.AddDays(+1);
-                            changedata2[0].FileheaderRow = false;
+                            if (!header)
+                            {
+                                changedata2[0].FileheaderRow = false;
+                            }
+                            
                             AddTextLog($"Загружаю: {security.Name} '{changedata2[0].DateFrom.ToString("d")} - {changedata2[0].DateTo.ToString("d")}'.");
+                            L.Info($"Загружаю: {security.Name} '{changedata2[0].DateFrom.ToString("d")} - {changedata2[0].DateTo.ToString("d")}'.");
                             var str4 = FinamLoading.DownloadData(security, fileData, changedata2, false);
                             str += str4;
-
-
-
-
+                            
                             var state = CheckStringData(str, settingsData[0].Autostart, security.Name);
 
                                 if (state == 0 || state == 3)
@@ -370,11 +375,11 @@ namespace FinamDownloader
                     }
 
                 }
-               AddTextLog( "All files save");
+               AddTextLog( "Все файлы сохранены");
             }
 
 
-            AddTextLog( "Download complete");
+            AddTextLog( "Загрузка завершена");
             
             
 
@@ -392,7 +397,7 @@ namespace FinamDownloader
 
             if (e.ProgressPercentage > 100)
             {
-                L.Info($"A value greater than 100 : {e.ProgressPercentage}  {e.UserState}");
+                L.Info($"Значение больше 100 (progressBar) : {e.ProgressPercentage}  {e.UserState}");
                 return;
             }
              
@@ -402,30 +407,30 @@ namespace FinamDownloader
         {
             if (CancelAsync == 1)
             {
-                L.Info("There are no files to merge");
-                MessageBox.Show(this, @"There are no files to merge");
+                L.Info("Нет файлов для объединения");
+                MessageBox.Show(this, @"Нет файлов для объединения");
             }
             else if (CancelAsync == 2)
             {
-                AddTextLog("Cancel download");
-                L.Info("Cancel download");
-                MessageBox.Show(this, @"Cancel download");
+                AddTextLog("Отмена загрузки");
+                L.Info("Отмена загрузки");
+                MessageBox.Show(this, @"Отмена загрузки");
             }
 
             else if (CancelAsync == 3)
             {
-                L.Info("Exit after autoloading");
+                L.Info("Выход после автозагрузки");
                 Application.Exit();
             }
             else if (CancelAsync == 4)
             {
-                L.Info("Incorrect date");
-                MessageBox.Show(@"Incorrect date");
+                L.Info("Неверная дата");
+                MessageBox.Show(@"Неверная дата");
             }
             else
             {
-                L.Info("Download complete");
-                MessageBox.Show(this, @"Download complete");
+                L.Info("Загрузка завершена");
+                MessageBox.Show(this, @"Загрузка завершена");
             }
 
             CancelAsync = 0;
@@ -444,6 +449,7 @@ namespace FinamDownloader
 
         private void WriteSetting()
         {
+           
             _props.Fields.Folder = textBoxTXTDir.Text;
 
             _props.Fields.TimeFrom = dateTimePickerFrom.Value;
@@ -467,6 +473,8 @@ namespace FinamDownloader
             _props.Fields.Security = Security;
 
             _props.WriteXml();
+
+            AddTextLog("Настройки сохранены");
         }
         private void ReadSetting()
         {
@@ -476,8 +484,9 @@ namespace FinamDownloader
             {
                 _props.Fields.XmlFileName = _settingsFolder;
                 _props.WriteXml();
-                L.Info(@"Сhange the settings folder");
-                MessageBox.Show(this, @"Сhange the settings folder");
+                L.Info(@"Путь к файлу настроект исправлен");
+                AddTextLog("Путь к файлу настроект исправлен");
+                //MessageBox.Show(this, @"Сhange the settings folder");
             }
 
 
@@ -518,7 +527,7 @@ namespace FinamDownloader
 
         private void buttonSaveSettings_Click(object sender, EventArgs e)
         {
-            L.Info(@"Save settings button");
+            L.Info(@"Нажатие на кнопку 'Сохранить'");
             WriteSetting();
         }
 
@@ -529,7 +538,8 @@ namespace FinamDownloader
                 return;
             }
 
-            L.Info(@"Add new Security");
+            L.Info($"Добавляем новый инструмент. URL: {textBoxUrlSecurity.Text}");
+
             var webGet = new HtmlWeb { OverrideEncoding = Encoding.GetEncoding(1251) };
             var doc = webGet.Load(textBoxUrlSecurity.Text);
 
@@ -537,7 +547,7 @@ namespace FinamDownloader
             if (ournote == null)
             {
                 L.Info(@"Нет данных для парсинга");
-                MessageBox.Show(@"Нет данных для парсинга");
+                AddTextLog(@"Нет данных для парсинга");
                 return;
             }
 
@@ -617,35 +627,42 @@ namespace FinamDownloader
                 if (Security.Any(t => t.Code == code))
                 {
                     L.Info(@"Инструмент " + name + @" уже есть в коллекции");
-                    MessageBox.Show(@"Инструмент "+ name +@" уже есть в коллекции"  );
+                    AddTextLog(@"Инструмент "+ name +@" уже есть в коллекции"  );
                     textBoxUrlSecurity.Clear();
                     return;
                 }
 
-                Security.Add(new SecurityInfo { Checed = true, Code = code, Id = id, MarketId = marketId, MarketName = marketName,Name = name });
-                L.Info($"New security:id {id},code {code},name {name},marketId {marketId}, marketName {marketName} ");
+                Security.Add(new SecurityInfo
+                {
+                    Checed = true,
+                    Code = code,
+                    Id = id,
+                    MarketId = marketId,
+                    MarketName = marketName,
+                    Name = name
+                });
+                L.Info($"New security:id-{id}, code-{code},name-{name}, marketId-{marketId}, marketName-{marketName} ");
 
-                 AddTextLog($"New security: {id}, {code}, {name}, {marketId}, {marketName} ");
+                AddTextLog($"New security: {id}, {code}, {name}, {marketId}, {marketName} ");
                  
             }
             textBoxUrlSecurity.Clear();
             WriteSetting();
             LoadTreeview();
-
-
+            
         }
 
         private void buttonDownloadTxt_Click(object sender, EventArgs e)
         {
-            L.Info(@"Start backgroundWorker");
+             
             if (!backgroundWorker1.IsBusy)
             {
                 backgroundWorker1.RunWorkerAsync();
             }
             else
             {
-                MessageBox.Show(this, @"backgroundWorker is busy");
-                L.Debug("backgroundWorker is busy"); 
+                MessageBox.Show(this, @"backgroundWorker уже работает");
+                L.Debug("backgroundWorker уже работает"); 
             }
             
         }
@@ -655,7 +672,7 @@ namespace FinamDownloader
            
            
 
-            L.Info("Start SaveToFile: " + security.Name);
+            L.Info("Сохраняем в файл: " + security.Name);
 
             if (backgroundWorker1.CancellationPending)
                 return;
@@ -668,6 +685,7 @@ namespace FinamDownloader
 
             if (File.Exists(filename))
             {
+                L.Info($"Файл уже существует {filename}, перезаписать ?");
                 string message = ($"Файл уже существует {filename}, перезаписать ?");
                 const string caption = "Save data";
                 var result = MessageBox.Show(message, caption,
@@ -677,19 +695,31 @@ namespace FinamDownloader
                 // If the no button was pressed ...
                 if (result == DialogResult.No)
                 {
+                    L.Info("Перезаписать файл? - НЕТ");
                     return;
                 }
+
+                L.Info("Перезаписать файл? - ДА");
             }
 
             if (filename != "")
             {
-                using (StreamWriter sw = new StreamWriter(filename, false, Encoding.UTF8))
+                try
                 {
-                    sw.Write(data);
-                    sw.Close();
-                    AddTextLog($"File saved: {security.Name}");
+                    using (StreamWriter sw = new StreamWriter(filename, false, Encoding.UTF8))
+                    {
+                        sw.Write(data);
+                        sw.Close();
+                        AddTextLog($"Сохранили в файл: {security.Name}");
 
+                    }
                 }
+                catch (Exception e)
+                {
+                     L.Error(e.Message);   
+                    AddTextLog(e.Message);
+                }
+                
             }
 
         }
@@ -698,7 +728,7 @@ namespace FinamDownloader
         {
            
             
-            L.Info("Start ChangeFile: " + fileSec.Sec);
+            L.Info("Объединяем файлы: " + fileSec.Sec);
 
 
             if (backgroundWorker1.CancellationPending)
@@ -729,21 +759,21 @@ namespace FinamDownloader
 
 
             File.Move(filename, newfilename);
-            AddTextLog($"Merge done: {fileSec.Sec }");
+            AddTextLog($"Файлы объединены: {fileSec.Sec }");
         }
 
 
         public List<FileSecurity> LoadTxtFile(List<SettingsMain> settingsData3)
 
         {
-            L.Debug("Load txt file in folder");
+             
             var settings3 = settingsData3[0];
 
             List<FileSecurity> fileHeader = new List<FileSecurity>();
             var dir = new DirectoryInfo(settings3.DirTxt + @"\" + settings3.PeriodItem); // папка с файлами 
-            L.Debug("Folder: " + dir);
+           
             var filescount = dir.GetFiles();
-            //L.Debug("Files: " + filescount);
+            L.Debug($"Файлов: {filescount} в папке: {dir}"  );
             foreach (FileInfo t in filescount)
             {
                 Char delimiter = '-';
@@ -753,8 +783,8 @@ namespace FinamDownloader
             }
             if (fileHeader.Count == 0)
             {
-                L.Info("There are no files to merge");
-                AddTextLog( "There are no files to merge");
+                L.Info("Нет файлов для объединения");
+                AddTextLog("Нет файлов для объединения");
                 CancelAsync = 1;
                 backgroundWorker1.CancelAsync();
 
@@ -938,7 +968,7 @@ namespace FinamDownloader
 
 
                 });
-                L.Debug("Setting: " + settingsData[0].Period + " " + settingsData[0].PeriodItem + " " + settingsData[0].DateFrom.ToString("d") + " " + settingsData[0].DateTo.ToString("d") + " " + settingsData[0].SplitChar + " " + settingsData[0].TimeCandle + " " + settingsData[0].DateFromeTxt + " " + settingsData[0].FileheaderRow + " " + settingsData[0].MergeFile + " " + settingsData[0].DirTxt);
+                L.Debug("Настройки: " + settingsData[0].Period + " " + settingsData[0].PeriodItem + " " + settingsData[0].DateFrom.ToString("d") + " " + settingsData[0].DateTo.ToString("d") + " " + settingsData[0].SplitChar + " " + settingsData[0].TimeCandle + " " + settingsData[0].DateFromeTxt + " " + settingsData[0].FileheaderRow + " " + settingsData[0].MergeFile + " " + settingsData[0].DirTxt);
 
             }
             catch (Exception e)
@@ -1015,7 +1045,7 @@ namespace FinamDownloader
             if (str== "Exception")
             {
                 AddTextLog($"{sec} {str}");
-                L.Info("Exception download");
+                L.Info("Ошибка при попытке загрузки файла");
 
                 //if (!auto)
                 //    MessageBox.Show(this, @"Exception download", @"Security: " + sec);
@@ -1047,7 +1077,7 @@ namespace FinamDownloader
                         return;
                     }
 
-                        string message = ($"Delete security: {nameDelSec.Text} ?");
+                        string message = ($"Удалить инструмент: {nameDelSec.Text} ?");
                         const string caption = "Delete data";
                         var result = MessageBox.Show(message, caption,
                                                      MessageBoxButtons.YesNo,
@@ -1061,10 +1091,10 @@ namespace FinamDownloader
                             {
                                 if (t.Name == nameDelSec.Text)
                                 {
-                                    L.Info($"Delete {t.Name}, {t.Code}, {t.Id}, {t.MarketName}, {t.MarketId}");
+                                    L.Info($"Удалили {t.Name}, {t.Code}, {t.Id}, {t.MarketName}, {t.MarketId}");
 
                                      
-                                    AddTextLog($"Delete {t.Name}, {t.Code}, {t.Id}, {t.MarketName}, {t.MarketId}"); 
+                                    AddTextLog($"Удалили {t.Name}, {t.Code}, {t.Id}, {t.MarketName}, {t.MarketId}"); 
                                     
 
                                     Security.Remove(t);
@@ -1074,9 +1104,10 @@ namespace FinamDownloader
                                  
                             }
                             LoadTreeview();
+                            WriteSetting();
                         }
 
-                        WriteSetting();
+                       
                 }
                     break;
 
@@ -1106,5 +1137,47 @@ namespace FinamDownloader
             }
              
         }
+
+        private void dateTimePickerTo_ValueChanged(object sender, EventArgs e)
+        {
+
+            CheckDate();
+          
+        }
+
+        private void dateTimePickerFrom_ValueChanged(object sender, EventArgs e)
+        {
+            CheckDate();
+            
+        }
+
+
+        private void CheckDate()
+        {
+          
+            dateTimePickerFrom.MaxDate = dateTimePickerTo.Value;
+            dateTimePickerTo.MinDate = dateTimePickerFrom.Value;
+        }
+
+        private void OnApplicationExit(object sender, EventArgs e)
+        {
+            
+            //if (_props.Fields.Security != Security)
+            //{
+            //    string message = ($"Данные по инструментам были изменены. Сохранить?");
+            //    const string caption = "Save data";
+            //    var result = MessageBox.Show(message, caption,
+            //        MessageBoxButtons.YesNo,
+            //        MessageBoxIcon.Question);
+
+
+            //    if (result == DialogResult.Yes)
+            //    {
+            //        WriteSetting();
+            //    }
+            //}
+            
+        }
     }
 }
+
