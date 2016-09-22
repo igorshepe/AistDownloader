@@ -103,6 +103,7 @@ namespace FinamDownloader
             CancelAsync = 3;
             checkBoxMergeFiles.Checked = true;
             checkBoxYesterday.Checked = true;
+            SettingsData = GetSettings();
             backgroundWorker1.RunWorkerAsync();
         }
 
