@@ -160,9 +160,12 @@ namespace FinamDownloader
 
                 var fileData = LoadTxtFile(SettingsData);
 
+                
 
                 if (backgroundWorker1.CancellationPending)
                     return;
+
+                 
 
                 // backgroundWorker1.ReportProgress(20, "Files in the folder: " + fileData.Count);
 
@@ -178,39 +181,48 @@ namespace FinamDownloader
 
                         if (security.Name == filesSecurities.Sec)
                         {
-                           
-
-                            if (!(filesSecurities.Dat.AddDays(-1) == settings.DateTo))
+                            if (filesSecurities.Dat.AddDays(-1) > settings.DateTo)
                             {
-                                AddTextLog($"Загружаю: {filesSecurities.Sec}");
-                                var str = FinamLoading.DownloadData(security, filesSecurities, SettingsData, true);
-                                int state = CheckStringData(str,  filesSecurities.Sec);
-                                 
-
-                                if (state == 0 || state == 3)
-                                {
-                                    ChangeFile(str, filesSecurities, settings);
-                                }
-                                else if (state == 2 || state == 4)
-                                {
-                                    backgroundWorker1.CancelAsync();
-                                    CancelAsync = 2;
-                                }
-                                else if (state == 1)
-                                {
-                                    str = Empty;
-                                    ChangeFile(str, filesSecurities, settings);
-                                }
-
-                                backgroundWorker1.ReportProgress(100 * index / fileData.Count);
-                                ++index;
+                                L.Info(  $"{filesSecurities.Sec}: Дата файла {filesSecurities.Dat.AddDays(-1).ToString("d")} старше даты загружаемых данных {settings.DateTo.ToString("d")}");
+                                AddTextLog(  $"{filesSecurities.Sec}: Дата файла {filesSecurities.Dat.AddDays(-1).ToString("d")} старше даты загружаемых данных {settings.DateTo.ToString("d")}");
 
                             }
                             else
                             {
-                                AddTextLog("Дата файла и дата загрузки истории совпадают: " + filesSecurities.Sec + " Дата с: " + filesSecurities.Dat.AddDays(-1).ToString("d") + ". По: " + settings.DateTo.ToString("d"));
-                                L.Info("Дата файла и дата загрузки истории совпадают: " + filesSecurities.Sec + " Дата с: " + filesSecurities.Dat.AddDays(-1).ToString("d") + ". По: " + settings.DateTo.ToString("d"));
+                                if (!(filesSecurities.Dat.AddDays(-1) == settings.DateTo))
+                                {
+                                    AddTextLog($"Загружаю: {filesSecurities.Sec}");
+                                    var str = FinamLoading.DownloadData(security, filesSecurities, SettingsData, true);
+                                    int state = CheckStringData(str, filesSecurities.Sec);
+
+
+                                    if (state == 0 || state == 3)
+                                    {
+                                        ChangeFile(str, filesSecurities, settings);
+                                    }
+                                    else if (state == 2 || state == 4)
+                                    {
+                                        backgroundWorker1.CancelAsync();
+                                        CancelAsync = 2;
+                                    }
+                                    else if (state == 1)
+                                    {
+                                        str = Empty;
+                                        ChangeFile(str, filesSecurities, settings);
+                                    }
+
+                                    backgroundWorker1.ReportProgress(100 * index / fileData.Count);
+                                    ++index;
+
+                                }
+                                else
+                                {
+                                    AddTextLog("Дата файла и дата загрузки истории совпадают: " + filesSecurities.Sec + " Дата с: " + filesSecurities.Dat.AddDays(-1).ToString("d") + ". По: " + settings.DateTo.ToString("d"));
+                                    L.Info("Дата файла и дата загрузки истории совпадают: " + filesSecurities.Sec + " Дата с: " + filesSecurities.Dat.AddDays(-1).ToString("d") + ". По: " + settings.DateTo.ToString("d"));
+                                }
                             }
+
+                            
 
                             
                         }
@@ -683,13 +695,11 @@ namespace FinamDownloader
 
         public void SaveToFile(string data, SecurityInfo security, SettingsMain settingsData)
         {
-           
-           
-
-            L.Info("Сохраняем в файл: " + security.Name);
 
             if (backgroundWorker1.CancellationPending)
                 return;
+
+            L.Info("Сохраняем в файл: " + security.Name);
 
             var settings = settingsData;
 
@@ -740,16 +750,17 @@ namespace FinamDownloader
 
         public void ChangeFile(string data, FileSecurity fileSec, SettingsMain settingsData)
         {
-           
-            
-            L.Info("Объединяем файлы: " + fileSec.Sec);
-
 
             if (backgroundWorker1.CancellationPending)
                 return;
+
+            L.Info("Объединяем файлы: " + fileSec.Sec);
+            
             var settings2 = settingsData;
 
             DateTime datatrue = fileSec.Dat.AddDays(-1); // для устранения лишнего дня в имени файла
+
+            
 
             string filename = settings2.DirTxt + @"\" + settings2.PeriodItem + @"\" + fileSec.Sec + @"-" + datatrue.Day + @"." + datatrue.Month + @"." + datatrue.Year + @"-" + settings2.PeriodItem + @".txt";
 
@@ -787,7 +798,7 @@ namespace FinamDownloader
             var dir = new DirectoryInfo(settings3.DirTxt + @"\" + settings3.PeriodItem); // папка с файлами 
            
             var filescount = dir.GetFiles();
-            L.Debug($"Файлов: {filescount} в папке: {dir}"  );
+            L.Debug($"Файлов: {filescount.Count()} в папке: {dir}"  );
             foreach (FileInfo t in filescount)
             {
                 Char delimiter = '-';

@@ -138,7 +138,7 @@ namespace FinamDownloader
             var securityFile = filesSecurities;
             var settings = settingsData;
 
-            //TODO: Проверить , почему верные значения fileheaderRow получаем только после сохранения настроек
+            
             WebClient webClient = InitWebClient();
             string address;
 
