@@ -130,13 +130,13 @@ namespace FinamDownloader
         //    }
         //}
 
-        public static string DownloadData(SecurityInfo security, Main.FileSecurity filesSecurities, List<Main.SettingsMain> settingsData, bool mergeFile)
+        public static string DownloadData(SecurityInfo security, Main.FileSecurity filesSecurities, Main.SettingsMain settingsData, bool mergeFile)
         {
             string str;
 
             var securitySelect = security;
             var securityFile = filesSecurities;
-            var settings = settingsData[0];
+            var settings = settingsData;
 
             //TODO: Проверить , почему верные значения fileheaderRow получаем только после сохранения настроек
             WebClient webClient = InitWebClient();

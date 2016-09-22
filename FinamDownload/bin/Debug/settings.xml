@@ -5,7 +5,7 @@
   <SplitChar>0</SplitChar>
   <TimeFrom>2014-01-01T00:00:00</TimeFrom>
   <TimeTo>2016-07-01T00:00:00</TimeTo>
-  <Period>1</Period>
+  <Period>6</Period>
   <TimeCandle>0</TimeCandle>
   <FileheaderRow>true</FileheaderRow>
   <DateFromTxt>false</DateFromTxt>
@@ -18,7 +18,7 @@
       <MarketName>МосБиржа фьючерсы</MarketName>
       <Name>RTS</Name>
       <Code>SPFB.RTS</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>14</MarketId>
@@ -26,7 +26,7 @@
       <MarketName>МосБиржа фьючерсы</MarketName>
       <Name>SBRF</Name>
       <Code>SPFB.SBRF</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>14</MarketId>
@@ -42,7 +42,7 @@
       <MarketName>МосБиржа фьючерсы</MarketName>
       <Name>ED</Name>
       <Code>SPFB.ED</Code>
-      <Checed>false</Checed>
+      <Checed>true</Checed>
     </SecurityInfo>
     <SecurityInfo>
       <MarketId>14</MarketId>
