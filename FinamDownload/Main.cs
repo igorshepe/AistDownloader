@@ -158,7 +158,18 @@ namespace FinamDownloader
             {
                 L.Debug("Дата из файла: " + checkBoxDateFromTxt.Checked);
 
-                var fileData = LoadTxtFile(SettingsData);
+                List<FileSecurity> fileData = new List<FileSecurity>();
+
+                if (checkBoxNoData.Checked)
+                {
+                    fileData = ReadDateOfTheFile(SettingsData);
+
+                }
+                else
+                {
+                    fileData = LoadTxtFile(SettingsData);
+                }
+               
 
                 
 
@@ -167,7 +178,7 @@ namespace FinamDownloader
 
                  
 
-                // backgroundWorker1.ReportProgress(20, "Files in the folder: " + fileData.Count);
+                
 
                 var index = 1;
 
@@ -198,7 +209,21 @@ namespace FinamDownloader
 
                                     if (state == 0 || state == 3)
                                     {
-                                        ChangeFile(str, filesSecurities, settings);
+                                        if (checkBoxMergeFiles.Checked)
+                                        {
+                                            ChangeFile(str, filesSecurities, settings);
+                                        }
+                                        else
+                                        {
+                                            //доделать сохранение файла 
+                                            // SaveToFile(str, filesSecurities, settings); 
+                                            L.Info("Выберите объединение файлов!");
+                                            AddTextLog("Выберите объединение файлов!");
+                                            backgroundWorker1.CancelAsync();
+                                            CancelAsync = 5;
+
+                                        }
+
                                     }
                                     else if (state == 2 || state == 4)
                                     {
@@ -208,7 +233,20 @@ namespace FinamDownloader
                                     else if (state == 1)
                                     {
                                         str = Empty;
-                                        ChangeFile(str, filesSecurities, settings);
+                                        if (checkBoxMergeFiles.Checked)
+                                        {
+                                            ChangeFile(str, filesSecurities, settings);
+                                        }
+                                        else
+                                        {
+                                            //доделать сохранение файла 
+                                            // SaveToFile(str, filesSecurities, settings);
+                                            L.Info("Выберите объединение файлов");
+                                            AddTextLog("Выберите объединение файлов!");
+                                            backgroundWorker1.CancelAsync();
+                                            CancelAsync = 5;
+                                        }
+
                                     }
 
                                     backgroundWorker1.ReportProgress(100 * index / fileData.Count);
@@ -450,6 +488,11 @@ namespace FinamDownloader
                 L.Info("Неверная дата");
                 MessageBox.Show(@"Неверная дата");
             }
+            else if (CancelAsync == 5)
+            {
+                L.Info("Ошибка");
+                MessageBox.Show(@"Ошибка. Смотри диалоговое окно");
+            }
             else
             {
                 L.Info("Загрузка завершена");
@@ -493,6 +536,8 @@ namespace FinamDownloader
 
             _props.Fields.Yesterday = checkBoxYesterday.Checked;
 
+            _props.Fields.NoData = checkBoxNoData.Checked;
+
             _props.Fields.Security = Security;
 
             _props.WriteXml();
@@ -532,6 +577,8 @@ namespace FinamDownloader
             checkBoxMergeFiles.Checked = _props.Fields.MergeFiles;
 
             checkBoxYesterday.Checked = _props.Fields.Yesterday;
+
+            checkBoxNoData.Checked = _props.Fields.NoData;
 
             Security = _props.Fields.Security;
 
@@ -705,7 +752,17 @@ namespace FinamDownloader
 
             Directory.CreateDirectory(settings.DirTxt + @"\" + settings.PeriodItem);
 
-            string filename = settings.DirTxt + @"\" + settings.PeriodItem + @"\" + security.Name + @"-" + settings.DateTo.Day + @"." + settings.DateTo.Month + @"." + settings.DateTo.Year + @"-" + settings.PeriodItem + @".txt";
+            string filename = null;
+            if (checkBoxNoData.Checked)
+            {
+                filename = settings.DirTxt + @"\" + settings.PeriodItem + @"\" + security.Name + @"-"+ settings.PeriodItem + @".txt";
+
+            }
+            else
+            {
+                 filename = settings.DirTxt + @"\" + settings.PeriodItem + @"\" + security.Name + @"-" + settings.DateTo.Day + @"." + settings.DateTo.Month + @"." + settings.DateTo.Year + @"-" + settings.PeriodItem + @".txt";
+
+            }
 
             if (File.Exists(filename))
             {
@@ -759,14 +816,24 @@ namespace FinamDownloader
             var settings2 = settingsData;
 
             DateTime datatrue = fileSec.Dat.AddDays(-1); // для устранения лишнего дня в имени файла
+            string filename = null;
+            string newfilename = null;
 
-            
+            if (checkBoxNoData.Checked)
+            {
+                filename = settings2.DirTxt + @"\" + settings2.PeriodItem + @"\" + fileSec.Sec + @"-" + settings2.PeriodItem + @".txt";
 
-            string filename = settings2.DirTxt + @"\" + settings2.PeriodItem + @"\" + fileSec.Sec + @"-" + datatrue.Day + @"." + datatrue.Month + @"." + datatrue.Year + @"-" + settings2.PeriodItem + @".txt";
+                newfilename = settings2.DirTxt + @"\" + settings2.PeriodItem + @"\" + fileSec.Sec + @"-" + settings2.PeriodItem + @".txt";
+            }
+            else
+            {
+             filename = settings2.DirTxt + @"\" + settings2.PeriodItem + @"\" + fileSec.Sec + @"-" + datatrue.Day + @"." + datatrue.Month + @"." + datatrue.Year + @"-" + settings2.PeriodItem + @".txt";
 
-            string newfilename = settings2.DirTxt + @"\" + settings2.PeriodItem + @"\" + fileSec.Sec + @"-" +
-                                 settings2.DateTo.Day + @"." + settings2.DateTo.Month + @"." + settings2.DateTo.Year + @"-" +
-                                 settings2.PeriodItem + @".txt";
+             newfilename = settings2.DirTxt + @"\" + settings2.PeriodItem + @"\" + fileSec.Sec + @"-" +
+                                     settings2.DateTo.Day + @"." + settings2.DateTo.Month + @"." + settings2.DateTo.Year + @"-" +
+                                     settings2.PeriodItem + @".txt";
+            }
+           
 
             try
             {
@@ -782,12 +849,61 @@ namespace FinamDownloader
                 throw;
             }
 
+            if (!checkBoxNoData.Checked)
+                File.Move(filename, newfilename);
 
-            File.Move(filename, newfilename);
             AddTextLog($"Файлы объединены: {fileSec.Sec }");
         }
 
+        public List<FileSecurity> ReadDateOfTheFile(SettingsMain settingsData4)
+        {
+            var settings4 = settingsData4;
+            List<FileSecurity> fileHeader = new List<FileSecurity>();
+            var dir = new DirectoryInfo(settings4.DirTxt + @"\" + settings4.PeriodItem); // папка с файлами 
 
+            var filescount = dir.GetFiles();
+            L.Debug($"Файлов: {filescount.Count()} в папке: {dir}");
+            try
+            {
+                foreach (FileInfo t in filescount)
+                {
+                    var lastString = File.ReadAllLines(t.FullName).Last();
+                    Char delimiter = ',';
+                    String[] substrings = lastString.Split(delimiter);
+                    string dateStr = substrings[0];
+                   
+                    int year =Convert.ToInt32($"{dateStr[0]}{dateStr[1]}{dateStr[2]}{dateStr[3]}");
+                    int month = Convert.ToInt32($"{dateStr[4]}{dateStr[5]}");
+                    int day = Convert.ToInt32($"{dateStr[6]}{dateStr[7]}");
+                    DateTime date = new DateTime(year,month,day);
+                    Char delimiterHeader = '-';
+                    String[] substringsHeader = Path.GetFileNameWithoutExtension(t.FullName).Split(delimiterHeader);
+                    if (substringsHeader.Length == 2)
+                    {
+                        fileHeader.Add(new FileSecurity { Sec = substringsHeader[0], Dat = date.AddDays(1), Per = settings4.PeriodItem.ToString() });
+                    }
+                   
+                }
+                if (fileHeader.Count == 0)
+                {
+                    L.Info("Нет файлов для объединения");
+                    AddTextLog("Нет файлов для объединения");
+                    CancelAsync = 1;
+                    backgroundWorker1.CancelAsync();
+
+                }
+
+               
+            }
+            catch (Exception e)
+            {
+
+                MessageBox.Show(e.ToString());
+            }
+
+            return fileHeader;
+
+        }
         public List<FileSecurity> LoadTxtFile(SettingsMain settingsData3)
 
         {
@@ -803,8 +919,11 @@ namespace FinamDownloader
             {
                 Char delimiter = '-';
                 String[] substrings = Path.GetFileNameWithoutExtension(t.FullName).Split(delimiter);
-
-                fileHeader.Add(new FileSecurity { Sec = substrings[0], Dat = DateTime.Parse(substrings[1]).AddDays(1), Per = substrings[2] });
+                if (substrings.Length == 3)
+                {
+                    fileHeader.Add(new FileSecurity { Sec = substrings[0], Dat = DateTime.Parse(substrings[1]).AddDays(1), Per = substrings[2] });
+                }
+                
             }
             if (fileHeader.Count == 0)
             {
@@ -1049,17 +1168,14 @@ namespace FinamDownloader
             {
                 AddTextLog($"{sec} {str}");
                 L.Info(str);
-                //if (!auto) MessageBox.Show(this, str, @"Security: " + sec);
-                return 1;
+               return 1;
             }
             if (str == "Система уже обрабатывает Ваш запрос. Дождитесь окончания обработки.")
             {
                 AddTextLog($"{sec} {str}");
                 AddTextLog(str);
                 L.Info(str);
-                //if (!auto)
-                //    MessageBox.Show(this, str,@"Security: "+sec);
-                return 2;
+               return 2;
             }
             if (str == "")
             {
@@ -1067,18 +1183,13 @@ namespace FinamDownloader
 
                 L.Info("За эту дату нет данных");
 
-                //if (!auto)
-                //    MessageBox.Show(this, @"За эту дату нет данных", @"Security: " + sec);
-
-                return 3;
+               return 3;
             }
             if (str== "Exception")
             {
                 AddTextLog($"{sec} {str}");
                 L.Info("Ошибка при попытке загрузки файла");
 
-                //if (!auto)
-                //    MessageBox.Show(this, @"Exception download", @"Security: " + sec);
                 return 4;
             }
             return 0;

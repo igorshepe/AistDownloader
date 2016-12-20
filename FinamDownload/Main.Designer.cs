@@ -36,6 +36,7 @@ namespace FinamDownloader
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.checkBoxNoData = new System.Windows.Forms.CheckBox();
             this.checkBoxYesterday = new System.Windows.Forms.CheckBox();
             this.checkBoxMergeFiles = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -89,6 +90,7 @@ namespace FinamDownloader
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.checkBoxNoData);
             this.tabPage1.Controls.Add(this.checkBoxYesterday);
             this.tabPage1.Controls.Add(this.checkBoxMergeFiles);
             this.tabPage1.Controls.Add(this.label7);
@@ -108,6 +110,16 @@ namespace FinamDownloader
             this.tabPage1.Text = "Системные";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // checkBoxNoData
+            // 
+            this.checkBoxNoData.AutoSize = true;
+            this.checkBoxNoData.Location = new System.Drawing.Point(257, 89);
+            this.checkBoxNoData.Name = "checkBoxNoData";
+            this.checkBoxNoData.Size = new System.Drawing.Size(132, 17);
+            this.checkBoxNoData.TabIndex = 25;
+            this.checkBoxNoData.Text = "Имя файла без даты";
+            this.checkBoxNoData.UseVisualStyleBackColor = true;
+            // 
             // checkBoxYesterday
             // 
             this.checkBoxYesterday.AutoSize = true;
@@ -122,10 +134,11 @@ namespace FinamDownloader
             // checkBoxMergeFiles
             // 
             this.checkBoxMergeFiles.AutoSize = true;
-            this.checkBoxMergeFiles.Location = new System.Drawing.Point(111, 93);
+            this.checkBoxMergeFiles.Location = new System.Drawing.Point(97, 88);
             this.checkBoxMergeFiles.Name = "checkBoxMergeFiles";
-            this.checkBoxMergeFiles.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxMergeFiles.Size = new System.Drawing.Size(122, 17);
             this.checkBoxMergeFiles.TabIndex = 22;
+            this.checkBoxMergeFiles.Text = "Объединять фалы ";
             this.checkBoxMergeFiles.UseVisualStyleBackColor = true;
             this.checkBoxMergeFiles.CheckedChanged += new System.EventHandler(this.checkBoxMergeFiles_CheckedChanged);
             // 
@@ -134,9 +147,8 @@ namespace FinamDownloader
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(6, 93);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(103, 13);
+            this.label7.Size = new System.Drawing.Size(0, 13);
             this.label7.TabIndex = 21;
-            this.label7.Text = "Объединять фалы ";
             // 
             // checkBoxDateFromTxt
             // 
@@ -496,6 +508,7 @@ namespace FinamDownloader
         private Label label8;
         private TextBox textBoxLog;
         private ToolTip toolTipUrlTextBox;
+        private CheckBox checkBoxNoData;
     }
 }
 

@@ -9,9 +9,6 @@ namespace FinamDownloader
     {
         //Путь до файла настроек
         public string XmlFileName = Environment.CurrentDirectory + "\\settings.xml";
-
-        //Чтобы добавить настройку в программу просто добавьте суда строку вида - 
-        //public ТИП ИМЯ_ПЕРЕМЕННОЙ = значение_переменной_по_умолчанию;
         public string Folder = Environment.CurrentDirectory; 
         public int SplitChar = 0;
         public DateTime TimeFrom = DateTime.Today.AddDays(-2);
@@ -22,6 +19,7 @@ namespace FinamDownloader
         public bool DateFromTxt = false;
         public bool MergeFiles = false;
         public bool Yesterday = false;
+        public bool NoData = false;
         public List<SecurityInfo> Security = new List<SecurityInfo>() ;
        
 
