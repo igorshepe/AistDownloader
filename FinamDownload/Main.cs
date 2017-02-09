@@ -1170,6 +1170,12 @@ namespace FinamDownloader
                 L.Info(str);
                return 1;
             }
+            if (str == "Error")
+            {
+                AddTextLog($"{sec} {str} ");
+                L.Info(str);
+                return 1;
+            }
             if (str == "Система уже обрабатывает Ваш запрос. Дождитесь окончания обработки.")
             {
                 AddTextLog($"{sec} {str}");

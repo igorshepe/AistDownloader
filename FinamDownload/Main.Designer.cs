@@ -134,7 +134,7 @@ namespace FinamDownloader
             // checkBoxMergeFiles
             // 
             this.checkBoxMergeFiles.AutoSize = true;
-            this.checkBoxMergeFiles.Location = new System.Drawing.Point(97, 88);
+            this.checkBoxMergeFiles.Location = new System.Drawing.Point(97, 89);
             this.checkBoxMergeFiles.Name = "checkBoxMergeFiles";
             this.checkBoxMergeFiles.Size = new System.Drawing.Size(122, 17);
             this.checkBoxMergeFiles.TabIndex = 22;
