@@ -870,7 +870,16 @@ namespace FinamDownloader
                     var lastString = File.ReadAllLines(t.FullName).Last();
                     Char delimiter = ',';
                     String[] substrings = lastString.Split(delimiter);
-                    string dateStr = substrings[0];
+                    string dateStr;
+                    if (settings4.PeriodItem == "tics")
+                    {
+                         dateStr = substrings[2];
+                    }
+                    else
+                    {
+                        dateStr = substrings[0];
+                    }
+                   
                    
                     int year =Convert.ToInt32($"{dateStr[0]}{dateStr[1]}{dateStr[2]}{dateStr[3]}");
                     int month = Convert.ToInt32($"{dateStr[4]}{dateStr[5]}");
